@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="container pt-1">
+    <div class="col-lg-6 mx-auto shadow p-0">
+        <div class="alert alert-success p-4 text-center"> 
+            <h2>Add Position</h2>
+        </div>
+    
+        <div class="p-2 text-bold">
+            <form action="" method="POST">
+                {% csrf_token %} 
+
+                {% for fm in form %}
+                    <p class="fw-bold mb-0">{{fm.label_tag}}</p>
+                    {{fm}}
+                    
+                    <br>
+                {% endfor %}               
+                
+                <input class="btn btn-info" type="submit" value="Add Task">
+            </form>
+        </div>
+    
+    </div>
+</div>
+
+
+{% endblock %}
