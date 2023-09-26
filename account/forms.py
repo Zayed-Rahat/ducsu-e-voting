@@ -14,8 +14,8 @@ class FormSettings(forms.ModelForm):
 
 class UserRegistrationForm(UserCreationForm):
     ACCOUNT_TYPE = (("admin", "Admin"), ("voter", "Voter"))
-    birth_date = forms.DateField(null=True, blank=True)
-    user_type = forms.CharField(default="voter", choices=ACCOUNT_TYPE, max_length=6)
+    birth_date = forms.DateField(widget=forms.DateInput(attrs={'type':'date'}))
+    user_type = forms.ChoiceField(choices=ACCOUNT_TYPE)
     class Meta:
         model = User
         fields = ['username', 'password1', 'password2', 'first_name', 'last_name', 'email', 'birth_date','user_type']
