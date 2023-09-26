@@ -29,7 +29,6 @@ INSTALLED_APPS = [
     'account',
     'administration',
     'voting',
-    'candidates',
 ]
 
 MIDDLEWARE = [
