@@ -30,7 +30,6 @@ class UserRegistrationForm(UserCreationForm):
         
         for field in self.fields:
             self.fields[field].widget.attrs.update({
-                
                 'class' : (
                     'appearance-none block w-full bg-gray-200 '
                     'text-gray-700 border border-gray-200 rounded '

@@ -1,6 +1,7 @@
 from .models import Candidate
 from django.forms import ModelForm,Textarea
 from django import forms
+
 class CandidateForm(ModelForm):   
     class Meta:
         model = Candidate
