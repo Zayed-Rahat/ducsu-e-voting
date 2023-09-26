@@ -1,7 +1,5 @@
-from django.db import models
-from account.models import CustomUser
-from candidates.models import Candidate, Position
-# Create your models here.
+from .models import *
+from account.forms import FormSettings
 
 
 class Voter(models.Model):
