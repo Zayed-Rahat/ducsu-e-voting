@@ -1,16 +1,16 @@
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render, redirect
-from .forms import UserRegistrationForm
+from .forms import RegistrationForm
 
 def user_registration(request):
     if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
+        form = RegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('home') 
+            return redirect('register') 
     else:
-        form = UserRegistrationForm()
+        form = RegistrationForm()
     return render(request, 'account/register.html', {'form': form})
 
 def user_login(request):
@@ -20,7 +20,7 @@ def user_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('home')
+            return redirect('login')
         else:
             pass
     return render(request, 'account/login.html')
