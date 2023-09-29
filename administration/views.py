@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 
 def dashboard(request):
-    return render(request,'administration/dashboard.html')
+    return render(request,'administration/home.html')
 
 
 # all position showing here
