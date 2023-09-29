@@ -5,7 +5,7 @@ from account.models import CustomUser
 
 class Voter(models.Model):
     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    phone = models.CharField(max_length=11, unique=True) 
+    # phone = models.CharField(max_length=11, unique=True) 
     verified = models.BooleanField(default=True)
     voted = models.BooleanField(default=False)
 

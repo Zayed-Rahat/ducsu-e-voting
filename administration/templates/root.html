@@ -9,7 +9,17 @@
 
 </head>
 <body class="flex flex-col min-h-screen">
- 
+  <!-- Include Navbar -->
+
+  {% include "navbar.html" %}
+  {% if request.user.is_authenticated %}
+
+  <!-- Sidebar and Content -->
+  <div class="flex flex-row flex-1">
+    <!-- Include Sidebar -->
+    
+    {% include "sidebar.html" %}
+    <!-- Content Area -->
     <div class="flex flex-col flex-1 p-4">
       <!-- Content block -->
       <div class="bg-white p-4 rounded shadow">
@@ -19,6 +29,11 @@
         {% endblock content %}
       </div>
     </div>
+  {% endif %}
+
+  </div>
+
+
 </body>
 
 </html>

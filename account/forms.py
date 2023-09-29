@@ -2,6 +2,13 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm  
 from django.contrib.auth.models import User
 
+class FormSettings(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(FormSettings, self).__init__(*args, **kwargs)
+        # Here make some changes such as:
+        for field in self.visible_fields():
+            field.field.widget.attrs['class'] = 'form-control'
+
 class RegistrationForm(UserCreationForm):
     class Meta:
         model = User 

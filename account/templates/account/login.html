@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-{% if request.user.is_authenticated %}
+<!-- {% if request.user.is_authenticated %}
 <p>temporary.just for check functionality is works or not</p>
 <a href="{% url 'logout' %}">
     <button type="submit" class="rounded-sm border-2 bg-red-700 text-white py-2 w-full">logout</button>
 </a>
-{% endif %}
+{% endif %} -->
 <form action="" method="post">
     {% csrf_token %}
     <div class="flex justify-center items-center h-screen bg-gray-300">

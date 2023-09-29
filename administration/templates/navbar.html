@@ -1,0 +1,23 @@
+<nav class="flex items-center justify-between flex-wrap bg-white p-6 px-10">
+  <div class="flex items-center flex-shrink-0 text-white mr-6">
+      <span class="font-semibold text-xl tracking-tight text-green-600"><a href="/">DUCSU</a></span>
+  </div>
+  <div class="w-full lg:flex lg:items-center lg:w-auto px-10">
+    <div class="flex w-auto justify-start items-center">
+      {% if request.user.is_authenticated %}
+      <div class="text-green-600 my-auto font-black px-5">Welcome, {{ request.user.username }}</div>
+  
+      <a href="{% url 'logout' %}" class="mx-2 inline-block font-medium text-sm px-4 py-2 leading-none bg-green-600 rounded text-white border-white hover:border-transparent hover:text-white hover:bg-red-700 mt-4 lg:mt-0">Logout</a>
+    </div>
+    {% else %}
+    <div class="text-md lg:flex-grow"></div>
+    <div class="mr-2">
+      <a href="{% url 'login' %}" class="inline-block font-medium text-sm px-4 py-2 leading-none bg-green-600 rounded text-white border-white hover:border-transparent hover:text-white hover:bg-red-700 mt-4 lg:mt-0">Login</a>
+    </div>
+    <div>
+      <a href="{% url 'register' %}" class="inline-block font-medium text-sm px-4 py-2 leading-none bg-green-600 rounded text-white border-white hover:border-transparent hover:text-green-600 hover:bg-white mt-4 lg:mt-0">Register</a>
+    </div>
+    {% endif %}
+  </div>
+  
+</nav>
