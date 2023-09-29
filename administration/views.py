@@ -1,5 +1,8 @@
 from django.shortcuts import render,redirect
-from voting.models import Position,Voter, CustomUser
+from voting.models import Position,Voter
+from django.contrib.auth.models import User
+
+
 from voting.forms import PositionForm, VoterForm
 from django.contrib.auth.decorators import login_required
 
@@ -13,7 +16,6 @@ def position(request):
     if request.user.username == 'admin':
       user = request.user
       positions = Position.objects.all() # all position assign to positons for showing
-      print(positions)
       return render(request, 'position.html', {'positions':positions})
     else:
         return redirect('login')
@@ -68,15 +70,15 @@ def delete_position(request, id):
 def voters(request):
     if request.user.username == 'admin':
       user = request.user
-      voters = CustomUser.objects.all() 
+      voters = User.objects.all() 
       return render(request, 'voters.html', {'voters':voters})
     else:
         return redirect('login')
 
 # voter edit here
-def edit_voters(request, id):
+def edit_voter(request, id):
     # if request.user.is_authenticated:
-    Voters = CustomUser.objects.get(pk=id) #Voters get form model by using id
+    Voters = User.objects.get(pk=id) #Voters get form model by using id
     form = VoterForm(instance = Voters)
     if request.method == 'POST':
         form = VoterForm(request.POST, instance = Voters)
@@ -89,9 +91,9 @@ def edit_voters(request, id):
     
 
 # Voters delete here
-def delete_voters(request, id):
+def delete_voter(request, id):
     # if request.user.is_authenticated:
-    Voters = CustomUser.objects.get(pk=id) # Voters get from model using id
+    Voters = User.objects.get(pk=id) # Voters get from model using id
     Voters.delete()
     return redirect('voters')
     # else:

@@ -2,36 +2,39 @@
  {% block content %}
 
         <div class="col-lg-12 mx-auto shadow text-black">
-                <h1 class="text-center bg-info text-black">Positions</h1>
-                <div class="p-4">                  
-
-                {% if positions %}
-                    <table class="table table-bordered pl-3">
+            <div class="bg-green-500 text-white p-4 text-center rounded-t-lg">
+                <h2 class="text-2xl font-bold">Position</h2>
+            </div>                <div class="p-4">
+                    {% if positions %}
+                    <table class="min-w-full border border-gray-300">
                         <thead>
                             <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Maximum-votes</th>
-                                <th scope="col">Priority</th>
-                                <th scope="col">Action</th>
+                                <th class="py-2 px-4 bg-gray-100">Name</th>
+                                <th class="py-2 px-4 bg-gray-100">Maximum Votes</th>
+                                <th class="py-2 px-4 bg-gray-100">Priority</th>
+                                <th class="py-2 px-4 bg-gray-100">Action</th>
                             </tr>
                         </thead>
-                        <thead>
+                        <tbody>
                             {% for pos in positions %}
                             <tr>
-                                <td scope="col">{{pos.name}}</td>
-                                <td scope="col">{{pos.max_vote}}</td>
-                                <td scope="col">{{pos.priority}}</td>
-                                <td> <a class="btn btn-primary btn-sm" href="{% url 'edit_position' id=pos.id %}">Edit</a> <a class="btn btn-danger btn-sm" href="{% url 'delete_position' id=pos.id %}">Delete</a></td>
-                                
+                                <td class="py-2 px-4 text-center">{{ pos.name }}</td>
+                                <td class="py-2 px-4 text-center">{{ pos.max_vote }}</td>
+                                <td class="py-2 px-4 text-center">{{ pos.priority }}</td>
+                                <td class="py-2 px-4 text-center">
+                                    <a href="{% url 'edit_position' id=pos.id %}" class="text-white bg-blue-500 hover:bg-blue-700 py-1 px-2 rounded">Edit</a>
+                                    <a href="{% url 'delete_position' id=pos.id %}" class="text-white bg-red-500 hover:bg-red-700 py-1 px-2 rounded">Delete</a>
+                                </td>
                             </tr>
                             {% endfor %}
-                        </thead>                            
+                        </tbody>
+                        
                     </table>
                     {% else %}
-                    <h1>There is no data available</h1>   
-                    
-                {% endif %}                    
-            </div>
+                    <h1>There is no data available</h1>
+                    {% endif %}
+                </div>
+                
         </div>
 
 {% endblock content %} 

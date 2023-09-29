@@ -4,27 +4,25 @@
     <!-- Sidebar user panel -->
 
     <!-- sidebar menu: style can be found in sidebar.less -->
-    <ul class="mt-4 space-y-2" data-widget="tree">
+    <ul class="mt-4 space-y-2">
       {% if request.user.username == 'admin' %}
-  
-      <li class="text-green-500">REPORTS</li>
-      <li class="text-green-500"><a href="#"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-      <li class="text-green-500"><a href="#"><i class="fa fa-lock"></i> <span>Votes</span></a></li>
-      <li class="text-green-500">MANAGE</li>
-      <li class="text-green-500"><a href=" "><i class="fa fa-users"></i> <span>Voters</span></a></li>
-      <li class="text-green-500"><a href=" {% url 'position' %}"><i class="fa fa-tasks"></i> <span>Positions</span></a></li>
-      <li class="text-green-500"><a href=" {% url 'add_position' %}"><i class="fa fa-tasks"></i> <span> Add Positions</span></a></li>
-
-      <li class="text-green-500"><a href=" {% url 'voters' %}"><i class="fa fa-tasks"></i> <span>Voters</span></a></li>
-
-      <li class="text-green-500"><a href="#"><i class="fa fa-black-tie"></i> <span>Candidates</span></a></li>
-      <li class="text-green-500"><a href="#"><i class="fa fa-file-text"></i> <span>Ballot Position</span></a></li>
-            
+    
+      <!-- <li class="text-green-500 font-bold py-2 px-4">REPORTS</li> -->
+      <!-- <li><a href="#" class="text-green-500 block py-2 px-4 hover:bg-green-200 font-bold"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+      <li><a href="#" class="text-green-500 block py-2 px-4 hover:bg-green-200 font-bold"><i class="fa fa-lock"></i> Votes</a></li> -->
+      <li><a href="{% url 'position' %}" class="text-green-500 block py-2 px-4 hover:bg-green-200 font-bold"><i class="fa fa-tasks"></i> Positions</a></li>
+    
+      <li><a href="{% url 'add_position' %}" class="text-green-500 block py-2 px-4 hover:bg-green-200 font-bold"><i class="fa fa-file-text"></i> Add Positions</a></li>
+    
+      <li><a href="{% url 'voters' %}" class="text-green-500 block py-2 px-4 hover:bg-green-200 font-bold"><i class="fa fa-tasks"></i> Voters</a></li>
+    
       {% endif %}
         
-      <li class="text-green-500">EXIT</li>
-      <li class="text-green-500"><a href="{% url 'logout' %}"><i class="fa fa-power-off"></i> <span>Logout</span></a></li>
+      <!-- Add hover effect for EXIT and Logout (if needed) -->
+      <!-- <li class="text-green-500 hover:bg-green-100">EXIT</li>
+      <li class="text-green-500"><a href="{% url 'logout' %}" class="hover:bg-green-100"><i class="fa fa-power-off"></i> <span>Logout</span></a></li> -->
     </ul>
+    
   </section>
   <!-- /.sidebar -->
 </aside>

@@ -1,11 +1,10 @@
 from django.db import models
-from account.models import CustomUser
+from django.contrib.auth.models import User
 # Create your models here.
 
 
 class Voter(models.Model):
-    admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    # phone = models.CharField(max_length=11, unique=True) 
+    admin = models.OneToOneField(User, on_delete=models.CASCADE)
     verified = models.BooleanField(default=True)
     voted = models.BooleanField(default=False)
 
