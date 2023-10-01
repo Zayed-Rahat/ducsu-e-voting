@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 from voting.forms import PositionForm, VoterForm
 from django.contrib.auth.decorators import login_required
 
-# def home(request):
-#     return render(request, 'home.html')
+def voters_home(request):
+     return render(request, 'voters_home.html')
 
 
 # all position showing here

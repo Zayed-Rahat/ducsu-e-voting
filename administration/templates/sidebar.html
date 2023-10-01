@@ -19,8 +19,8 @@
       {% endif %}
         
       <!-- Add hover effect for EXIT and Logout (if needed) -->
-      <!-- <li class="text-green-500 hover:bg-green-100">EXIT</li>
-      <li class="text-green-500"><a href="{% url 'logout' %}" class="hover:bg-green-100"><i class="fa fa-power-off"></i> <span>Logout</span></a></li> -->
+       <li><a href="{% url 'myprofile' %}" class="text-green-500 block py-2 px-4 hover:bg-green-200 font-bold"><i class="fa fa-dashboard"></i> <span>My profile</span></a></li>
+      <li><a href="{% url 'logout' %}" class="text-green-500 block py-2 px-4 hover:bg-green-200 font-bold"><i class="fa fa-power-off"></i> <span>Logout</span></a></li> 
     </ul>
     
   </section>

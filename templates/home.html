@@ -19,10 +19,16 @@
                 </div>
                 <div class="text-white">
                     <div class="flex gap-[20px]">
+
+                        {% if request.user.is_authenticated %}
                         <a class="hover:bg-green-400 hover:rounded-xl hover:px-2 px-2" href="">Home</a>
-                        <a class="hover:bg-green-400 hover:rounded-xl hover:px-2 px-2" href="">About</a>
+                        <a class="hover:bg-green-400 hover:rounded-xl hover:px-2 px-2" href="{% url 'myprofile' %}">Welcome, {{ request.user.username }}</a>
+                        {% else %}                      
+
                         <a class="hover:bg-green-400 hover:rounded-xl hover:px-2 px-2" href="{% url 'login' %}">Login</a>
                         <a class="hover:bg-green-400 hover:rounded-xl hover:px-2 px-2" href="{% url 'register' %}">Register</a>
+
+                        {% endif %}
                     </div>
                 </div>
             </div>
