@@ -9,6 +9,16 @@ from django.contrib.auth.decorators import login_required
 def voters_home(request):
      return render(request, 'voters_home.html')
 
+def dashboard(request):
+    if request.user.username == 'admin':
+      user = request.user
+      positions = Position.objects.all()
+      voters = User.objects.all() 
+      context = {'positions':positions, 'voters' : voters}
+      return render(request, 'dashboard.html', context)
+    else:
+        return redirect('login')
+
 
 # all position showing here
 def position(request):
