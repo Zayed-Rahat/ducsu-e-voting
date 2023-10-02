@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DACSU</title>
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+
+</head>
+<body class="flex flex-col min-h-screen">
+ 
+    <div class="flex flex-col flex-1 p-4">
+      <!-- Content block -->
+      <div class="bg-white p-4 rounded shadow">
+        <!-- Block-specific content goes here -->
+        {% block content %}
+        
+        {% endblock content %}
+      </div>
+    </div>
+</body>
+
+</html>
