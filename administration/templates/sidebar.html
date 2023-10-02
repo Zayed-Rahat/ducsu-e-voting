@@ -8,8 +8,10 @@
       {% if request.user.username == 'admin' %}
     
       <!-- <li class="text-green-500 font-bold py-2 px-4">REPORTS</li> -->
-      <!-- <li><a href="#" class="text-green-500 block py-2 px-4 hover:bg-green-200 font-bold"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-      <li><a href="#" class="text-green-500 block py-2 px-4 hover:bg-green-200 font-bold"><i class="fa fa-lock"></i> Votes</a></li> -->
+
+      <!-- <li><a href="#" class="text-green-500 block py-2 px-4 hover:bg-green-200 font-bold"><i class="fa fa-lock"></i> Votes</a></li> --> 
+    <li><a href="{% url 'dashboard' %}" class="text-green-500 block py-2 px-4 hover:bg-green-200 font-bold"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+     
       <li><a href="{% url 'position' %}" class="text-green-500 block py-2 px-4 hover:bg-green-200 font-bold"><i class="fa fa-tasks"></i> Positions</a></li>
     
       <li><a href="{% url 'add_position' %}" class="text-green-500 block py-2 px-4 hover:bg-green-200 font-bold"><i class="fa fa-file-text"></i> Add Positions</a></li>
