@@ -37,4 +37,4 @@ class Vote(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.voter.phone
+        return self.voter.admin.email

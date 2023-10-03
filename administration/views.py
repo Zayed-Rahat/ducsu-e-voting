@@ -1,9 +1,9 @@
 from django.shortcuts import render,redirect
-from voting.models import Position,Voter
+from voting.models import Position,Voter, Candidate
 from django.contrib.auth.models import User
 
 
-from voting.forms import PositionForm, VoterForm
+from voting.forms import PositionForm, VoterForm, CandidateForm
 from django.contrib.auth.decorators import login_required
 
 def voters_home(request):
@@ -87,7 +87,7 @@ def voters(request):
 # voter edit here
 def edit_voter(request, id):
     # if request.user.is_authenticated:
-    Voters = User.objects.get(pk=id) #Voters get form model by using id
+    Voters = Voter.objects.get(pk=id) #Voters get form model by using id
     form = VoterForm(instance = Voters)
     if request.method == 'POST':
         form = VoterForm(request.POST, instance = Voters)
@@ -107,3 +107,59 @@ def delete_voter(request, id):
     return redirect('voters')
     # else:
     #     return redirect('add_Voters')        
+    
+ 
+ 
+   
+# showing all candidates here 
+def show_candidate(request):
+    if request.user.username == 'admin':
+      user = request.user
+      candidates = Candidate.objects.all() # all position assign to positons for showing
+      return render(request, 'candidate.html', {'candidates':candidates})
+    else:
+        return redirect('login')
+    
+    
+# candidate add here for vote
+def create_candidate(request):
+    if request.user.username == 'admin':
+     user = request.user
+     form = CandidateForm(request.POST)
+     if form.is_valid():
+        candidate = form.save(commit=False) # position k save kora hocce na
+        candidate.user = user # request user k assign kora holo
+        candidate.save() # finaly save kora holo
+        return redirect('candidate')
+     else:
+        return render(request, 'create_candidate.html', {'form':form})
+    else:
+        return redirect('login') 
+    
+    
+    
+    
+# candidate edit function
+def edit_candidate(request, id):
+    # if request.user.is_authenticated:
+    candidate = Candidate.objects.get(pk=id) #candidate get form model by using id
+    form = CandidateForm(instance = candidate)
+    if request.method == 'POST':
+        form = CandidateForm(request.POST, instance=candidate)
+        if form.is_valid():
+            form.save()
+            return redirect('candidate') 
+    return render(request, 'add_candidate.html',{'form':form})
+    # else:
+    #     return redirect('lokgin')
+    
+    
+# candidates delete here
+def delete_candidate(request, id):
+    # if request.user.is_authenticated:
+    candidate = Candidate.objects.get(pk=id) # Voters get from model using id
+    candidate.delete()
+    return redirect('candidate')
+    # else:
+    #     return redirect('add_Voters')        
+    

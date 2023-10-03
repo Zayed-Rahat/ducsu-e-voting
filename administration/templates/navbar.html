@@ -17,7 +17,7 @@
     {% else %}
     <div class="text-md lg:flex-grow"></div>
     <div class="mr-2">
-      <a class="inline-block font-medium text-sm px-4 py-2 leading-none bg-green-600 rounded text-white border-white hover:border-transparent hover:text-white hover:bg-red-700 mt-4 lg:mt-0" href="">Home</a>
+      <a class="inline-block font-medium text-sm px-4 py-2 leading-none bg-green-600 rounded text-white border-white hover:border-transparent hover:text-white hover:bg-red-700 mt-4 lg:mt-0" href="{% url 'home' %}">Home</a>
 
       <a href="{% url 'login' %}" class="inline-block font-medium text-sm px-4 py-2 leading-none bg-green-600 rounded text-white border-white hover:border-transparent hover:text-white hover:bg-red-700 mt-4 lg:mt-0">Login</a>
     </div>

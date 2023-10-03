@@ -21,10 +21,11 @@
                     <div class="flex gap-[20px]">
 
                         {% if request.user.is_authenticated %}
-                        <a class="hover:bg-green-400 hover:rounded-xl hover:px-2 px-2" href="">Home</a>
+                        <a class="hover:bg-green-400 hover:rounded-xl hover:px-2 px-2" href="{% url 'home' %}">Home</a>
                         <a class="hover:bg-green-400 hover:rounded-xl hover:px-2 px-2" href="{% url 'myprofile' %}">Welcome, {{ request.user.username }}</a>
                         {% else %}                      
 
+                        <a class="hover:bg-green-400 hover:rounded-xl hover:px-2 px-2" href="{% url 'home' %}">Home</a>
                         <a class="hover:bg-green-400 hover:rounded-xl hover:px-2 px-2" href="{% url 'login' %}">Login</a>
                         <a class="hover:bg-green-400 hover:rounded-xl hover:px-2 px-2" href="{% url 'register' %}">Register</a>
 
@@ -46,7 +47,7 @@
                         </p>
                     </div>
                     <div>
-                        <button class="border-2 border-xl rounded-3xl p-2 text-md">Get Started</button>
+                        <a href="{% url 'position' %}" class="border-2 border-xl rounded-3xl p-2 text-md hover:border-green-400 hover:text-white">Get Started</a>
                     </div>
                 </div>
     
