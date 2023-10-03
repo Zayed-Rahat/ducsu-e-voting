@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from voting.models import Position,Voter, Candidate
 from django.contrib.auth.models import User
 
-
+from django.http import HttpResponse
 from voting.forms import PositionForm, VoterForm, CandidateForm
 from django.contrib.auth.decorators import login_required
 
@@ -23,7 +23,6 @@ def dashboard(request):
 # all position showing here
 def position(request):
     if request.user.username == 'admin':
-      user = request.user
       positions = Position.objects.all() # all position assign to positons for showing
       return render(request, 'position.html', {'positions':positions})
     else:
@@ -33,7 +32,6 @@ def position(request):
 
 # Here new position add
 def add_position(request):
-    if request.user.username == 'admin':
      user = request.user
      form = PositionForm(request.POST)
      if form.is_valid():
@@ -42,9 +40,7 @@ def add_position(request):
         poses.save() # finaly save kora holo
         return redirect('position')
      else:
-        return render(request, 'add_position.html', {'form':form})
-    else:
-        return redirect('login') 
+        return render(request, 'add_position.html', {'form':form}) 
 
 
 
@@ -114,7 +110,6 @@ def delete_voter(request, id):
 # showing all candidates here 
 def show_candidate(request):
     if request.user.username == 'admin':
-      user = request.user
       candidates = Candidate.objects.all() # all position assign to positons for showing
       return render(request, 'candidate.html', {'candidates':candidates})
     else:
@@ -123,21 +118,16 @@ def show_candidate(request):
     
 # candidate add here for vote
 def create_candidate(request):
-    if request.user.username == 'admin':
-     user = request.user
-     form = CandidateForm(request.POST)
-     if form.is_valid():
-        candidate = form.save(commit=False) # position k save kora hocce na
-        candidate.user = user # request user k assign kora holo
-        candidate.save() # finaly save kora holo
-        return redirect('candidate')
+     form = CandidateForm(request.POST, request.FILES)  
+     if request.method == 'POST':
+        if form.is_valid():
+            form = form.save()
+            return redirect('candidate')
+        else:
+             return HttpResponse("Invalid  form", status=400)
      else:
-        return render(request, 'create_candidate.html', {'form':form})
-    else:
-        return redirect('login') 
-    
-    
-    
+           return render(request, 'create_candidate.html', {'form':form}) 
+                  
     
 # candidate edit function
 def edit_candidate(request, id):
@@ -149,7 +139,7 @@ def edit_candidate(request, id):
         if form.is_valid():
             form.save()
             return redirect('candidate') 
-    return render(request, 'add_candidate.html',{'form':form})
+    return render(request, 'create_candidate.html',{'form':form})
     # else:
     #     return redirect('lokgin')
     

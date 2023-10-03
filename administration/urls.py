@@ -16,9 +16,9 @@ urlpatterns = [
     
     
     path('candidate/',views.show_candidate, name='candidate'),
-    path('add_candidate/',views.create_candidate, name='add_candidate'),
-    path('edit_candidate/<int:id>/',views.edit_voter, name='edit_candidate'),
-    path('delete_candidate/<int:id>/',views.delete_voter, name='delete_candidate'),
+    path('create_candidate/',views.create_candidate, name='create_candidate'),
+    path('edit_candidate/<int:id>/',views.edit_candidate, name='edit_candidate'),
+    path('delete_candidate/<int:id>/',views.delete_candidate, name='delete_candidate'),
     
     
 ]
