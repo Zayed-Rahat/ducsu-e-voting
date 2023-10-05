@@ -9,5 +9,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('administration/',include('administration.urls') ),
     path('account/', include('account.urls')),
+<<<<<<< HEAD
     path('api/', include('api.urls')),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+=======
+    
+]+ static(settings.MEDIA_URL , document_root = settings.MEDIA_ROOT)
+>>>>>>> 1528ee7ed751ae0f44d211e0e8c849146c7ebf86

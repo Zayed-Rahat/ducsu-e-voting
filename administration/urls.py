@@ -13,4 +13,12 @@ urlpatterns = [
     path('voters/',views.voters, name='voters'),
     path('edit_voter/<int:id>/',views.edit_voter, name='edit_voter'),
     path('delete_voter/<int:id>/',views.delete_voter, name='delete_voter'),
+    
+    
+    path('candidate/',views.show_candidate, name='candidate'),
+    path('create_candidate/',views.create_candidate, name='create_candidate'),
+    path('edit_candidate/<int:id>/',views.edit_candidate, name='edit_candidate'),
+    path('delete_candidate/<int:id>/',views.delete_candidate, name='delete_candidate'),
+    
+    
 ]
