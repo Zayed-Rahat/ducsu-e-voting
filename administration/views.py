@@ -1,6 +1,7 @@
-from django.shortcuts import render,redirect
-from voting.models import Position,Voter, Candidate
+from django.shortcuts import render,redirect, reverse
+from voting.models import Position, Voter, Candidate
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 
 from voting.forms import PositionForm, VoterForm, CandidateForm
@@ -92,7 +93,7 @@ def edit_voter(request, id):
 # Voters delete here
 def delete_voter(request, id):
     # if request.user.is_authenticated:
-    Voters = User.objects.get(pk=id) # Voters get from model using id
+    Voters = Voter.objects.get(pk=id) # Voters get from model using id
     Voters.delete()
     return redirect('voters')
     # else:
@@ -106,6 +107,7 @@ def show_candidate(request):
     if request.user.username == 'admin':
       user = request.user
       candidates = Candidate.objects.all() # all position assign to positons for showing
+    #   print('all print', candidates.values())
       return render(request, 'candidate.html', {'candidates':candidates})
     else:
         return redirect('login')
@@ -114,18 +116,19 @@ def show_candidate(request):
 # candidate add here for vote
 def create_candidate(request):
     if request.user.username == 'admin':
-     user = request.user
-     form = CandidateForm(request.POST)
-     if form.is_valid():
-        candidate = form.save(commit=False) # position k save kora hocce na
-        candidate.user = user # request user k assign kora holo
-        candidate.save() # finaly save kora holo
-        return redirect('candidate')
-     else:
-        return render(request, 'create_candidate.html', {'form':form})
+        user = request.user
+        form = CandidateForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            candidate = form.save(commit=False) # candidate k save kora hocce na
+            candidate.user = user # request user(admin) k assign kora holo
+            candidate.save() # finaly save kora holo
+            return redirect('candidate')
+        else:
+            return render(request, 'create_candidate.html', {'form':form})
     else:
         return redirect('login') 
-    
+
+
     
     
     
@@ -135,11 +138,11 @@ def edit_candidate(request, id):
     candidate = Candidate.objects.get(pk=id) #candidate get form model by using id
     form = CandidateForm(instance = candidate)
     if request.method == 'POST':
-        form = CandidateForm(request.POST, instance=candidate)
+        # form = CandidateForm(request.POST or None, request.FILES or None, instance=candidate)
         if form.is_valid():
             form.save()
             return redirect('candidate') 
-    return render(request, 'add_candidate.html',{'form':form})
+    return render(request, 'create_candidate.html',{'form':form})
     # else:
     #     return redirect('lokgin')
     
@@ -147,9 +150,9 @@ def edit_candidate(request, id):
 # candidates delete here
 def delete_candidate(request, id):
     # if request.user.is_authenticated:
-    candidate = Candidate.objects.get(pk=id) # Voters get from model using id
+    candidate = Candidate.objects.get(pk=id) # candidate get from model using id
     candidate.delete()
     return redirect('candidate')
     # else:
-    #     return redirect('add_Voters')        
+    #     return redirect('create_candidate')        
     
