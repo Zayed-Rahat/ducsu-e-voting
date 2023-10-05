@@ -24,7 +24,7 @@ class Position(models.Model):
 class Candidate(models.Model):
     position = models.ForeignKey(Position, on_delete=models.CASCADE)
     fullname = models.CharField(max_length=50)
-    photo = models.ImageField(upload_to="candidates")
+    photo = models.ImageField(upload_to="candidates", blank=True)
     bio = models.TextField()
     def __str__(self):
         return self.fullname
