@@ -118,15 +118,17 @@ def show_candidate(request):
     
 # candidate add here for vote
 def create_candidate(request):
-     form = CandidateForm(request.POST, request.FILES)  
      if request.method == 'POST':
+        form = CandidateForm(request.POST, request.FILES)  
         if form.is_valid():
-            form = form.save()
+            form.save()
             return redirect('candidate')
         else:
-             return HttpResponse("Invalid  form", status=400)
+            print(form.errors)
      else:
-           return render(request, 'create_candidate.html', {'form':form}) 
+        form = CandidateForm()
+
+     return render(request, 'create_candidate.html', {'form':form}) 
                   
     
 # candidate edit function
