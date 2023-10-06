@@ -1,8 +1,6 @@
 from django.shortcuts import render,redirect
 from voting.models import Position,Voter, Candidate
 from django.contrib.auth.models import User
-
-from django.http import HttpResponse
 from voting.forms import PositionForm, VoterForm, CandidateForm
 from django.contrib.auth.decorators import login_required
 
@@ -11,10 +9,10 @@ def voters_home(request):
 
 def dashboard(request):
     if request.user.username == 'admin':
-      user = request.user
       positions = Position.objects.all()
+      candidates = Candidate.objects.all()
       voters = User.objects.all() 
-      context = {'positions':positions, 'voters' : voters}
+      context = {'positions':positions, 'voters' : voters, 'candidates': candidates}
       return render(request, 'dashboard.html', context)
     else:
         return redirect('login')
