@@ -23,8 +23,8 @@
                     <td class="py-2 px-4 text-center">{{ pos.max_vote }}</td>
                     <td class="py-2 px-4 text-center">{{ pos.priority }}</td>
                     <td class="py-2 px-4 text-center">
-                        <a href="{% url 'edit_position' id=pos.id %}"><box-icon name='edit'></box-icon></a></a>
-                        <a href="{% url 'delete_position' id=pos.id %}"><box-icon name='minus'></box-icon></a>
+                        <a class="text-white bg-blue-500 hover:bg-blue-700 py-2 px-2" href="{% url 'edit_position' id=pos.id %}"><box-icon name='edit'></box-icon></a></a>
+                        <a  class="text-white bg-red-500 hover:bg-red-700 py-2 px-2" href="{% url 'delete_position' id=pos.id %}"><box-icon name='minus'></box-icon></a>
                     </td>
                 </tr>
                 {% endfor %}
