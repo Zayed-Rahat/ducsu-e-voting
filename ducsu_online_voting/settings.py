@@ -4,6 +4,17 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# added for render(live server)
+import environ
+env = environ.Env()
+
+environ.Env.read_env()
+
+SECRET_KEY = 'xq0&fn5$*&pvf+xc$$ar)tiljcm!xp1zyvz$r6i-@5apxkk7k$'
+DEBUG = False
+
+ALLOWED_HOSTS = ['*']
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -65,12 +76,20 @@ WSGI_APPLICATION = 'ducsu_online_voting.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+...
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+...
+# render postgreSQL database(live) 
+import dj_database_url
+DATABASES = {
+    'default': dj_database_url.parse(env('DATABASE_URL'))
+}
+
 
 
 # Password validation
