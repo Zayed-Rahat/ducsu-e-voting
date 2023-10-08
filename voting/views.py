@@ -173,3 +173,15 @@ def submit_ballot(request):
         voter.save()
         messages.success(request, "Thanks for voting")
         return redirect(reverse('myprofile'))
+
+
+def dashboard(request):
+    user = request.user
+    if user.voter.voted:  # * User has voted
+            # To display election result or candidates I voted for ?
+            context = {
+                'my_votes': Vote.objects.filter(voter=user.voter),
+            }
+            return render(request, "result.html", context)
+    else:
+            return redirect(reverse('show_ballot'))
