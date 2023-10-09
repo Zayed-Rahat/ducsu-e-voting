@@ -5,12 +5,12 @@ from django.contrib.auth.models import User
 
 class Voter(models.Model):
     # admin = models.OneToOneField(User, on_delete=models.CASCADE)
-    admin = models.ForeignKey('auth.User', related_name='api_voter_admin', on_delete=models.CASCADE)
+    user = models.ForeignKey('auth.User', related_name='api_voter_admin', on_delete=models.CASCADE)
     verified = models.BooleanField(default=True)
     voted = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.admin.email
+        return self.user.email
 
 
 class Position(models.Model):
@@ -38,4 +38,4 @@ class Vote(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.voter.phone
+        return self.voter.email

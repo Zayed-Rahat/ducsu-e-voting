@@ -1,15 +1,27 @@
 from django.db import models
 from django.contrib.auth.models import User
-# Create your models here.
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 
 class Voter(models.Model):
-    admin = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     verified = models.BooleanField(default=True)
     voted = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.admin.email
+        return self.user.username
+
+
+@receiver(post_save, sender=User)
+def create_user_voter(sender, instance, created, **kwargs):
+    if created:
+        Voter.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_voter(sender, instance, **kwargs):
+    instance.voter.save()
 
 
 class Position(models.Model):
@@ -23,9 +35,9 @@ class Position(models.Model):
 
 class Candidate(models.Model):
     position = models.ForeignKey(Position, on_delete=models.CASCADE)
-    fullname = models.CharField(max_length=50)
+    fullname = models.CharField(max_length=20)
     photo = models.ImageField(upload_to="candidates", blank=True)
-    bio = models.TextField()
+    bio = models.TextField(max_length=50)
     def __str__(self):
         return self.fullname
 
@@ -36,4 +48,4 @@ class Vote(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.voter.admin.email
+        return self.voter.user.username
