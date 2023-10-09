@@ -1,0 +1,27 @@
+{% extends 'root.html' %} {% block content %}
+
+  <div class="text-center">
+    <h3>You have already voted for this election!</h3>
+      <div class="modal-content">
+        <h4 class="modal-title"><b>Your Voted Candidates</b></h4>
+        <div class="modal-body">
+          <table class="table-bordered table table-hover">
+            <thead style="background-color: #3a804c; color: white">
+              <tr>
+                <th>#</th>
+                <th>Position</th>
+                <th>Candidate</th>
+              </tr>
+            </thead>
+            {% for vote in my_votes %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ vote.position }}</td>
+              <td>{{ vote.candidate }}</td>
+            </tr>
+            {% endfor %}
+          </table>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
