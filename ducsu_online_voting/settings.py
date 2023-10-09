@@ -82,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'evoting',
         'USER': 'admin',
-        'PASSWORD': '123',
+        'PASSWORD': 'am123456',
         'HOST': 'localhost',  # Replace with your PostgreSQL server's address if necessary
         'PORT': '5432',          # Leave empty to use the default PostgreSQL port (usually 5432)
     }
@@ -135,7 +135,7 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+# for email varification 
 from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
@@ -144,6 +144,6 @@ MESSAGE_TAGS = {
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'ariful10462@gmail.com'
+EMAIL_HOST_USER = 'ariful10462@gmail.com' # hosting mail
 EMAIL_HOST_PASSWORD = 'cvsk bimg hmsp tlpb' # google theke create kore dite hobe
 EMAIL_USE_TLS = True
