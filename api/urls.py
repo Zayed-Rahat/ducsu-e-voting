@@ -6,7 +6,7 @@ from .views import *
 router = DefaultRouter()
 router.register('position', PositionViewSet)
 router.register('voter', VoterViewSet)
-router.register('vote', VoterViewSet)
+router.register('vote', VoteViewSet)
 router.register('candidate', CandidateViewSet)
 # router.register(r'position', views.PositionList,basename="position")
 # router.register(r'voter', views.VoterList,basename="voter")
