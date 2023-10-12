@@ -7,6 +7,8 @@ from api.serializers import *
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from voting.forms import PositionForm, VoterForm, CandidateForm
+from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 
 def voters_home(request):
      return render(request, 'voters_home.html')
@@ -15,21 +17,31 @@ def dashboard(request):
       positions= requests.get('http://127.0.0.1:8000/api/position').json()
       voters= requests.get('http://127.0.0.1:8000/api/voter').json()
       candidates= requests.get('http://127.0.0.1:8000/api/candidate').json()
-    #   positions = Position.objects.all()
-    #   candidates = Candidate.objects.all()
-    #   voters = User.objects.all() 
       context = {'positions':positions, 'voters' : voters, 'candidates': candidates}
       return render(request, 'dashboard.html', context)
 
 
 # all position showing here
+
+
 def position(request):
     if request.user.username == 'admin':
-      positions= requests.get('http://127.0.0.1:8000/api/position').json()
-    #   positions = Position.objects.all() # all position assign to positons for showing
-      return render(request, 'position.html', {'positions':positions})
+        # positions= requests.get('http://127.0.0.1:8000/api/position').json()
+        # positions = Position.objects.all() # all position assign to positons for showing
+        positions_list = Position.objects.order_by('id')  # Order by the 'id' field, you can change it to the desired field
+        paginator = Paginator(positions_list, 2)  # Show 5 positions per page
+        page_number = request.GET.get('page')
+        try:
+            positions = paginator.page(page_number)
+        except PageNotAnInteger:
+            positions = paginator.page(1)
+        except EmptyPage:
+            positions = paginator.page(paginator.num_pages)
+
+        return render(request, 'position.html', {'positions': positions})
     else:
         return redirect('login')
+    
     
 
 def add_position(request):
@@ -62,14 +74,26 @@ def delete_position(request, id):
     return redirect('position')
 
 
+
 # all voter showing here
 def voters(request):
     if request.user.username == 'admin':
     #   voters= requests.get('http://127.0.0.1:8000/api/voter').json()
-      voters = Voter.objects.all() 
-      return render(request, 'voters.html', {'voters':voters})
+        # voters = Voter.objects.all() 
+        voters_list = Voter.objects.order_by('id')  # Order by the 'id' field, you can change it to the desired field
+        paginator = Paginator(voters_list, 2)  # Show 5 voters per page
+        page_number = request.GET.get('page')
+        try:
+            voters = paginator.page(page_number)
+        except PageNotAnInteger:
+            voters = paginator.page(1)
+        except EmptyPage:
+            voters = paginator.page(paginator.num_pages)
+
+        return render(request, 'voters.html', {'voters': voters})
     else:
         return redirect('login')
+    
 
 # voter edit here
 def edit_voter(request, id):
@@ -98,15 +122,30 @@ def delete_voter(request, id):
   
 # showing all candidates here 
 def show_candidate(request):
+    # if request.user.username == 'admin':
+    # #   candidates= requests.get('http://127.0.0.1:8000/api/candidate').json()
+    #   candidates = Candidate.objects.all() # all position assign to positons for showing
+    #   return render(request, 'candidate.html', {'candidates':candidates})
+    # else:
+    #     return redirect('login')
+    
     if request.user.username == 'admin':
-    #   candidates= requests.get('http://127.0.0.1:8000/api/candidate').json()
-      candidates = Candidate.objects.all() # all position assign to positons for showing
-      return render(request, 'candidate.html', {'candidates':candidates})
+        # candidates_list = Candidate.objects.all()
+        candidates_list = Candidate.objects.order_by('id')
+        paginator = Paginator(candidates_list, 2)  # Show 10 candidates per page
+        page_number = request.GET.get('page')
+        try:
+            candidates = paginator.page(page_number)
+        except PageNotAnInteger:
+            # If page is not an integer, default to the first page
+            candidates = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver the last page of results
+            candidates = paginator.page(paginator.num_pages)
+
+        return render(request, 'candidate.html', {'candidates': candidates})
     else:
         return redirect('login')
-    
-
-    
     
 # candidate add here for vote
 def create_candidate(request):
