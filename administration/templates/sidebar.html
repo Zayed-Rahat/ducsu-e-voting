@@ -1,13 +1,13 @@
+{% load  static %}
+
 <aside class="main-sidebar">
   <!-- sidebar: style can be found in sidebar.less -->
   <section class="sidebar">
-    <!-- Sidebar user panel -->
 
     <!-- sidebar menu: style can be found in sidebar.less -->
-    <ul class="mt-4 space-y-2">
-      {% if request.user.username == 'admin' %}
+    <ul class="space-y-2">
 
-      <!-- <li class="text-green-500 font-bold py-2 px-4">REPORTS</li> -->
+      {% if request.user.username == 'admin' %}
 
       <!-- <li><a href="#" class="text-green-500 block py-2 px-4 hover:bg-green-200 font-bold"><i class="fa fa-lock"></i> Votes</a></li> -->
       <li><a href="{% url 'dashboard' %}" class="text-green-500 block py-2 px-4 hover:bg-green-200 font-bold"><i

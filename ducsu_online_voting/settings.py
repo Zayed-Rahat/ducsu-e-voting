@@ -28,9 +28,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'account',
     'administration',
-    'voting',
-    'rest_framework',
     'api',
+    'rest_framework',
+    'voting'
 ]
 
 MIDDLEWARE = [

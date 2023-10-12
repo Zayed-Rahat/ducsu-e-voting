@@ -1,4 +1,6 @@
 {% extends "root.html" %}
+
+{% block head_title %} DUCSU | Voters{% endblock %}
  {% block content %}
 
         <div class="col-lg-12 mx-auto shadow text-black">
@@ -18,8 +20,8 @@
                         <thead>
                             {% for vo in voters %}
                             <tr>
-                                <td class="py-2 px-4 text-center">{{vo.username}}</td>
-                                <td class="py-2 px-4 text-center">{{vo.email}}</td>
+                                <td class="py-2 px-4 text-center">{{ vo.user.username }}</td>
+                                <td class="py-2 px-4 text-center">{{ vo.user.email }}</td>
                                 <td class="py-2 px-4 text-center"> 
                                     <a class="text-white bg-blue-500 hover:bg-blue-700 py-2 px-2" href="{% url 'edit_voter' id=vo.id %}"><box-icon name='edit'></box-icon></a></a>
                                     <a  class="text-white bg-red-500 hover:bg-red-700 py-2 px-2" href="{% url 'delete_voter' id=vo.id %}"><box-icon name='minus'></box-icon></a>

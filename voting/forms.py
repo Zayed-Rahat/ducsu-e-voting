@@ -1,4 +1,4 @@
-from .models import *
+from api.models import *
 from django import forms
 from account.forms import FormSettings
 
