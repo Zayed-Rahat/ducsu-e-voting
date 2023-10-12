@@ -20,8 +20,8 @@
                         <thead>
                             {% for vo in voters %}
                             <tr>
-                                <td class="py-2 px-4 text-center">{{vo.username}}</td>
-                                <td class="py-2 px-4 text-center">{{vo.email}}</td>
+                                <td class="py-2 px-4 text-center">{{vo.user.username}}</td>
+                                <td class="py-2 px-4 text-center">{{vo.user.email}}</td>
                                 <td class="py-2 px-4 text-center">
                                     <a class="hover:green-500 py-2 px-2" href="{% url 'edit_voter' id=vo.id %}"><box-icon
                                             name='edit'></box-icon></a></a>
@@ -41,21 +41,20 @@
         <nav aria-label="Page navigation example">
             <ul class="inline-flex -space-x-px text-sm">
               {% if voters.has_previous %}
-        
               <li>
-                <a href="?page={{voters.previous_page_number}}" class="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+                <a href="?page={{voters.previous_page_number}}" class="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-green-500 bg-white border border-green-300 rounded-l-lg hover:bg-green-100 hover:text-green-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
               </li>
               {% endif %}
               {% for i in voters.paginator.page_range %}
-               <li>
-                <a href="?page={{i}}"class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{i}}</a>
-                {% endfor %}
+              <li>
+                <a href="?page={{i}}" class="flex items-center justify-center px-3 h-8 leading-tight text-green-500 bg-white border border-green-300 hover:bg-green-100 hover:text-green-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{i}}</a>
               </li>
+              {% endfor %}
               {% if voters.has_next %}
               <li>
-                <a href="?page={{voters.next_page_number}}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
-              </li>{% endif %}
+                <a href="?page={{voters.next_page_number}}" class="flex items-center justify-center px-3 h-8 leading-tight text-green-500 bg-white border border-green-300 rounded-r-lg hover:bg-green-700 hover:text-white dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+              </li>
+              {% endif %}
             </ul>
           </nav>
-
 {% endblock content %} 
