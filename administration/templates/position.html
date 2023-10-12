@@ -9,24 +9,26 @@
     </div>
     <div class="p-4">
         {% if positions %}
-        <table class="min-w-full border border-gray-300">
-            <thead>
+        <table class="min-w-full border border-gray-300 ">
+            <thead class="bg-gray-100">
                 <tr>
-                    <th class="py-2 px-4 bg-gray-100">Name</th>
-                    <th class="py-2 px-4 bg-gray-100">Maximum Votes</th>
-                    <th class="py-2 px-4 bg-gray-100">Priority</th>
-                    <th class="py-2 px-4 bg-gray-100">Action</th>
+                    <th class="py-2 px-4">Name</th>
+                    <th class="py-2 px-4">Maximum Votes</th>
+                    <th class="py-2 px-4">Priority</th>
+                    <th class="py-2 px-4">Action</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="border border-2">
                 {% for pos in positions %}
                 <tr>
                     <td class="py-2 px-4 text-center">{{ pos.name }}</td>
                     <td class="py-2 px-4 text-center">{{ pos.max_vote }}</td>
                     <td class="py-2 px-4 text-center">{{ pos.priority }}</td>
                     <td class="py-2 px-4 text-center">
-                        <a class="text-white bg-blue-500 hover:bg-blue-700 py-2 px-2" href="{% url 'edit_position' id=pos.id %}"><box-icon name='edit'></box-icon></a></a>
-                        <a  class="text-white bg-red-500 hover:bg-red-700 py-2 px-2" href="{% url 'delete_position' id=pos.id %}"><box-icon name='minus'></box-icon></a>
+                        <a class="py-2 px-2" href="{% url 'edit_position' id=pos.id %}"><box-icon
+                                name='edit'></box-icon></a></a>
+                        <a class="py-2 px-2" href="{% url 'delete_position' id=pos.id %}"><box-icon
+                                name='minus'></box-icon></a>
                     </td>
                 </tr>
                 {% endfor %}
