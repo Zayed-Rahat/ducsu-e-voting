@@ -28,6 +28,7 @@ class Position(models.Model):
     name = models.CharField(max_length=50, unique=True)
     max_vote = models.IntegerField()
     priority = models.IntegerField()
+    position_title = models.CharField(max_length=100, null=True)
 
     def __str__(self):
         return self.name
@@ -49,3 +50,11 @@ class Vote(models.Model):
 
     def __str__(self):
         return self.voter.user.username
+    
+
+
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)

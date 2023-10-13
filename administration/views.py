@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from voting.models import Position,Voter, Candidate
+from voting.models import Position,Voter, Candidate,Notification
 from django.contrib.auth.models import User
 from voting.forms import PositionForm, VoterForm, CandidateForm
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
@@ -7,17 +7,47 @@ from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 def voters_home(request):
      return render(request, 'voters_home.html')
 
+# def dashboard(request):
+#       positions = Position.objects.all()
+#       candidates = Candidate.objects.all()
+#       voters = User.objects.all() 
+#       context = {'positions':positions, 'voters' : voters, 'candidates': candidates}
+#       return render(request, 'dashboard.html', context)
 def dashboard(request):
-      positions = Position.objects.all()
-      candidates = Candidate.objects.all()
-      voters = User.objects.all() 
-      context = {'positions':positions, 'voters' : voters, 'candidates': candidates}
-      return render(request, 'dashboard.html', context)
+    # ... your existing code ...
 
+    # Get notifications for the current user
+    positions = Position.objects.all()
+    candidates = Candidate.objects.all()
+    voters = User.objects.all() 
+    notifications = Notification.objects.filter(user=request.user)
+    context = {
+        'positions': positions,
+        'voters': voters,
+        'candidates': candidates,
+        'notifications': notifications  # Add notifications to the context
+    }
+    return render(request, 'dashboard.html', context)
 
 # all position showing here
 
 
+# def position(request):
+#     if request.user.username == 'admin':
+#         positions_list = Position.objects.order_by('id')  # Order by the 'id' field, you can change it to the desired field
+#         paginator = Paginator(positions_list, 5)  # Show 5 positions per page
+
+#         page_number = request.GET.get('page')
+#         try:
+#             positions = paginator.page(page_number)
+#         except PageNotAnInteger:
+#             positions = paginator.page(1)
+#         except EmptyPage:
+#             positions = paginator.page(paginator.num_pages)
+
+#         return render(request, 'position.html', {'positions': positions})
+#     else:
+#         return redirect('login')
 def position(request):
     if request.user.username == 'admin':
         positions_list = Position.objects.order_by('id')  # Order by the 'id' field, you can change it to the desired field
@@ -31,22 +61,47 @@ def position(request):
         except EmptyPage:
             positions = paginator.page(paginator.num_pages)
 
-        return render(request, 'position.html', {'positions': positions})
+        if request.method == 'POST':
+            # Assuming you have a form to add a new position, handle the form submission here
+            form = PositionForm(request.POST)
+            if form.is_valid():
+                new_position = form.save()
+                
+                # Create a notification when a new position is added
+                message = f'New position "{new_position.position_title}" has been added.'
+                add_notification(request.user, message)
+                
+                # Redirect to the position list page
+                return redirect('position')
+        else:
+            form = PositionForm()  # Initialize an empty form for adding new positions
+            
+        return render(request, 'position.html', {'positions': positions, 'form': form})
     else:
         return redirect('login')
+
+def add_notification(user, message):
+    notification = Notification(user=user, message=message)
+    notification.save()
 
     
 # Here new position add
 def add_position(request):
-     user = request.user
-     form = PositionForm(request.POST)
-     if form.is_valid():
-        poses = form.save(commit=False) # position k save kora hocce na
-        poses.user = user # request user k assign kora holo
-        poses.save() # finaly save kora holo
+    user = request.user
+    form = PositionForm(request.POST)
+    if form.is_valid():
+        position = form.save(commit=False)
+        position.user = user
+        position.save()
+        
+        # Create a notification when a new position is added
+        message = f'New position "{position.position_title}" has been added.'
+        add_notification(user, message)
+        
         return redirect('position')
-     else:
-        return render(request, 'add_position.html', {'form':form}) 
+    else:
+        return render(request, 'add_position.html', {'form': form})
+
     
 
 
@@ -178,3 +233,6 @@ def delete_candidate(request, id):
     # else:
     #     return redirect('add_Voters')        
     
+def add_notification(user, message):
+    notification = Notification(user=user, message=message)
+    notification.save()
