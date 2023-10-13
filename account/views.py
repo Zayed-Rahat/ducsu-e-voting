@@ -48,7 +48,7 @@ def user_registration(request):
             email = EmailMessage(mail_subject, message, to=[send_mail])
             email.send()
             messages.success(request, 'Account Created Successfully')
-            messages.info(request, 'Activate your account from the mail you provided')
+            messages.info(request, 'Activate your account from your provided email')
             # login(request, user)
             return redirect('login') 
     else:
@@ -69,7 +69,7 @@ def activate(request, uidb64, token):
     if user is not None and default_token_generator.check_token(user, token):
         user.is_active = True
         user.save()
-        messages.success(request, 'Congratulations! Your account is activated.')
+        messages.success(request, 'Congratulations! Your account is activated. You Can login now')
         return redirect('login')
     else:
         messages.error(request, 'Invalid activation link')
@@ -117,6 +117,7 @@ def pass_change(request):
             if form.is_valid():
                 form.save()
                 update_session_auth_hash(request, form.user) # password update kora hocce
+                messages.success('Your password updated successfully')
                 return redirect('myprofile')
         else:
             form = Changepass(user = request.user)
@@ -134,6 +135,7 @@ def change_pass(request):
         if form.is_valid():
             form.save()
             update_session_auth_hash(request, form.user) # password update kora hocce
+            messages.success('Your Password updated successfully')
             return redirect('myprofile')
     else:
         form = Change_pass(user = request.user)
@@ -172,3 +174,25 @@ def change_pass(request):
 
         
     
+    
+# Notification send to user email after voting
+from django.core.mail import send_mail
+
+def notification(request):
+    user = request.user
+    if user.voter.voted == True:
+        current_site = get_current_site(request)
+        mail_subject = "New Notification"
+        message = render_to_string('account/notify.html',{
+            'user': request.user,
+            'domain':current_site.domain,
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': default_token_generator.make_token(user),
+            
+        })
+        send_mail = user.cleaned_data.get('email')
+        email = EmailMessage(mail_subject, message, to=[send_mail])
+        email.send()
+        return redirect('result') 
+    else:
+        return render(request, 'ballot.html')
