@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 import requests
 from voting.forms import *
 from api.serializers import *
+from api.models import *
+
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -13,11 +15,15 @@ def voters_home(request):
      return render(request, 'voters_home.html')
 
 def dashboard(request):
-      positions= requests.get('http://127.0.0.1:8000/api/position').json()
-      voters= requests.get('http://127.0.0.1:8000/api/voter').json()
-      candidates= requests.get('http://127.0.0.1:8000/api/candidate').json()
-      votes= requests.get('http://127.0.0.1:8000/api/vote').json()
-    #   positions = Position.objects.get.all()
+    #   positions= requests.get('http://127.0.0.1:8000/api/position').json()
+    #   voters= requests.get('http://127.0.0.1:8000/api/voter').json()
+    #   candidates= requests.get('http://127.0.0.1:8000/api/candidate').json()
+    #   votes= requests.get('http://127.0.0.1:8000/api/vote').json()
+      positions = Position.objects.all()
+      voters = Voter.objects.all()
+      candidates = Candidate.objects.all()
+      votes = Vote.objects.all()
+
 
       context = {'positions':positions, 'voters' : voters, 'votes' : votes, 'candidates': candidates}
       return render(request, 'dashboard.html', context)
