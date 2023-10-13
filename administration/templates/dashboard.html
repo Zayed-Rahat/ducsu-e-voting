@@ -1,11 +1,16 @@
 {% extends "root.html" %}
+
+{% block head_title %} DUCSU | Admin Dashboard{% endblock %}
 {% block content %}
 <div>
+    <div class="bg-green-500 text-white p-3 text-center rounded-t-lg">
+        <h2 class="text-2xl font-bold">Admin Dashboard</h2>
+    </div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
         <div class="bg-white rounded-md border border-gray-100 p-4 shadow-md shadow-black/5">
             <div class="flex justify-between mb-6">
                 <div>
-                    <div class="text-2xl  font-semibold mb-1">{{positions | length}}</div>
+                    <div class="text-2xl  font-semibold mb-1">{{positions.count}}</div>
                     <div class="text-lg font-medium text-green-600">No. of Positions</div>
                 </div>
             </div>
@@ -13,7 +18,7 @@
         <div class="bg-white rounded-md border border-gray-100 p-4 shadow-md shadow-black/5">
             <div class="flex justify-between mb-6">
                 <div>
-                    <div class="text-2xl  font-semibold mb-1">{{candidates | length}}</div>
+                    <div class="text-2xl  font-semibold mb-1">{{candidates.count}}</div>
                     <div class="text-lg font-medium text-green-600">No. of Candidates</div>
                 </div>
             </div>
@@ -21,7 +26,7 @@
         <div class="bg-white rounded-md border border-gray-100 p-4 shadow-md shadow-black/5">
             <div class="flex justify-between mb-6">
                 <div>
-                    <div class="text-2xl font-semibold mb-1">{{voters | length}}</div>
+                    <div class="text-2xl font-semibold mb-1">{{voters.count}}</div>
                     <div class="text-lg font-medium text-green-600">Total Voter</div>
                 </div>
             </div>
@@ -29,7 +34,7 @@
         <div class="bg-white rounded-md border border-gray-100 p-4 shadow-md shadow-black/5">
             <div class="flex justify-between mb-6">
                 <div>
-                    <div class="text-2xl  font-semibold mb-1">None</div>
+                    <div class="text-2xl  font-semibold mb-1">{{votes.count}}</div>
                     <div class="text-lg font-medium text-green-600">Voters Voted</div>
                 </div>
             </div>

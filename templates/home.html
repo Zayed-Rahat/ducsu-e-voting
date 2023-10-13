@@ -87,37 +87,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    {% comment %} <link rel="stylesheet" href="style.css" type="text/css">
+    <title>
+        {% block head_title %}DUCSU{% endblock %}
+    </title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/v4-shims.min.js" integrity="sha512-6n3X18GAJomziz6HVPbmyBOEZeoB8+unwEBTRXFs3IZTRYYCkbXNAWNV68uHujamEvDBqaGe2FTW19o81h1/RA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
 </head>
 <body>
     <div class="h-screen bg-purple-900 ">
         <div class="container max-w-[1280px] mx-auto ">
-
-            <div class="flex justify-between pt-8">
-                <div class="text-white">
-                    <h1 class="text-5xl font-bold w-[150px]">DUCSU</h1>
-                </div>
-                <div class="text-white">
-                    <div class="flex gap-[20px]">
-
+                <div class="flex justify-between items-center">
+                    <div>
+                        <img class="absolute h-30 w-80 -left-4 -top-2" src="static/images/ducsu_logo.png" alt="Logo">                
+                    </div>
+                                          
+                    <div class="text-white flex pt-6">
                         {% if request.user.is_authenticated %}
                         <a class="hover:bg-green-400 hover:rounded-xl hover:px-2 px-2" href="{% url 'home' %}">Home</a>
                         <a class="hover:bg-green-400 hover:rounded-xl hover:px-2 px-2" href="{% url 'myprofile' %}">Welcome, {{ request.user.username }}</a>
-                        {% else %}                      
-
+                        {% else %}
                         <a class="hover:bg-green-400 hover:rounded-xl hover:px-2 px-2" href="{% url 'home' %}">Home</a>
                         <a class="hover:bg-green-400 hover:rounded-xl hover:px-2 px-2" href="{% url 'login' %}">Login</a>
                         <a class="hover:bg-green-400 hover:rounded-xl hover:px-2 px-2" href="{% url 'register' %}">Register</a>
-
                         {% endif %}
                     </div>
                 </div>
-            </div>
-
+                
 
             
             <div class="flex gap-[100px]">

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, reverse
 from account.views import user_login
-from .models import Position, Candidate, Voter, Vote
+from api.models import*
 from django.http import JsonResponse
 from django.utils.text import slugify
 from django.contrib import messages

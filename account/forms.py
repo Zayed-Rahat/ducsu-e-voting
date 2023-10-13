@@ -8,7 +8,7 @@ class FormSettings(forms.ModelForm):
         super(FormSettings, self).__init__(*args, **kwargs)
         # Here make some changes such as:
         for field in self.visible_fields():
-            field.field.widget.attrs['class'] = 'form-control'
+            field.field.widget.attrs['class'] = 'w-full py-2 px-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-400'
 
 class RegistrationForm(UserCreationForm):
     class Meta:
