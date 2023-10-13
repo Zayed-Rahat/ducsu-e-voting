@@ -7,14 +7,9 @@
             <ul class="mt-4 space-y-2">
                   {% if request.user.username == 'admin' %}
 
-                  <!-- <li class="text-green-500 font-bold py-2 px-4">REPORTS</li> -->
-
-                  <!-- <li><a href="#" class="text-green-500 block py-2 px-4 hover:bg-green-200 font-bold"><i class="fa fa-lock"></i> Votes</a></li> -->
-
                   <li><a href="{% url 'dashboard' %}"
                               class="text-green-600 block py-2 px-4 hover:bg-green-200 font-bold">
                               <i class='bx bxs-dashboard'></i> Dashboard</a></li>
-
                   <li><a href="{% url 'position' %}"
                               class="text-green-600 block py-2 px-4 hover:bg-green-200 font-bold"><i
                                     class="fa fa-tasks"></i> Positions</a></li>
@@ -24,9 +19,6 @@
                   <li><a href="{% url 'voters' %}"
                               class="text-green-600 block py-2 px-4 hover:bg-green-200 font-bold"><i
                                     class="fa fa-tasks"></i> Voters</a></li>
-                  <li><a href="{% url 'show_ballot' %}"
-                              class="text-green-600 block py-2 px-4 hover:bg-green-200 font-bold"><i
-                                    class="fa fa-dashboard"></i> <span>Show Ballot</span></a></li>
                   <hr>
                   <li><a href="{% url 'add_position' %}"
                               class="text-green-600 block py-2 px-4 hover:bg-green-200 font-bold"><i
@@ -43,6 +35,13 @@
                                     class="fa fa-dashboard"></i> <span>Show Ballot</span></a></li>
                   {% endif %}
                   <hr>
+                  <li><a href="{% url 'voterDashboard' %}"
+                              class="text-green-600 block py-2 px-4 hover:bg-green-200 font-bold"><i
+                                    class="fa fa-dashboard"></i>Voter Dashboard</a></li>
+                  <li><a href="{% url 'show_ballot' %}"
+                              class="text-green-600 block py-2 px-4 hover:bg-green-200 font-bold"><i
+                                    class="fa fa-dashboard"></i> <span>Show Ballot</span></a></li>
+
                   <li><a href="{% url 'myprofile' %}"
                               class="text-green-600 block py-2 px-4 hover:bg-green-200 font-bold"><i
                                     class="fa fa-dashboard"></i> <span>My profile</span></a></li>
