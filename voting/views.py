@@ -33,7 +33,7 @@ def generate_ballot(display_controls=False):
                     {input_box}
                     <button type="button" class="btn btn-primary btn-sm btn-flat clist" data-fullname="{candidate.fullname}" data-bio="{candidate.bio}">
                     </button>
-                    <img src="{image}" height="100px" width="100px" class="clist">
+                    <img src="{image}" height="00px" width="100px" class="clist">
                     <span class="cname clist">{candidate.fullname}</span>
                 </li>
             '''

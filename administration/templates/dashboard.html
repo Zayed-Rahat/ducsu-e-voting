@@ -1,6 +1,6 @@
 {% extends "root.html" %}
 {% block content %}
-<div>
+<div class="akther">
     <div class="bg-green-500 text-white p-3 text-center rounded-t-lg">
         <h2 class="text-2xl font-bold">Admin Dashboard</h2>
     </div>
@@ -56,7 +56,9 @@
             </div>
             <div class="overflow-x-auto">
                 <div class="w-full min-w-[540px]">
-                    <canvas id="pie-chart"></canvas>
+                    <div class="bg">
+                        <canvas id="myChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
