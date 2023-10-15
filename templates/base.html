@@ -8,26 +8,100 @@
     {% block head_title %}DUCSU{% endblock %}
 </title>
   <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" type="text/css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/v4-shims.min.js" integrity="sha512-6n3X18GAJomziz6HVPbmyBOEZeoB8+unwEBTRXFs3IZTRYYCkbXNAWNV68uHujamEvDBqaGe2FTW19o81h1/RA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 </head>
-<body class="flex flex-col min-h-screen">
- 
-    <div class="flex flex-col flex-1 p-2">
-      <!-- Content block -->
-      <div class="bg-white p-2 rounded shadow">
-        <!-- Block-specific content goes here -->
-
-        
+<body>
+         
 
         {% block content %}
         
         {% endblock content %}
-      
+
 
        
+        <footer class="w- mx-auto bg-[#0e0d0f]">
+          <div class="w-[1280px] flex justify-between text-white mx-auto pt-8">
+            <div>
+             
+              <div class="flex flex-col">
+                <div class="item-cente">
+                  <h1 class="text-xl font-bold">ABOUT US</h1>
+                </div>
+                <hr class="border mt-4 border-red-700">
+                <div class="flex gap-4 flex-col pt-4">
+                  <a href="" class="hover:text-red-700"> About</a>
+                  <a href="" class="hover:text-red-700">Team</a>
+                  <a href="" class="hover:text-red-700">Event Calendar</a>
+                  <a href="" class="hover:text-red-700">Requirements</a>
+                 
+                </div>              
+              </div>
+            </div>
 
-      </div>
-    </div>
+            <div>
+              <div class="flex flex-col ">
+                <h1 class="text-xl font-bold">QUICK LINKS</h1>
+              </div>
+             <hr class="border mt-3 text-red-500 border-red-700">
+              <div class="flex flex-col gap-4 pt-4">
+                <a href="" class="hover:text-red-700">services</a>
+                <a href="" class="hover:text-red-700">Blog</a>
+                <a href="" class="hover:text-red-700">Campaign</a>
+                <a href="" class="hover:text-red-700">Support</a>                
+              </div>
+            </div>
+
+            <div>
+              <div class="flex flex-col  ">
+                <h1 class="text-xl font-bold">FOLLOW US</h1>
+                <hr class="text-xl mt-4 border border-red-700">
+
+              </div>
+  
+              <div class="flex flex-col gap-4 pt-4">
+                <a href="" class="hover:text-red-700">
+                  <i class="fa-solid fa-envelope"></i>
+                  <span>Email</span>
+                </a>
+                <a href="" class="hover:text-red-700">
+                  <i class="fa-solid fa-phone"></i>
+                  <span>Contact </span>
+                </a>
+                <a href="" class="hover:text-red-700">
+                  <i class="fa-brands fa-facebook-f" ></i>
+                  <span>Facebook</span>
+                </a>
+                <a href="" class="hover:text-red-700">
+                  <i class="fa-brands fa-github"></i>
+                  <span>GitHub</span>
+                </a>
+                <a class="hover:text-red-700" href="">
+                  <i class="fa-brands fa-youtube"></i>
+                  <span >Youtube</span>
+                </a>
+              </div>
+            </div>           
+            
+          </div>
+          
+            <hr class="w-[1280px] mx-auto mt-8 border">
+          
+          <div class="text-white w-[1280px] mx-auto flex justify-between mt-8 pb-8">
+            <p class="" >Online voting Platform</p>
+            
+            <p >Copyright &copy; 2023 by team <span class="text-red-700 font-bold">Techtitans SAMAR</span></p>
+
+          </div>
+          <div>
+
+          </div>
+
+        </footer>
+      
 </body>
 
 </html>

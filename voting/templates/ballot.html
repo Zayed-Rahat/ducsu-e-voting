@@ -5,6 +5,7 @@
 
 <div class="col-sm-10 col-sm-offset-1">
 
+<<<<<<< HEAD
         <form method="POST" id="ballotForm" action="{% url 'submit_ballot' %}">
                 {% csrf_token %}
                 {{ ballot|safe }}
@@ -17,5 +18,15 @@
                                 name="submit_vote"><i class="fa fa-check-square-o"></i> Submit</button>
                 </div>
         </form>
+=======
+<form method="POST" id="ballotForm" action="{% url 'submit_ballot' %}">
+  {% csrf_token %}
+  {{ ballot|safe }}
+  <div class="text-center gap-6 flex justify-center">
+    <button type="button" class="text-white border-green-500 bg-green-500 rounded-md p-2 hover:bg-green-700" id="preview"><i
+            class="fa fa-file-text"></i> Preview</button>
+    <button type="submit" class=" text-white border-blue-500 bg-blue-500 rounded-md p-2 hover:bg-blue-700" name="submit_vote"><i
+            class="fa fa-check-square-o"></i> Submit</button>
+>>>>>>> eb37ddaf7aaf26cde69ddfab51e4d46fab8ecd99
 </div>
 {% endblock content %}

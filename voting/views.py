@@ -23,47 +23,54 @@ def generate_ballot(display_controls=False):
         for candidate in candidates:
             if position.max_vote > 1:
                 instruction = f"You may select up to {position.max_vote} candidates"
-                input_box = f'<input type="checkbox" value="{candidate.id}" class="flat-red {position_name}" name="{position_name}[]">'
+                input_box = f'<input type="checkbox" value="{candidate.id}" class="rounded text-red-500 {position_name}" name="{position_name}[]">'
             else:
                 instruction = "Select only one candidate"
-                input_box = f'<input value="{candidate.id}" type="radio" class="flat-red {position_name}" name="{position_name}">'
+                input_box = f'<input value="{candidate.id}" type="radio" class="rounded text-red-500 {position_name}" name="{position_name}">'
             image = f"/media/{candidate.photo}"
             candidates_data += f'''
-                <li>
+                <li class="flex items-center space-x-4">
                     {input_box}
-                    <button type="button" class="btn btn-primary btn-sm btn-flat clist" data-fullname="{candidate.fullname}" data-bio="{candidate.bio}">
+                    <button type="button" class="btn btn-primary btn-sm btn-flat clist bg-blue-500 text-white px-3 py-2 rounded" data-fullname="{candidate.fullname}" data-bio="{candidate.bio}">
                     </button>
+<<<<<<< HEAD
                     <img src="{image}" height="00px" width="100px" class="clist">
                     <span class="cname clist">{candidate.fullname}</span>
+=======
+                    <img src="{image}" height="100px" width="100px" class="clist rounded">
+                    <span class="cname clist text-lg">{candidate.fullname}</span>
+>>>>>>> eb37ddaf7aaf26cde69ddfab51e4d46fab8ecd99
                 </li>
             '''
         output += f'''
             <div class="row">
-                <div class="col-xs-12">
-                    <div class="box box-solid" id="{position.id}">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>{name}</b></h3>
-                            {''
-                            if display_controls
-                            else ''}
-                        </div>
-                        <div class="box-body">
-                            <p>{instruction}
-                                <span class="pull-right">
-                                    <button type="button" class="btn btn-success btn-sm btn-flat" data-desc="{position_name}">
-                                    </button>
-                                </span>
-                            </p>
-                            <div id="candidate_list">
-                                <ul>
-                                    {candidates_data}
-                                </ul>
-                            </div>
-                        </div>
+        <div class="col-xs-12">
+            <div class="box box-solid bg-white shadow-lg rounded-lg overflow-hidden" id="{position.id}">
+                <div class="box-header with-border bg-gray-200 py-3 px-4">
+                    <h3 class="box-title text-xl font-semibold"><b>{name}</b></h3>
+                    {''
+                    if display_controls
+                    else ''}
+                </div>
+                <div class="box-body p-4">
+                    <p class="mb-2">{instruction}
+                        <span class="pull-right">
+                            <P class="text-white px-3 py-2" data-desc="{position}">
+                            </P>
+                        </span>
+                    </p>
+                    <div id="candidate_list">
+                        <ul>
+                            {candidates_data}
+                        </ul>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
         '''
+
         position.priority = num
         position.save()
         num += 1
