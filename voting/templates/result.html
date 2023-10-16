@@ -3,29 +3,30 @@
 {% block head_title %} DUCSU | My Votes{% endblock %} 
 
 {% block content %}
-
-  <div class="text-center">
-    <h3>You have already voted for this election!</h3>
-      <div class="modal-content">
-        <h4 class="modal-title"><b>Your Voted Candidates</b></h4>
-        <div class="modal-body">
-          <table class="table-bordered table table-hover">
-            <thead style="background-color: #3a804c; color: white">
-              <tr>
-                <th>#</th>
-                <th>Position</th>
-                <th>Candidate</th>
-              </tr>
-            </thead>
-            {% for vote in my_votes %}
-            <tr>
-              <td>{{ forloop.counter }}</td>
-              <td>{{ vote.position }}</td>
-              <td>{{ vote.candidate }}</td>
+<div class="text-center">
+  <h3 class="text-lg font-bold mb-4">You have already voted for this election!</h3>
+  <div class="modal-content">
+    <h4 class="modal-title text-xl font-bold mb-2">Your Voted Candidates</h4>
+    <div class="modal-body">
+      <table class="table-auto w-full">
+        <thead style="background-color: #3a804c;" class="text-white">
+          <tr>
+            <th class="py-2">#</th>
+            <th class="py-2">Position</th>
+            <th class="py-2">Candidate</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for vote in my_votes %}
+            <tr class="border-b">
+              <td class="py-2">{{ forloop.counter }}</td>
+              <td class="py-2">{{ vote.position }}</td>
+              <td class="py-2">{{ vote.candidate }}</td>
             </tr>
-            {% endfor %}
-          </table>
-      </div>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
+</div>
 {% endblock content %}

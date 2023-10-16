@@ -15,65 +15,65 @@ from django.core.mail import EmailMessage
 
 
 # Normal user register function
-# def user_registration(request):
-#     if request.method == 'POST':
-#         form = RegistrationForm(request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             login(request, user)
-#             return redirect('myprofile') 
-#     else:
-#         form = RegistrationForm()
-#     return render(request, 'account/register.html', {'form': form})
-
-
-# user register with email varification
 def user_registration(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.is_active=False
-            user.save()
-            current_site = get_current_site(request)
-            mail_subject = "Activate Your Account"
-            message = render_to_string('account/varify_email.html',{
-                'user': request.user,
-                'domain':current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': default_token_generator.make_token(user),
-                
-            })
-            send_mail = form.cleaned_data.get('email')
-            email = EmailMessage(mail_subject, message, to=[send_mail])
-            email.send()
-            messages.success(request, 'Account Created Successfully')
-            messages.info(request, 'Activate your account from your provided email')
-            # login(request, user)
-            return redirect('login') 
+            user = form.save()
+            login(request, user)
+            return redirect('myprofile') 
     else:
         form = RegistrationForm()
     return render(request, 'account/register.html', {'form': form})
 
 
+# user register with email varification
+# def user_registration(request):
+#     if request.method == 'POST':
+#         form = RegistrationForm(request.POST)
+#         if form.is_valid():
+#             user = form.save(commit=False)
+#             user.is_active=False
+#             user.save()
+#             current_site = get_current_site(request)
+#             mail_subject = "Activate Your Account"
+#             message = render_to_string('account/varify_email.html',{
+#                 'user': request.user,
+#                 'domain':current_site.domain,
+#                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+#                 'token': default_token_generator.make_token(user),
+                
+#             })
+#             send_mail = form.cleaned_data.get('email')
+#             email = EmailMessage(mail_subject, message, to=[send_mail])
+#             email.send()
+#             messages.success(request, 'Account Created Successfully')
+#             messages.info(request, 'Activate your account from your provided email')
+#             # login(request, user)
+#             return redirect('login') 
+#     else:
+#         form = RegistrationForm()
+#     return render(request, 'account/register.html', {'form': form})
+
+
 
 
 # Account acivation function from email here
-def activate(request, uidb64, token):
-    try:
-        uid = urlsafe_base64_decode(uidb64).decode()
-        user = User._default_manager.get(pk=uid)
-    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
+# def activate(request, uidb64, token):
+#     try:
+#         uid = urlsafe_base64_decode(uidb64).decode()
+#         user = User._default_manager.get(pk=uid)
+#     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+#         user = None
 
-    if user is not None and default_token_generator.check_token(user, token):
-        user.is_active = True
-        user.save()
-        messages.success(request, 'Congratulations! Your account is activated. You Can login now')
-        return redirect('login')
-    else:
-        messages.error(request, 'Invalid activation link')
-        return redirect('register')
+#     if user is not None and default_token_generator.check_token(user, token):
+#         user.is_active = True
+#         user.save()
+#         messages.success(request, 'Congratulations! Your account is activated. You Can login now')
+#         return redirect('login')
+#     else:
+#         messages.error(request, 'Invalid activation link')
+#         return redirect('register')
 
 
 
