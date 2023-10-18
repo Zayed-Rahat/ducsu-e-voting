@@ -145,16 +145,16 @@ def voters(request):
     #   voters= requests.get('http://127.0.0.1:8000/api/voter').json()
         # voters = Voter.objects.all() 
         voters_list = Voter.objects.order_by('id')  # Order by the 'id' field, you can change it to the desired field
-        paginator = Paginator(voters_list, 3)  # Show 5 voters per page
-        page_number = request.GET.get('page')
-        try:
-            voters = paginator.page(page_number)
-        except PageNotAnInteger:
-            voters = paginator.page(1)
-        except EmptyPage:
-            voters = paginator.page(paginator.num_pages)
+        # paginator = Paginator(voters_list, 3)  # Show 5 voters per page
+        # page_number = request.GET.get('page')
+        # try:
+        #     voters = paginator.page(page_number)
+        # except PageNotAnInteger:
+        #     voters = paginator.page(1)
+        # except EmptyPage:
+        #     voters = paginator.page(paginator.num_pages)
 
-        return render(request, 'admin/voters.html', {'voters': voters})
+        return render(request, 'admin/voters.html', {'voters': voters_list})
     else:
         return redirect('account_login')
 
