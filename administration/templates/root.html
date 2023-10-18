@@ -1,42 +1,63 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title> {% block head_title %} DUCSU {% endblock %} </title>
-    <link
-      href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
-    <!-- for icons  -->
-    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-  </head>
+<html>
+{% include 'header.html' %}
 
-  <body class="flex flex-col min-h-screen">
-    <!-- Include Navbar -->
+<body class="hold-transition skin-blue sidebar-mini">
+  <div class="wrapper">
 
-    {% include "navbar.html" %} {% if request.user.is_authenticated %}
+ {% include "navbar.html" %}
+   
+ {% include "sidebar.html" %}
 
-    <!-- Sidebar and Content -->
-    <div class="flex flex-row flex-1">
-  <!-- Include Sidebar -->
 
-      {% include "sidebar.html" %} 
-            <!-- Content Area -->
-      <div class="flex flex-col flex-1 p-4">
-        <!-- Content block -->
-        <div class="bg-white p-4 rounded shadow">
-          <!-- Block-specific content goes here -->
-        {% block content %}
+ <div class="modal fade" id="config">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title"><b>Configure</b></h4>
+          </div>
+          <div class="modal-body">
+            <div class="text-center">
+                              <form class="form-horizontal" method="POST" action="{% url 'ballot_title'  %}">
+                <div class="form-group">
+                  {% csrf_token %}
+                  <label for="title" class="col-sm-3 control-label">Title</label>
 
-        {% endblock content %}
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" required id="title" name="title" value="{{ TITLE }}">
+                  </div>
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+            <button type="submit" class="btn btn-success btn-flat" name="save"><i class="fa fa-save"></i> Save</button>
+            </form>
+          </div>
       </div>
-    </div>
-    {% endif %}
-
   </div>
+</div>
+ 
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
 
-
+  {% block content %}
+    
+  {% endblock content %}
+  </div>
+{% include "footer.html" %}
+{% block modal %}
+  
+{% endblock modal %}
+</div>
+{% include "scripts.html"%}
+{% block custom_js %}
+  
+{% endblock custom_js %}
 </body>
+
 
 </html>
