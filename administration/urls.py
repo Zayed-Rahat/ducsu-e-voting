@@ -1,24 +1,39 @@
 from django.urls import path
 from . import views
+
+
 urlpatterns = [
-    path('dashborad/',views.dashboard,name='dashboard'),
+    path('', views.dashboard, name="adminDashboard"),
     path('myprofile/',views.voters_home,name='myprofile'),
 
+    # # * Voters
+    path('voters', views.voters, name="adminViewVoters"),
+    path('voters/view', views.view_voter_by_id, name="viewVoter"),
+    path('voters/delete', views.deleteVoter, name='deleteVoter'),
+    path('voters/update', views.updateVoter, name="updateVoter"),
 
-    path('position/',views.position, name='position'),
-    path('add_position/',views.add_position, name='add_position'),
-    path('edit_position/<int:id>/',views.edit_position, name='edit_position'),
-    path('delete_position/<int:id>/',views.delete_position, name='delete_position'),
+    # # * Position
+    path('position/view', views.view_position_by_id, name="viewPosition"),
+    path('position/update', views.updatePosition, name="updatePosition"),
+    path('position/delete', views.deletePosition, name='deletePosition'),
+    path('positions', views.viewPositions, name='viewPositions'),
 
-    path('voters/',views.voters, name='voters'),
-    path('edit_voter/<int:id>/',views.edit_voter, name='edit_voter'),
-    path('delete_voter/<int:id>/',views.delete_voter, name='delete_voter'),
-    
-    
-    path('candidate/',views.show_candidate, name='candidate'),
-    path('create_candidate/',views.create_candidate, name='create_candidate'),
-    path('edit_candidate/<int:id>/',views.edit_candidate, name='edit_candidate'),
-    path('delete_candidate/<int:id>/',views.delete_candidate, name='delete_candidate'),
-    
-    
+    # * Candidate
+    path('candidate/', views.viewCandidates, name='viewCandidates'),
+    path('candidate/update', views.updateCandidate, name="updateCandidate"),
+    path('candidate/delete', views.deleteCandidate, name='deleteCandidate'),
+    path('candidate/view', views.view_candidate_by_id, name='viewCandidate'),
+
+    # # * Settings (Ballot Position and Election Title)
+    path("settings/ballot/position", views.ballot_position, name='ballot_position'),
+    path("settings/ballot/title/", views.ballot_title, name='ballot_title'),
+    path("settings/ballot/position/update/<int:position_id>/<str:up_or_down>/",
+         views.update_ballot_position, name='update_ballot_position'),
+
+    # # * Votes
+    path('votes/view', views.viewVotes, name='viewVotes'),
+    path('votes/reset/', views.resetVote, name='resetVote'),
+    path('votes/print/', views.PrintView.as_view(), name='printResult'),
+
+
 ]
