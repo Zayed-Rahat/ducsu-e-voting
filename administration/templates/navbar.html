@@ -1,8 +1,10 @@
 {% load static %}
 <header class="main-header">
   <!-- Logo -->
-  <a href="{% url 'adminDashboard' %}">
-    <img class="absolute h-30 w-40"  src="{% static 'images/ducsu_logo.png' %}" alt="Logo">                
+  <a href="#">
+    <div class="absolute h-12 w-34">
+      <img style="width:400px; height:150px; margin-top:-60px; margin-left:-85px ;"  src="{% static 'images/ducsu_logo.png' %}" alt="Logo">
+    </div>                
   </a>
   <!-- Header Navbar: style can be found in header.less -->
   <nav class="navbar navbar-static-top">
@@ -15,18 +17,14 @@
       <ul class="nav navbar-nav">
         <!-- User Account: style can be found in dropdown.less -->
         <li class="dropdown user user-menu">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="{% static 'images/people.png' %}" class="user-image" alt="User Image">
-            <span class="hidden-xs">{{ request.user.username }}</span>
-          </a>
+            <a class="font-bold text-white text-3xl mt-2"> Username : {{ request.user.username }}</a>
           <ul class="dropdown-menu">
             <!-- User image -->
-            <li class="user-header">
-              <img src="{% static 'images/people.png' %}" class="img-circle" alt="User Image">
-
-              <p>
-                System Administrator                <small>Member since Mar. 2021</small>
+            <li class="use">
+              <p> 
+                System Administrator <small>Member since 2023</small>
               </p>
+
             </li>
             <li class="user-footer">
               <div class="pull-left">

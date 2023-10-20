@@ -164,3 +164,10 @@ def account_logout(request):
 #             messages.error(request, 'Account does not exist!')
 #             return redirect('forgot_password')
 #     return render(request, 'account/forgot_password.html')
+
+
+
+
+
+def profile(request):
+    return render(request,'account/footer/team.html')
