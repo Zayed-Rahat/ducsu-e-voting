@@ -1,14 +1,20 @@
 {% extends 'root.html' %}
+
+{% block head_title %} DUCSU | Voters{% endblock %}
+
+
 {% block content %}
 <section class="content">
+  <div class="flex justify-center mb-2">
+    <h1 class="font-bold text-4xl text-blue-800">Voters List</h1>
+  </div>
+
   <div class="row">
 <div class="col-xs-12">
 <div class="box">
 <div class="box-body">
   <table id="example1" class="table table-bordered">
       <thead>
-          <th>Firstname</th>
-          <th>Lastname</th>
           <th>Email</th>
           <th>Voted</th>
           <th>Action</th>
@@ -17,10 +23,8 @@
     {% for voter in voters %}
       
     <tr>
-      <td>{{ voter.user.first_name }}</td>
-      <td>{{ voter.user.last_name }}</td>
       <td>{{ voter.user.email }}</td> 
-      <td>{{ voter.voted }}</td>      
+      <td>{% if voter.voted == True %}Yes{% else %}No{% endif %}</td>      
 
       <td>
         <button class='btn btn-success btn-sm edit btn-flat' data-id='{{ voter.id }}'><i class='fa fa-edit'></i> Edit</button>

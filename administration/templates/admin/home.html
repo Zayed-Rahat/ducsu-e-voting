@@ -1,8 +1,15 @@
 {% extends 'root.html' %}
 {% load static %}
+
+{% block head_title %} DUCSU | Admin Dashboard{% endblock %}
+
 {% block content %}
 <!-- Main content -->
     <section class="content">
+      <div class="flex justify-center mb-2">
+        <h1 class="font-bold text-4xl text-blue-800">Admin Dashboard</h1>
+      </div>
+      
             <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-lg-3 col-xs-6">
@@ -66,11 +73,11 @@
      
       <div class="row">
         <div class="col-xs-12">
-          <h3>Votes Tally
+          <h2>Votes Tally
             <span class="pull-right">
               <a href="{% url 'printResult' %}" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Print</a>
             </span>
-          </h3>
+          </h2>
         </div>
       </div>
 
