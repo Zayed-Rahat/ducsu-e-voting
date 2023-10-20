@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from voting.models import Position,Voter, Candidate
+# from voting.models import Position,Voter, Candidate
 from django.contrib.auth.models import User
 import requests
 from voting.forms import *
@@ -34,18 +34,6 @@ def dashboard(request):
       context = {'positions':positions, 'voters' : voters, 'votes' : votes, 'candidates': candidates}
       return render(request, 'dashboard.html', context)
 
-    # Get notifications for the current user
-    positions = Position.objects.all()
-    candidates = Candidate.objects.all()
-    voters = User.objects.all() 
-    notifications = Notification.objects.filter(user=request.user)
-    context = {
-        'positions': positions,
-        'voters': voters,
-        'candidates': candidates,
-        'notifications': notifications  # Add notifications to the context
-    }
-    return render(request, 'dashboard.html', context)
 
 # all position showing here
 
@@ -85,10 +73,6 @@ def position(request):
             form = PositionForm(request.POST)
             if form.is_valid():
                 new_position = form.save()
-                
-                # Create a notification when a new position is added
-                message = f'New position "{new_position.position_title}" has been added.'
-                add_notification(request.user, message)
                 
                 # Redirect to the position list page
                 return redirect('position')
