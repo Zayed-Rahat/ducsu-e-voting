@@ -147,11 +147,11 @@ EMAIL_HOST_USER = 'ariful10462@gmail.com' # hosting mail
 EMAIL_HOST_PASSWORD = 'cvsk bimg hmsp tlpb' # google theke create kore dite hobe
 EMAIL_USE_TLS = True
 
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND' : 'channels_redis.core.RedisChannelLayer',
-        'CONFIG':{
-            "hosts": [('127.0.0.1',6379)],
-        }
-    }
-}
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND' : 'channels_redis.core.RedisChannelLayer',
+#         'CONFIG':{
+#             "hosts": [('127.0.0.1',6379)],
+#         }
+#     }
+# }
