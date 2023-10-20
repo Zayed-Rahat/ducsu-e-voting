@@ -14,39 +14,39 @@
       {% if request.user.username == 'admin' %}
 
       <li><a href="{% url 'adminDashboard' %}"
-                  class="text-white block py-2 px-4 hover:bg-white font-bold">
+                  class="py-2 px-4 text-white block hover:bg-white font-bold">
                   <i class='bx bxs-dashboard'></i> Dashboard</a></li>
 
       <li><a href="{% url 'viewPositions' %}"
-                    class="text-white block py-2 px-4 hover:bg-white font-bold"><i
+                    class="py-2 px-4 text-white block hover:bg-white font-bold"><i
                           class="fa fa-tasks"></i> Positions</a></li>
                           
       <li><a href="{% url 'viewCandidates' %}"
-                            class="text-white block py-2 px-4 hover:bg-white font-bold"><i
+                            class="py-2 px-4 text-white block hover:bg-white font-bold"><i
                                   class="fa fa-tasks"></i> Candidates</a></li>
                                   
       <li><a href="{% url 'adminViewVoters' %}"
-                                    class="text-white block py-2 px-4 hover:bg-white font-bold"><i
+                                    class="py-2 px-4 text-white block hover:bg-white font-bold"><i
                                           class="fa fa-tasks"></i> Voters</a></li>
 
       
-      <li><a href="{% url 'ballot_position' %}"  class="text-white block py-2 px-4 hover:bg-white font-bold"><i class="fa fa-file-text"></i> <span>Ballot Position</span></a></li>
-      <li><a href="#config" class="text-white block py-2 px-4 hover:bg-white font-bold" data-toggle="modal"><i class="fa fa-cog"></i> <span>Election Title</span></a></li>                                    
+      <li><a href="{% url 'ballot_position' %}"  class="py-2 px-4 text-white block hover:bg-white font-bold"><i class="fa fa-file-text"></i> <span>Ballot Position</span></a></li>
+      <li><a href="#config" class="py-2 px-4 text-white block hover:bg-white font-bold" data-toggle="modal"><i class="fa fa-cog"></i> <span>Election Title</span></a></li>                                    
                                   
       {% endif %}
       <hr>
       <li><a href="{% url 'voterDashboard' %}"
-        class="text-white block py-2 px-4 hover:bg-white font-bold"><i
+        class="py-2 px-4 text-white block hover:bg-white font-bold"><i
               class="fa fa-dashboard"></i>Voter Dashboard</a></li>
       <li><a href="{% url 'show_ballot' %}"
-        class="text-white block py-2 px-4 hover:bg-white font-bold"><i
+        class="py-2 px-4 text-white block hover:bg-white font-bold"><i
               class="fa fa-dashboard"></i> <span>Show Ballot</span></a></li>
               
       <li><a href="{% url 'myprofile' %}"
-                  class="text-white block py-2 px-4 hover:bg-white font-bold"><i
+                  class="py-2 px-4 text-white block hover:bg-white font-bold"><i
                         class="fa fa-dashboard"></i> <span>My profile</span></a></li>
       <li><a href="{% url 'account_logout' %}"
-                  class="text-white block py-2 px-4 hover:bg-white font-bold"><i
+                  class="py-2 px-4 text-white block hover:bg-white font-bold"><i
                         class="fa fa-power-off"></i> <span>Logout</span></a></li>
 </ul>
   </section>

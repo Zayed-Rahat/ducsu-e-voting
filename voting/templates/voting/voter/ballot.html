@@ -17,7 +17,7 @@ aria-hidden="true">&times;</button>
 
 <form method="POST" id="ballotForm" action="{% url 'submit_ballot' %}">
   {% csrf_token %}
-  <div class="" style="border:2px solid ; text-align:cente;">
+  <div class="bg-gray">
     {{ ballot|safe }}
   </div>
   <div class="text-center">
