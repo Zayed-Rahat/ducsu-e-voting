@@ -25,7 +25,7 @@ def dashboard(request):
       votes = Vote.objects.all()
 
 
-      context = {'positions':positions, 'voters' : voters, 'votes' : votes, 'candidates': candidates}
+      context = {'positions':positions, 'voters' : voters, 'votes' : votes, 'candidates': candidates,'room_name': "broadcast"}
       return render(request, 'dashboard.html', context)
 
 
