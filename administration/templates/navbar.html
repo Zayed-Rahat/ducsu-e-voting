@@ -1,9 +1,15 @@
 {% load static %}
 <header class="main-header">
   <!-- Logo -->
+<<<<<<< HEAD
   <a href="{% url 'adminDashboard' %}">
     <div class="image pt-6 pb-4">
       <img class="absolute rounded" style="width:150px; height:40px; margin-top:-6px margin-left:10px ;" src="{% static 'images/logo_t.png' %}" alt="Logo">
+=======
+  <a href="#">
+    <div class="absolute h-12 w-34">
+      <img style="width:400px; height:150px; margin-top:-60px; margin-left:-85px ;"  src="{% static 'images/ducsu_logo.png' %}" alt="Logo">
+>>>>>>> e5ee3a32a46873349e863f72ed63384e3d4715db
     </div>                
   </a>
 
@@ -18,16 +24,28 @@
       <ul class="nav navbar-nav">
         <!-- User Account: style can be found in dropdown.less -->
         <li class="dropdown user user-menu">
+<<<<<<< HEAD
           <a href="#" class="dropdown-toggle hover:bg-green-500" data-toggle="dropdown">
             <img src="{% static 'images/arif.jpg' %}" class="w-12 h-12 border rounded-full" alt="Userpic">
             <span class="hidden-xs text-white">{{ request.user.username }}</span>
           </a>
+=======
+            <a class="font-bold text-white text-3xl mt-2"> Username : {{ request.user.username }}</a>
+>>>>>>> e5ee3a32a46873349e863f72ed63384e3d4715db
           <ul class="dropdown-menu">
 
             <!-- User image -->
+<<<<<<< HEAD
             <li class=" use">
               <img src="{% static 'images/arif.jpg' %}" class="img-circle h-24 w-24 mx-auto" alt="User Image">
               <p class=" text-black mx-auto text-2xl"> System Administrator <small class="text-blue-900 ">Member since Mar. 2021</small></p>
+=======
+            <li class="use">
+              <p> 
+                System Administrator <small>Member since 2023</small>
+              </p>
+
+>>>>>>> e5ee3a32a46873349e863f72ed63384e3d4715db
             </li>
 
             <li class="user-footer">
