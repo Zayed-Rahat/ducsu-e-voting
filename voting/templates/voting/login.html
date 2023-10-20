@@ -1,0 +1,45 @@
+{% extends "voting/base.html" %}
+
+{% block head_title %} DUCSU | Login{% endblock %}
+{% block content %}
+
+    <div class="login-box">
+     
+        <div class="login-box-body">
+            <h1 class="text-4xl block text-center font-semibold">Login</h1>
+            <form action="{% url 'account_login' %}" method="POST">
+                {% csrf_token %}
+                <div class="mt-2">
+                    <label for="username" class="block  text-2xl mb-2">Username</label>
+                    <input type="text"
+                        class="border w-full px-2 py-2 focus:outline-none focus:ring-0  text-2xl focus:border-gray-600"
+                        id="username" name="username">
+                </div>
+
+                <div class="mt-2">
+                <label for="password" class="block  text-2xl mb-2">Password</label>
+                <input type="password"
+                    class="border w-full px-2 py-2 focus:outline-none focus:ring-0  text-2xl focus:border-gray-600"
+                    id="password" name="password">
+                </div>
+
+                <div class="mt-2 flex justify-between items-center">
+
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat" name="login"><i
+                                class="fa fa-sign-in"></i> Sign In</button>
+                    </div>
+                
+                    <div class="pull-right col-xs-4">
+                        <a  class="btn btn-primary btn-block btn-flat" href="{% url 'account_register' %}"><i class="fa fa-upload"></i> Register</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+            </div>
+
+ 
+{% endblock content %} 

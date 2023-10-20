@@ -1,29 +1,46 @@
-{% load  static %}
+{% load static %}
+<header class="main-header">
+  <!-- Logo -->
+  <a href="{% url 'adminDashboard' %}">
+    <img class="absolute h-30 w-40"  src="{% static 'images/ducsu_logo.png' %}" alt="Logo">                
+  </a>
+  <!-- Header Navbar: style can be found in header.less -->
+  <nav class="navbar navbar-static-top">
+    <!-- Sidebar toggle button-->
+    <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+      <span class="sr-only">Toggle navigation</span>
+    </a>
 
-<nav class="flex items-center justify-between bg-white px-10 m-4">
-  <div class="flex justify-between items-center w-full">
+    <div class="navbar-custom-menu">
+      <ul class="nav navbar-nav">
+        <!-- User Account: style can be found in dropdown.less -->
+        <li class="dropdown user user-menu">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <img src="{% static 'images/people.png' %}" class="user-image" alt="User Image">
+            <span class="hidden-xs">{{ request.user.username }}</span>
+          </a>
+          <ul class="dropdown-menu">
+            <!-- User image -->
+            <li class="user-header">
+              <img src="{% static 'images/people.png' %}" class="img-circle" alt="User Image">
 
-    <!-- Logo on the left side -->
-    <div class="relative">
-        <img class="h-15 w-40" src="{% static 'images/logo_t.png' %}" alt="Logo">
+              <p>
+                System Administrator                <small>Member since Mar. 2021</small>
+              </p>
+            </li>
+            <li class="user-footer">
+              <div class="pull-left">
+                <a href="#profile" data-toggle="modal" class="btn btn-default btn-flat" id="admin_profile">Update</a>
+              </div>
+              <div class="pull-right">
+                <a href="{% url 'account_logout' %}" class="btn btn-default btn-flat">Sign out</a>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
-
-    <!-- Navigation and user info on the right side -->
-    <div class="flex items-center ml-auto">
-
-        {% if request.user.is_authenticated %}
-        <div class="text-green-600 my-auto font-black px-5">Welcome, {{ request.user.username }}</div>
-
-        <a href="{% url 'home' %}" class="inline-block font-medium text-sm px-4 py-2 leading-none bg-green-600 rounded text-white border-white hover:border-transparent hover:text-white hover:bg-red-700 mt-4 lg:mt-0 mr-2">Home</a>
-
-        <a href="{% url 'logout' %}" class="inline-block font-medium text-sm px-4 py-2 leading-none bg-green-600 rounded text-white border-white hover:border-transparent hover:text-white hover:bg-red-700 mt-4 lg:mt-0">Logout</a>
-        {% else %}
-        <a href="{% url 'home' %}" class="inline-block font-medium text-sm px-4 py-2 leading-none bg-green-600 rounded text-white border-white hover:border-transparent hover:text-white hover:bg-red-700 mt-4 lg:mt-0 mr-2">Home</a>
-
-        <a href="{% url 'login' %}" class="inline-block font-medium text-sm px-4 py-2 leading-none bg-green-600 rounded text-white border-white hover:border-transparent hover:text-white hover:bg-red-700 mt-4 lg:mt-0">Login</a>
-
-        <a href="{% url 'register' %}" class="inline-block font-medium text-sm px-4 py-2 leading-none bg-green-600 rounded text-white border-white hover:border-transparent hover:text-green-600 hover:bg-white mt-4 lg:mt-0">Register</a>
-        {% endif %}
-    </div>
-  </div>
-</nav>
+  </nav>
+</header>
+ 
+{% include "bio.html" %}

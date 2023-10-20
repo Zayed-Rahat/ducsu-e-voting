@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'account',
     'administration',
     'api',
@@ -48,7 +49,7 @@ ROOT_URLCONF = 'ducsu_online_voting.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ["templates"],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -56,6 +57,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'voting.context_processors.ElectionTitle'
             ],
         },
     },
@@ -126,7 +128,24 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATICFILES_DIRS = [
     BASE_DIR/'static',
 ]
+
+ELECTION_TITLE_PATH = os.path.join(
+    BASE_DIR, 'election_title.txt')  # Election Title File
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# for email varification 
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
+# SMTP configuration (send mail transfer protocol)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'ariful10462@gmail.com' # hosting mail
+EMAIL_HOST_PASSWORD = 'cvsk bimg hmsp tlpb' # google theke create kore dite hobe
+EMAIL_USE_TLS = True
