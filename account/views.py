@@ -121,19 +121,20 @@ def account_logout(request):
 
 
 # change passsword without old password
-# def change_pass(request):
-#     # if request.user.is_authenticated:
-#     if request.method == 'POST':        
-#         form = Change_pass(user=request.user, data=request.POST) # user data collect kora hocce
-#         if form.is_valid():
-#             form.save()
-#             update_session_auth_hash(request, form.user) # password update kora hocce
-#             messages.success('Your Password updated successfully')
-#             return redirect('myprofile')
-#     else:
-#         form = Change_pass(user = request.user)
-#     return render(request, 'account/pass_change.html', {'form':form})
-#     # return redirect('login')
+def change_pass(request):
+    # if request.user.is_authenticated:
+    form = Change_pass(user=request.user, data=request.POST) # user data collect kora hocce
+    if request.method == 'POST':        
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user) # password update kora hocce
+            messages.success('Your Password updated successfully')
+            return redirect('myprofile')
+        
+        else:
+            form = Change_pass(user = request.user)
+    return render(request, 'account/pass_change.html', {'form':form})
+    # return redirect('change_pass')
 
 
 
@@ -169,5 +170,5 @@ def account_logout(request):
 
 
 
-def profile(request):
+def team_profile(request):
     return render(request,'account/footer/team.html')

@@ -34,6 +34,9 @@ urlpatterns = [
     path('votes/view', views.viewVotes, name='viewVotes'),
     path('votes/reset/', views.resetVote, name='resetVote'),
     path('votes/print/', views.PrintView.as_view(), name='printResult'),
+    
+    
+    path('print/', views.printshow, name="showprint"),
 
 
 ]

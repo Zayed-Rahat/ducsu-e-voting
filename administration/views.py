@@ -108,37 +108,40 @@ def voters_home(request):
 #       return render(request, 'dashboard.html', context)
 
 def dashboard(request):
-    positions = Position.objects.all().order_by('priority')
-    candidates = Candidate.objects.all()
-    voters = Voter.objects.all()
-    voted_voters = Voter.objects.filter(voted=1)
-    list_of_candidates = []
-    votes_count = []
-    chart_data = {}
-
-    for position in positions:
+    if request.user.is_authenticated:
+        positions = Position.objects.all().order_by('priority')
+        candidates = Candidate.objects.all()
+        voters = Voter.objects.all()
+        voted_voters = Voter.objects.filter(voted=1)
         list_of_candidates = []
         votes_count = []
-        for candidate in Candidate.objects.filter(position=position):
-            list_of_candidates.append(candidate.fullname)
-            votes = Vote.objects.filter(candidate=candidate).count()
-            votes_count.append(votes)
-        chart_data[position] = {
-            'candidates': list_of_candidates,
-            'votes': votes_count,
-            'pos_id': position.id
-        }
+        chart_data = {}
 
-    context = {
-        'position_count': positions.count(),
-        'candidate_count': candidates.count(),
-        'voters_count': voters.count(),
-        'voted_voters_count': voted_voters.count(),
-        'positions': positions,
-        'chart_data': chart_data,
-        'page_title': "Dashboard"
-    }
-    return render(request, "admin/home.html", context)
+        for position in positions:
+            list_of_candidates = []
+            votes_count = []
+            for candidate in Candidate.objects.filter(position=position):
+                list_of_candidates.append(candidate.fullname)
+                votes = Vote.objects.filter(candidate=candidate).count()
+                votes_count.append(votes)
+            chart_data[position] = {
+                'candidates': list_of_candidates,
+                'votes': votes_count,
+                'pos_id': position.id
+            }
+
+        context = {
+            'position_count': positions.count(),
+            'candidate_count': candidates.count(),
+            'voters_count': voters.count(),
+            'voted_voters_count': voted_voters.count(),
+            'positions': positions,
+            'chart_data': chart_data,
+            'page_title': "Dashboard"
+        }
+        return render(request, "admin/home.html", context)
+    else:
+        return redirect('account_login')
 
 def voters(request):
     if request.user.username == 'admin':
@@ -157,6 +160,7 @@ def voters(request):
         return render(request, 'admin/voters.html', {'voters': voters})
     else:
         return redirect('account_login')
+
 
 
 # def voters(request):
@@ -421,3 +425,7 @@ def resetVote(request):
     Voter.objects.all().update(voted=False)
     messages.success(request, "All votes has been reset")
     return redirect(reverse('viewVotes'))
+
+
+def printshow(request):
+    return render(request,'admin/print.html')
