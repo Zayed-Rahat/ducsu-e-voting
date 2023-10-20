@@ -18,9 +18,10 @@
                     {% else %}
 
                     <a class="hover:bg-pink-500 hover:rounded-xl hover:px-2 px-2" href="{% url 'home' %}">Home</a>
-                    <a class="hover:bg-pink-500 hover:rounded-xl hover:px-2 px-2" href="{% url 'login' %}">Login</a>
                     <a class="hover:bg-pink-500 hover:rounded-xl hover:px-2 px-2"
-                        href="{% url 'register' %}">Register</a>
+                        href="{% url 'account_login' %}">Login</a>
+                    <a class="hover:bg-pink-500 hover:rounded-xl hover:px-2 px-2"
+                        href="{% url 'account_register' %}">Register</a>
 
                     {% endif %}
                 </div>
@@ -43,7 +44,7 @@
                     </p>
                 </div>
                 <div class="pt-5">
-                    <a href="{% url 'position' %}"
+                    <a href="{% url 'home' %}"
                         class="border-2 rounded-3xl p-2 text-md hover:border-pink-500 hover:text-white">Get Started</a>
                 </div>
             </div>
@@ -166,7 +167,10 @@
             </div>
         </form>
     </div>
+    <<<<<<< HEAD </section>
+        =======
 </section>
+>>>>>>> e2066431805d585e0408d239ddf76f273ed05101
 
 
 
