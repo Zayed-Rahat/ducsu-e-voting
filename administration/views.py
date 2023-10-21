@@ -94,13 +94,6 @@ def voters_home(request):
      return render(request, 'voters_home.html')
 
 # def dashboard(request):
-<<<<<<< HEAD
-#       positions = Position.objects.all()
-#       candidates = Candidate.objects.all()
-#       voters = User.objects.all() 
-#       context = {'positions':positions, 'voters' : voters, 'candidates': candidates}
-#       return render(request, 'dashboard.html', context)
-=======
 #     #   positions= requests.get('http://127.0.0.1:8000/api/position').json()
 #     #   voters= requests.get('http://127.0.0.1:8000/api/voter').json()
 #     #   candidates= requests.get('http://127.0.0.1:8000/api/candidate').json()
@@ -114,7 +107,6 @@ def voters_home(request):
 #       context = {'positions':positions, 'voters' : voters, 'votes' : votes, 'candidates': candidates}
 #       return render(request, 'dashboard.html', context)
 
->>>>>>> e2066431805d585e0408d239ddf76f273ed05101
 def dashboard(request):
     positions = Position.objects.all().order_by('priority')
     candidates = Candidate.objects.all()
@@ -148,92 +140,6 @@ def dashboard(request):
     }
     return render(request, "admin/home.html", context)
 
-<<<<<<< HEAD
-
-# all position showing here
-
-
-# def position(request):
-#     if request.user.username == 'admin':
-#         positions_list = Position.objects.order_by('id')  # Order by the 'id' field, you can change it to the desired field
-#         paginator = Paginator(positions_list, 5)  # Show 5 positions per page
-
-#         page_number = request.GET.get('page')
-#         try:
-#             positions = paginator.page(page_number)
-#         except PageNotAnInteger:
-#             positions = paginator.page(1)
-#         except EmptyPage:
-#             positions = paginator.page(paginator.num_pages)
-
-#         return render(request, 'position.html', {'positions': positions})
-#     else:
-#         return redirect('login')
-def position(request):
-    if request.user.username == 'admin':
-        # positions= requests.get('http://127.0.0.1:8000/api/position').json()
-        # positions = Position.objects.all() # all position assign to positons for showing
-        positions_list = Position.objects.order_by('id')  # Order by the 'id' field, you can change it to the desired field
-        paginator = Paginator(positions_list, 3)  # Show 5 positions per page
-        page_number = request.GET.get('page')
-        try:
-            positions = paginator.page(page_number)
-        except PageNotAnInteger:
-            positions = paginator.page(1)
-        except EmptyPage:
-            positions = paginator.page(paginator.num_pages)
-
-        if request.method == 'POST':
-            # Assuming you have a form to add a new position, handle the form submission here
-            form = PositionForm(request.POST)
-            if form.is_valid():
-                new_position = form.save()
-                
-                # Redirect to the position list page
-                return redirect('position')
-        else:
-            form = PositionForm()  # Initialize an empty form for adding new positions
-            
-        return render(request, 'position.html', {'positions': positions, 'form': form})
-    else:
-        return redirect('login')
-    
-    
-
-def add_position(request):
-    if request.method == 'POST':
-        form = PositionForm(request.POST)        
-        serializer = PositionSerializer(data=form.data)
-        if serializer.is_valid():
-            serializer.save()
-            return redirect('position')
-    else:
-         form = PositionForm()
-    return render(request, 'add_position.html', {'form': form})
-     
-
-# position edit here
-def edit_position(request, id):
-    positions = Position.objects.get(pk=id) #position get form model by using id
-    form = PositionForm(instance = positions)
-    if request.method == 'POST':
-        form = PositionForm(request.POST, instance = positions)
-        if form.is_valid():
-            form.save()
-            return redirect('position') 
-    return render(request, 'add_position.html',{'form':form})
-    
-# position delete here
-def delete_position(request, id):
-    positions = Position.objects.get(pk=id) # position get from model using id
-    positions.delete()
-    return redirect('position')
-
-
-
-# all voter showing here
-=======
->>>>>>> e2066431805d585e0408d239ddf76f273ed05101
 def voters(request):
     if request.user.username == 'admin':
     #   voters= requests.get('http://127.0.0.1:8000/api/voter').json()
@@ -405,19 +311,6 @@ def updateCandidate(request):
                              request.FILES or None, instance=candidate)
         if form.is_valid():
             form.save()
-<<<<<<< HEAD
-            return redirect('candidate') 
-    return render(request, 'create_candidate.html',{'form':form})
-    
-    
-# candidates delete here
-def delete_candidate(request, id):
-    candidate = Candidate.objects.get(pk=id) # Voters get from model using id
-    candidate.delete()
-    return redirect('candidate')
-         
-    
-=======
             messages.success(request, "Candidate Data Updated")
         else:
             messages.error(request, "Form has errors")
@@ -528,4 +421,3 @@ def resetVote(request):
     Voter.objects.all().update(voted=False)
     messages.success(request, "All votes has been reset")
     return redirect(reverse('viewVotes'))
->>>>>>> e2066431805d585e0408d239ddf76f273ed05101
