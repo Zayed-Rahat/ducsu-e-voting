@@ -1,12 +1,14 @@
 {% extends "base.html" %}
 
+{% block head_title %} DUCSU | Home{% endblock %}
+
 {% block content %}
 <div class="h-screen bg-[#032245]">
     <div class="container max-w-[1280px] mx-auto ">
 
         <div class="flex justify-between pt-8">
             <div>
-                <img class="absolute h-30 w-80 -left-4 -top-2" src="static/images/ducsu_logo.png" alt="Logo">
+                <img class="absolute h-10 w-30" src="static/images/logo_t.png" alt="Logo">
             </div>
             <div class="text-white">
                 <div class="flex gap-[20px] pt-4 text-white font-bold">
@@ -44,7 +46,7 @@
                     </p>
                 </div>
                 <div class="pt-5">
-                    <a href="{% url 'home' %}"
+                    <a href="{% url 'myprofile' %}"
                         class="border-2 rounded-3xl p-2 text-md hover:border-pink-500 hover:text-white">Get Started</a>
                 </div>
             </div>
@@ -71,9 +73,10 @@
         </div>
         <div class="flex justify-between  text-white gap-6">
 
-            <div class="mt-12  mx-auto text-center">
+            <div class="mt-10  mx-auto text-center">
                 <div class="text-center">
-                    <img class=" h-28 mx-auto" src="static/images/poll.png" alt="">
+                    {% comment %} <img class=" h-28 mx-auto" src="static/images/poll.png" alt=""> {% endcomment %}
+                    <i class="fa-solid fa-check-to-slot mx-auto text-7xl pt-10"></i>
                 </div>
                 <h1 class="text-3xl text-center font-bold pb-2">Online Elections</h1>
                 <p>Send your voters an email with secure, single-use voting links that ensure only authorized voters can
@@ -84,7 +87,7 @@
                 <div class="texte-center">
                     <i class="fa-solid fa-square-poll-horizontal mx-auto text-7xl pt-10"></i>
                 </div>
-                <h1 class="text-3xl font-bold pb-5">Online Polls</h1>
+                <h1 class="text-3xl font-bold pb-2">Online Polls</h1>
                 <p>Create a personalized poll that anyone can vote on, and publish it using your website, email, or
                     social media.</p>
             </div>
@@ -93,7 +96,7 @@
                 <div>
                     <i class="fa-solid fa-earth-europe pt-10 text-7xl"></i>
                 </div>
-                <h1 class="text-3xl text-center font-bold pb-5">Automated Ballot Counts</h1>
+                <h1 class="text-3xl text-center font-bold pb-2">Automated Ballot Counts</h1>
                 <p>Count ranked ballots that you've already collected (using e.g., paper ballots or your own vote
                     collection software).</p>
             </div>
@@ -167,10 +170,7 @@
             </div>
         </form>
     </div>
-    <<<<<<< HEAD </section>
-        =======
 </section>
->>>>>>> e2066431805d585e0408d239ddf76f273ed05101
 
 
 

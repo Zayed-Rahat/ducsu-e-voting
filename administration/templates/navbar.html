@@ -1,46 +1,49 @@
 {% load static %}
 <header class="main-header">
   <!-- Logo -->
-  <a href="{% url 'adminDashboard' %}">
+  <<<<<<< HEAD <a href="{% url 'adminDashboard' %}">
     <img class="absolute h-30 w-40" src="{% static 'images/ducsu_logo.png' %}" alt="Logo">
-  </a>
-  <!-- Header Navbar: style can be found in header.less -->
-  <nav class="navbar navbar-static-top">
-    <!-- Sidebar toggle button-->
-    <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-      <span class="sr-only">Toggle navigation</span>
+    =======
+    <a href="#">
+      <div class="absolute h-12 w-34">
+        <img style="width:400px; height:150px; margin-top:-60px; margin-left:-85px ;"
+          src="{% static 'images/ducsu_logo.png' %}" alt="Logo">
+      </div>
+      >>>>>>> e5ee3a32a46873349e863f72ed63384e3d4715db
     </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
 
-    <div class="navbar-custom-menu">
-      <ul class="nav navbar-nav">
-        <!-- User Account: style can be found in dropdown.less -->
-        <li class="dropdown user user-menu">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="{% static 'images/people.png' %}" class="user-image" alt="User Image">
-            <span class="hidden-xs">{{ request.user.username }}</span>
-          </a>
-          <ul class="dropdown-menu">
-            <!-- User image -->
-            <li class="user-header">
-              <img src="{% static 'images/people.png' %}" class="img-circle" alt="User Image">
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <!-- User Account: style can be found in dropdown.less -->
+          <li class="dropdown user user-menu">
+            <a class="font-bold text-white text-3xl mt-2"> Username : {{ request.user.username }}</a>
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="use">
+                <p>
+                  System Administrator <small>Member since 2023</small>
+                </p>
 
-              <p>
-                System Administrator <small>Member since Mar. 2021</small>
-              </p>
-            </li>
-            <li class="user-footer">
-              <div class="pull-left">
-                <a href="#profile" data-toggle="modal" class="btn btn-default btn-flat" id="admin_profile">Update</a>
-              </div>
-              <div class="pull-right">
-                <a href="{% url 'account_logout' %}" class="btn btn-default btn-flat">Sign out</a>
-              </div>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-  </nav>
+              </li>
+              <li class="user-footer">
+                <div class="pull-left">
+                  <a href="#profile" data-toggle="modal" class="btn btn-default btn-flat" id="admin_profile">Update</a>
+                </div>
+                <div class="pull-right">
+                  <a href="{% url 'account_logout' %}" class="btn btn-default btn-flat">Sign out</a>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
 </header>
 
 {% include "bio.html" %}

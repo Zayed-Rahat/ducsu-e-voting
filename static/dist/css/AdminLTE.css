@@ -12,6 +12,7 @@
 html,
 body {
   height: 100%;
+  width: 80%;
 }
 .layout-boxed html,
 .layout-boxed body {
