@@ -90,9 +90,6 @@ class PrintView(PDFView):
         return context
 
 
-def voters_home(request):
-     return render(request, 'voters_home.html')
-
 # def dashboard(request):
 #     #   positions= requests.get('http://127.0.0.1:8000/api/position').json()
 #     #   voters= requests.get('http://127.0.0.1:8000/api/voter').json()
@@ -108,7 +105,8 @@ def voters_home(request):
 #       return render(request, 'dashboard.html', context)
 
 def dashboard(request):
-    if request.user.is_authenticated:
+    user = request.user
+    if user.voter.account_type == 'Admin':
         positions = Position.objects.all().order_by('priority')
         candidates = Candidate.objects.all()
         voters = Voter.objects.all()
@@ -139,9 +137,15 @@ def dashboard(request):
             'chart_data': chart_data,
             'page_title': "Dashboard"
         }
-        return render(request, "admin/home.html", context)
-    else:
-        return redirect('account_login')
+        return render(request, "admin/admin_home.html", context)
+    
+    elif user.voter.account_type == 'Voter':
+        return render(request, "voter/voter_home.html")
+    
+    return redirect('account_login')
+
+
+
 
 def voters(request):
     if request.user.username == 'admin':
@@ -429,3 +433,19 @@ def resetVote(request):
 
 def printshow(request):
     return render(request,'admin/print.html')
+
+
+
+def create_election(request):
+    user = request.user
+    form = ElectionForm(request.POST)
+    if form.is_valid():
+        election = form.save(commit=False) 
+        election.user = user
+        election.save() 
+        return redirect('userDashboard')
+    else:
+        return render(request, 'admin/election.html',{'form':form})
+
+
+

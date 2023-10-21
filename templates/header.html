@@ -12,10 +12,12 @@
 
                     {% if request.user.is_authenticated %}
                     <a class="hover:bg-pink-500 hover:rounded-md hover:px-2 px-2" href="{% url 'home' %}">Home</a>
-                    <a class="hover:bg-pink-500 hover:rounded-md hover:px-2 px-2" href="{% url 'myprofile' %}">Welcome, {{ request.user.username }}</a>
+                    <a class="hover:bg-pink-500 hover:rounded-md hover:px-2 px-2" href="">Welcome, {{ request.user.username }}</a>
+                    <a class="hover:bg-pink-500 hover:rounded-md hover:px-2 px-2" href="{% url 'account_logout' %}">Logout</a>
                     {% else %}                      
 
                     <a class="hover:bg-pink-500 hover:rounded-md hover:px-2 px-2" href="{% url 'home' %}">Home</a>
+                    <a class="hover:bg-pink-500 hover:rounded-md hover:px-2 px-2" href="{% url 'election' %}">election</a>
                     <a class="hover:bg-pink-500 hover:rounded-md hover:px-2 px-2" href="{% url 'login' %}">Login</a>
                     <a class="hover:bg-pink-500 hover:rounded-md hover:px-2 px-2" href="{% url 'register' %}">Register</a>
                     {% endif %}

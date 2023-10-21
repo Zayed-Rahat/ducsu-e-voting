@@ -1,5 +1,12 @@
 from rest_framework import serializers
-from .models import Voter,Position,Candidate,Vote
+from .models import *
+
+
+class ElectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Election
+        fields = '__all__'
+
 
 class PositionSerializer(serializers.ModelSerializer):
     class Meta:

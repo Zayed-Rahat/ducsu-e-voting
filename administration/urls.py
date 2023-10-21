@@ -3,9 +3,7 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.dashboard, name="adminDashboard"),
-    path('myprofile/',views.voters_home,name='myprofile'),
-
+    path('', views.dashboard, name="userDashboard"),
     # # * Voters
     path('voters', views.voters, name="adminViewVoters"),
     path('voters/view', views.view_voter_by_id, name="viewVoter"),
@@ -37,6 +35,7 @@ urlpatterns = [
     
     
     path('print/', views.printshow, name="showprint"),
+    path('election/', views.create_election, name="election"),
 
 
 ]
