@@ -3,10 +3,11 @@
 {% block head_title %} DUCSU | Home{% endblock %}
 
 {% block content %}
-<div class="h-screen bg-[#032245]" >
-    <div class="container max-w-[1280px] mx-auto ">
+<div class="h-screen bg-[#032245]">
+    <div class="container px-24 mx-auto ">
+       
 
-        <div class="flex justify-between pt-8">
+        {% comment %} <div class="flex justify-between pt-8">
             <div>
                 <img class="absolute h-10 w-30" src="static/images/logo_t.png" alt="Logo">                
             </div>
@@ -25,10 +26,8 @@
                     {% endif %}
                 </div>
             </div>
-        </div>
-
-
-
+        </div> {% endcomment %}
+        
 
         <!--home page section-->
         <div class="flex gap-[100px]">
@@ -43,6 +42,7 @@
                 <div class="pt-5">
                     <a href="{% url 'myprofile' %}" class="border-2 rounded-3xl p-2 text-md hover:border-pink-500 hover:text-white">Get Started</a>
                 </div>
+                <script src="//code.tidio.co/vd36pjv83zicyt5nqkdcouo4bnt5xnde.js" async></script>
             </div>
 
             <div>
@@ -60,7 +60,7 @@
 
 <!--servicess section-->
 <div class="bg-blue-900 ">
-    <div class="w-[1280px] mx-auto pb-20 text-center">
+    <div class="px-24 mx-auto pb-20 text-center">
         <div>
             <h1 class="text-white text-3xl font-bold pt-10 pb-4">Our Voting Services</h1>
             <hr class="w-[400px] mx-auto">
@@ -101,7 +101,7 @@
 <!--works section-->
 
 <div class="bg-gray-300 ">
-    <div class="w-[1280px] mx-auto pb-20 ">
+    <div class="px-24 mx-auto pb-20 ">
 
         <div class="flex justify-between ">
             <div class="w-2/4">

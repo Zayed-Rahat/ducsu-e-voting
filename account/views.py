@@ -6,6 +6,7 @@ from django.contrib import messages, auth
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, SetPasswordForm
 
 
+# new coder code for toster
 def account_login(request):
     if request.method == 'POST':
         form = AuthenticationForm(request=request, data=request.POST)        
@@ -20,7 +21,7 @@ def account_login(request):
             messages.error(request, "Invalid details")
     else:
         form = AuthenticationForm()
-    return render(request, 'voting/login.html', {'form':form})
+    return render(request, 'account/login.html')
 
 
 
@@ -38,7 +39,34 @@ def account_register(request):
             # return account_login(request)
     else :
         form = RegistrationForm()        
-    return render(request, 'voting/register.html', {'form': form})
+    return render(request, 'account/register.html', {'form': form})
+
+
+
+
+# def user_registration(request):
+#     if request.method == 'POST':
+#         form = RegistrationForm(request.POST)
+#         if form.is_valid():
+#             user = form.save()
+#             login(request, user)
+#             return redirect('myprofile') 
+#     else:
+#         form = RegistrationForm()
+#     return render(request, 'account/register.html', {'form': form})
+
+
+# def user_login(request):
+#     if request.method == 'POST':
+#         username = request.POST['username']
+#         password = request.POST['password']
+#         user = authenticate(request, username=username, password=password)
+#         if user is not None:
+#             login(request, user)
+#             return redirect('myprofile')
+#         else:
+#             pass
+#     return render(request, 'account/login.html')
 
 
 
@@ -51,7 +79,7 @@ def account_logout(request):
         messages.error(
             request, "You need to be logged in to perform this action")
 
-    return redirect('account_login') 
+    return redirect('login') 
 
 
 # user register with email varification
@@ -128,7 +156,7 @@ def change_pass(request):
         if form.is_valid():
             form.save()
             update_session_auth_hash(request, form.user) # password update kora hocce
-            messages.success('Your Password updated successfully')
+            # messages.success('Your Password updated successfully')
             return redirect('myprofile')
         
         else:
@@ -172,3 +200,6 @@ def change_pass(request):
 
 def team_profile(request):
     return render(request,'account/footer/team.html')
+
+def about(request):
+    return render(request, 'account/footer/about.html')

@@ -16,7 +16,7 @@
 
                
      
-                <div class="login-box-body w-1/4 pt-44 border shadow-2xl">
+                <div class="login-box-body w-1/4 pt-44 border shadow-2xl ">
                     <h1 class="text-4xl block text-center font-semibold">Login</h1>
                     <form action="{% url 'account_login' %}" method="POST">
                         {% csrf_token %}
@@ -39,7 +39,7 @@
                         </div>
 
                         <div class="pb-8">
-                            <a class="text-xl text-blue-500 " href="">Forgot Password?</a>
+                            <a class="text-xl text-blue-500 " href="{% url 'change_pass' %}">Forgot Password?</a>
                         </div>
         
                         <div class="row pt-8">
