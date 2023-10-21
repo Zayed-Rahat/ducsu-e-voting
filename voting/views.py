@@ -6,8 +6,6 @@ from django.utils.text import slugify
 from django.contrib import messages
 from django.conf import settings
 from django.http import JsonResponse
-# # Create your views here.
-
 
 
 def home(request):
