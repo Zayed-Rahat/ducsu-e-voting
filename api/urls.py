@@ -4,6 +4,7 @@ from .views import *
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
+router.register('position', ElectionViewSet)
 router.register('position', PositionViewSet)
 router.register('voter', VoterViewSet)
 router.register('vote', VoteViewSet)

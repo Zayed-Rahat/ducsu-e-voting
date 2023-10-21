@@ -13,7 +13,7 @@
     <ul class="mt-4 space-y-2">
       {% if request.user.username == 'admin' %}
 
-      <li><a href="{% url 'adminDashboard' %}"
+      <li><a href="{% url 'userDashboard' %}"
                   class="py-2 px-4 text-white block hover:bg-white font-bold">
                   <i class='bx bxs-dashboard'></i> Dashboard</a></li>
 
@@ -42,7 +42,7 @@
         class="py-2 px-4 text-white block hover:bg-white font-bold"><i
               class="fa fa-dashboard"></i> <span>Show Ballot</span></a></li>
               
-      <li><a href="{% url 'myprofile' %}"
+      <li><a href="{% url 'userDashboard' %}"
                   class="py-2 px-4 text-white block hover:bg-white font-bold"><i
                         class="fa fa-dashboard"></i> <span>My profile</span></a></li>
       <li><a href="{% url 'account_logout' %}"
