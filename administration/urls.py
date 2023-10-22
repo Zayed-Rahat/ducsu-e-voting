@@ -26,7 +26,7 @@ urlpatterns = [
     path('candidate/', views.viewCandidates, name='viewCandidates'),
     path('candidate/update', views.updateCandidate, name="updateCandidate"),
     path('candidate/delete', views.deleteCandidate, name='deleteCandidate'),
-    # path('candidate/view/', views.view_candidate_by_id, name='viewCandidate'),
+    # path('candidate/view', views.view_candidate_by_id, name='viewCandidate'),
 
     # # * Settings (Ballot Position and Election Title)
     path("settings/ballot/position", views.ballot_position, name='ballot_position'),

@@ -21,7 +21,7 @@ class Position(models.Model):
     election = models.ForeignKey(Election,on_delete=models.CASCADE,default=None)
 
     def __str__(self):
-        return self.name    
+        return  f'{self.name} - {self.election}'   
 
 ACCOUNT_TYPE = (
     ('SuperAdmin', 'SuperAdmin'),
@@ -36,7 +36,7 @@ class Voter(models.Model):
     voted = models.BooleanField(default=False)
     election = models.ManyToManyField(Election, default=None)
     def __str__(self):
-        return self.user.username
+      return f'{self.user.username} - {self.election}'
 
 
 @receiver(post_save, sender=User)
