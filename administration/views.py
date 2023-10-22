@@ -110,7 +110,9 @@ class PrintView(PDFView):
 def dashboard(request):
     user = request.user
     if user.voter.account_type == 'Admin':
-        positions = Position.objects.all().order_by('priority')
+        # positions = Position.objects.all().order_by('priority')
+        elections = Election.objects.get(admin=request.user)
+        positions = Position.objects.filter(election_id=elections.id).order_by('priority')
         candidates = Candidate.objects.all()
         voters = Voter.objects.all()
         voted_voters = Voter.objects.filter(voted=1)
