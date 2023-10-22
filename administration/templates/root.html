@@ -1,12 +1,12 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>{% block head_title %} DUCSU {% endblock %}</title>
-     <!-- Bootstrap 3.3.7 -->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <title>{% block head_title %} DUCSU {% endblock %}</title>
+  <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
   <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="{% static 'plugins/iCheck/all.css' %}">
@@ -18,69 +18,62 @@
   <link rel="stylesheet" href="{% static 'bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
   <!-- daterange picker -->
   <link rel="stylesheet" href="{% static 'bower_components/bootstrap-daterangepicker/daterangepicker.css' %}">
-  <!-- Bootstrap time Picker -->
-  <link rel="stylesheet" href="{% static 'plugins/timepicker/bootstrap-timepicker.min.css' %}">
-  <!-- bootstrap datepicker -->
-  <link rel="stylesheet" href="{% static 'bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css' %}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{% static 'dist/css/skins/_all-skins.min.css' %}">
   <link rel="stylesheet" href="{% static 'toastr/toastr.min.css' %} ">
   <!-- Tailwind CSS -->
-  <link
-      href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
-   <!-- Google Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  
-    <style>
-      .bold{
-        font-weight:bold;
-      }
-      
-      #candidate_list{
-        margin-top:20px;
-      }
-  
-      #candidate_list ul{
-        list-style-type:none;
-      }
-  
-      #candidate_list ul li{ 
-        margin:0 30px 30px 0; 
-        vertical-align:top
-      }
-  
-      .clist{
-        margin-left: 20px;
-      }
-  
-      .cname{
-        font-size: 25px;
-      }
-    </style>		
-  </head>
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet" />
+  <!-- Google Font -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
-<body class="hold-transition bg-blue-900 sidebar-mini mx-10">
+  <style>
+    .bold {
+      font-weight: bold;
+    }
+
+    #candidate_list {
+      margin-top: 20px;
+    }
+
+    #candidate_list ul {
+      list-style-type: none;
+    }
+
+    #candidate_list ul li {
+      margin: 0 30px 30px 0;
+      vertical-align: top
+    }
+
+    .clist {
+      margin-left: 20px;
+    }
+
+    .cname {
+      font-size: 25px;
+    }
+  </style>
+</head>
+
+<body class="hold-transition bg-[#032245] sidebar-mini ml-10">
   <div class="wrapper">
 
- {% include "navbar.html" %}
-  
- {% include "sidebar.html" %}
+    {% include "navbar.html" %}
 
+    {% include "sidebar.html" %}
 
- <div class="modal fade" id="config">
-  <div class="modal-dialog">
-      <div class="modal-content">
+    <div class="modal fade" id="config">
+      <div class="modal-dialog">
+        <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span></button>
+              <span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title"><b>Configure</b></h4>
           </div>
           <div class="modal-body">
             <div class="text-center">
-                              <form class="form-horizontal" method="POST" action="{% url 'ballot_title'  %}">
+              <form class="form-horizontal" method="POST" action="{% url 'ballot_title'  %}">
                 <div class="form-group">
                   {% csrf_token %}
                   <label for="title" class="col-sm-3 control-label">Title</label>
@@ -92,28 +85,29 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+            <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i
+                class="fa fa-close"></i> Close</button>
             <button type="submit" class="btn btn-success btn-flat" name="save"><i class="fa fa-save"></i> Save</button>
             </form>
           </div>
+        </div>
       </div>
-  </div>
-</div>
- 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+    </div>
 
-  {% block content %}
-    
-  {% endblock content %}
-  </div>
-{% include "footer.html" %}
-{% block modal %}
-  
-{% endblock modal %}
-</div>
-{% include "scripts.html"%}
-{% block custom_js %}
-  
-{% endblock custom_js %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
 
+      {% block content %}
+
+      {% endblock content %}
+    </div>
+    {% include "footer.html" %}
+    {% block modal %}
+
+    {% endblock modal %}
+  </div>
+  {% include "scripts.html"%}
+  {% block custom_js %}
+
+  {% endblock custom_js %}
+</body>

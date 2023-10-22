@@ -26,12 +26,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'account',
     'administration',
     'api',
+    # 'notifications',
     'rest_framework',
-    'voting'
+    'voting',
+    # 'channels',
 ]
 
 MIDDLEWARE = [
@@ -64,7 +65,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'ducsu_online_voting.wsgi.application'
-
+ASGI_APPLICATION = 'ducsu_online_voting.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -122,6 +123,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+# STATIC_ROOT = BASE_DIR / 'static'
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -149,3 +151,12 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'ariful10462@gmail.com' # hosting mail
 EMAIL_HOST_PASSWORD = 'cvsk bimg hmsp tlpb' # google theke create kore dite hobe
 EMAIL_USE_TLS = True
+
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND' : 'channels_redis.core.RedisChannelLayer',
+#         'CONFIG':{
+#             "hosts": [('127.0.0.1',6379)],
+#         }
+#     }
+# }

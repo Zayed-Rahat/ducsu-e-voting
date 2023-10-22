@@ -1,102 +1,57 @@
-<!doctype html>
+{% load static %}
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>
-    {% block head_title %}DUCSU{% endblock %}
-</title>
+  <title>{% block head_title %}DUCSU{% endblock %}</title>
+
   <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css" type="text/css">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/v4-shims.min.js"
+    integrity="sha512-6n3X18GAJomziz6HVPbmyBOEZeoB8+unwEBTRXFs3IZTRYYCkbXNAWNV68uHujamEvDBqaGe2FTW19o81h1/RA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/v4-shims.min.js" integrity="sha512-6n3X18GAJomziz6HVPbmyBOEZeoB8+unwEBTRXFs3IZTRYYCkbXNAWNV68uHujamEvDBqaGe2FTW19o81h1/RA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.7 -->
+  {% comment %} <link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}"> {% endcomment %}
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="{% static 'plugins/iCheck/all.css' %}">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{% static 'bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'bower_components/font-awesome/css/font-awesome.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+     folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="{% static 'dist/css/skins/_all-skins.min.css' %}">
+  <link rel="stylesheet" href="{% static 'toastr/toastr.min.css' %} ">
+  
+
+    <!-- Tailwind CSS -->
+{% comment %} <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet" /> {% endcomment %}
+{% comment %} <script src="https://cdn.tailwindcss.com"></script> {% endcomment %}
+
+  <!-- Google Font -->
+  {% comment %} <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"> {% endcomment %}
 
 </head>
+
 <body>
          
+        {% include "header.html" %}
 
         {% block content %}
         
-        {% endblock content %}
+        {% endblock content %}       
+        
 
-
-       
-        <footer class="w- mx-auto bg-[#0e0d0f]">
-          <div class="w-[1280px] flex justify-between text-white mx-auto pt-8">
-            <div>
-             
-              <div class="flex flex-col">
-                <div class="item-cente">
-                  <h1 class="text-xl font-bold">ABOUT US</h1>
-                </div>
-                <hr class="border mt-4 border-red-700">
-                <div class="flex gap-4 flex-col pt-4">
-                  <a href="" class="hover:text-red-700"> About</a>
-                  <a href="{% url 'profile' %}" class="hover:text-red-700">Team</a>
-                  <a href="https://calendar.google.com/calendar/" class="hover:text-red-700">Event Calendar</a>
-                  <a href="" class="hover:text-red-700">Requirements</a>
-                 
-                </div>              
-              </div>
-            </div>
-
-            <div>
-              <div class="flex flex-col ">
-                <h1 class="text-xl font-bold">QUICK LINKS</h1>
-              </div>
-             <hr class="border mt-3 text-red-500 border-red-700">
-              <div class="flex flex-col gap-4 pt-4">
-                <a href="" class="hover:text-red-700">services</a>
-                <a href="" class="hover:text-red-700">Blog</a>
-                <a href="" class="hover:text-red-700">Campaign</a>
-                <a href="" class="hover:text-red-700">Support</a>                
-              </div>
-            </div>
-
-            <div>
-              <div class="flex flex-col  ">
-                <h1 class="text-xl font-bold">FOLLOW US</h1>
-                <hr class="text-xl mt-4 border border-red-700">
-
-              </div>
-  
-              <div class="flex flex-col gap-4 pt-4">
-                <a href="" class="hover:text-red-700">
-                  <i class="fa-solid fa-envelope"></i>
-                  <span>Email</span>
-                </a>
-                <a href="" class="hover:text-red-700">
-                  <i class="fa-solid fa-phone"></i>
-                  <span>Contact </span>
-                </a>
-                <a href="" class="hover:text-red-700">
-                  <i class="fa-brands fa-facebook-f" ></i>
-                  <span>Facebook</span>
-                </a>
-                <a class="hover:text-red-700" href="">
-                  <i class="fa-brands fa-youtube"></i>
-                  <span >Youtube</span>
-                </a>
-              </div>
-            </div>           
-            
-          </div>
-          
-            <hr class="w-[1280px] mx-auto mt-8 border">
-          
-          <div class="text-white w-[1280px] mx-auto flex justify-between mt-8 pb-8">
-            <p class="" >Online voting Platform</p>
-            
-            <p >Copyright &copy; 2023 by team <span class="text-red-700 font-bold">Techtitans SAMAR</span></p>
-
-          </div>
-          <div>
-
-          </div>
-
-        </footer>
+        {% include "footer1.html"%}
       
 </body>
 
