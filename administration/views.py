@@ -431,21 +431,7 @@ def resetVote(request):
     return redirect(reverse('viewVotes'))
 
 
-def printshow(request):
-    return render(request,'admin/print.html')
 
-
-
-def create_election(request):
-    user = request.user
-    form = ElectionForm(request.POST)
-    if form.is_valid():
-        election = form.save(commit=False) 
-        election.user = user
-        election.save() 
-        return redirect('userDashboard')
-    else:
-        return render(request, 'admin/election.html',{'form':form})
 
 
 

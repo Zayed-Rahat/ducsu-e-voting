@@ -157,7 +157,7 @@ def change_pass(request):
             form.save()
             update_session_auth_hash(request, form.user) # password update kora hocce
             # messages.success('Your Password updated successfully')
-            return redirect('myprofile')
+            return redirect('userDashboard')
         
         else:
             form = Change_pass(user = request.user)
