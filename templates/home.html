@@ -16,10 +16,13 @@
 
                     {% if request.user.is_authenticated %}
                     <a class="hover:bg-pink-500 hover:rounded-xl hover:px-2 px-2" href="{% url 'home' %}">Home</a>
-                    <a class="hover:bg-pink-500 hover:rounded-xl hover:px-2 px-2" href="{% url 'userDashboard' %}">Welcome, {{ request.user.username }}</a>
-                    {% else %}                      
+                    <a class="hover:bg-pink-500 hover:rounded-xl hover:px-2 px-2" href="{% url 'about' %}">About</a>
+                    <a class="hover:bg-pink-500 hover:rounded-xl hover:px-2 px-2"
+                        href="{% url 'userDashboard' %}">Welcome, {{ request.user.username }}</a>
+                    {% else %}
 
                     <a class="hover:bg-pink-500 hover:rounded-xl hover:px-2 px-2" href="{% url 'home' %}">Home</a>
+                    <a class="hover:bg-pink-500 hover:rounded-xl hover:px-2 px-2" href="{% url 'about' %}">About</a>
                     <a class="hover:bg-pink-500 hover:rounded-xl hover:px-2 px-2"
                         href="{% url 'account_login' %}">Login</a>
                     <a class="hover:bg-pink-500 hover:rounded-xl hover:px-2 px-2"
@@ -141,32 +144,19 @@
         <div>
             <h1 class="text-4xl font-bold mt-10 pb-5 text-gray-200">Contact <span class="text-pink-500">Us!</span></h1>
         </div>
-        <form action="">
-            <div class="">
-                <input class="border border-green-700 w-2/4 p-2 rounded-md focus:outline-none" type="text" name="fname"
-                    id="fname" placeholder="Write your full name">
+        <div class="flex justify-center">
+            <div class="w-1/2">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{form}}
+                    <div class="text-center pt-5 ">
+                        <button
+                            class="shadow-xl shadow-cyan-700/30 font-bold text-white text-xl p-2 border border-blue-500 rounded-xl hover:bg-sky-700 cursor-pointer"
+                            type="submit">Send Messege</button>
+                    </div>
+                </form>
             </div>
-            <div class="mt-3">
-                <input class="border border-green-700 w-2/4 p-2 rounded-md focus:outline-none" type="text" name="fname"
-                    id="fname" placeholder="Write your Email">
-            </div>
-            <div class="mt-3 mb-3">
-                <input class="border border-green-700 w-2/4 p-2 rounded-md focus:outline-none" type="text" name="fname"
-                    id="fname" placeholder="Write your contact number">
-            </div>
-
-            <textarea class="w-2/4 border border-green-700 rounded-md focus:outline-none p-3" name="" id="" rows="8"
-                placeholder="Write your Messege..">
-
-            </textarea>
-
-
-            <div class="text-center pt-5 ">
-                <button
-                    class="shadow-xl shadow-cyan-700/30 font-bold text-white text-xl p-2 border border-blue-500 rounded-xl hover:bg-sky-700 cursor-pointer"
-                    type="button">Send Messeges</button>
-            </div>
-        </form>
+        </div>
     </div>
 </section>
 

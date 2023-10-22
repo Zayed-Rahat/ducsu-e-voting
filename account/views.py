@@ -197,9 +197,8 @@ def change_pass(request):
 
 
 
-
-def team_profile(request):
+def profile(request):
     return render(request,'account/footer/team.html')
 
-def about(request):
-    return render(request, 'account/footer/about.html')
+def aboutus(request):
+    return render(request,'account/footer/about.html')
