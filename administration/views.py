@@ -91,7 +91,11 @@ class PrintView(PDFView):
 
 
 def voters_home(request):
-     return render(request, 'voters_home.html')
+    voters = Voter.objects.all()  # Fetch all voters from the database
+    context = {
+        'voters': voters,  # Pass the voters queryset to the template context
+    }
+    return render(request, 'voters_home.html', context)
 
 # def dashboard(request):
 #     #   positions= requests.get('http://127.0.0.1:8000/api/position').json()
