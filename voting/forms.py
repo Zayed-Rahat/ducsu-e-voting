@@ -1,7 +1,7 @@
 from django import forms
 from api.models import *
 from account.forms import FormSettings
-
+import requests
 
 class PositionForm(FormSettings):
     class Meta:
@@ -26,12 +26,13 @@ class CandidateForm(FormSettings):
         model = Candidate
         fields = ['position', 'fullname', 'bio', 'photo']
 
-    # def __init__(self, *args, **kwargs):
-    #     super(CandidateForm, self).__init__(*args, **kwargs)
-    #     if self.instance.pk:
-    #         self.fields['position'].queryset = Position.objects.get(election_id=self.election_id)
-    #     else:
-    #         self.fields['position'].queryset = Position.objects.none()    
+    def __init__(self, *args, **kwargs):
+        # user = kwargs.pop('user', None)
+        super(CandidateForm, self).__init__(*args, **kwargs)
+        if self.instance.pk:
+            election = Election.objects.get(admin=self.instance.admin)
+                # election = Election.objects.get(admin=user)
+            self.fields['position'].queryset = Position.objects.filter(election_id=election.id) 
 
 class VoteForm(FormSettings):
     class Meta:
