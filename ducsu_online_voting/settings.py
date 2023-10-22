@@ -58,7 +58,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'voting.context_processors.ElectionTitle'
+                'voting.context_processors.ElectionTitle',
+                'administration.context_processors.user_election',
             ],
         },
     },

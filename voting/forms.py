@@ -21,18 +21,30 @@ class VoterForm(FormSettings):
         fields = ['election' , 'account_type']
 
 
-class CandidateForm(FormSettings):    
+# class CandidateForm(FormSettings):    
+#     class Meta:
+#         model = Candidate
+#         fields = ['position', 'fullname', 'bio', 'photo']
+        
+#     def __init__(self, *args, **kwargs):
+#         super(CandidateForm, self).__init__(*args, **kwargs)
+#         if self.instance.pk:
+#             self.fields['position'].queryset = Position.objects.get(user_election =self.election_id)
+#         else:
+#             self.fields['position'].queryset = Position.objects.none()    
+
+class CandidateForm(forms.ModelForm):
     class Meta:
         model = Candidate
         fields = ['position', 'fullname', 'bio', 'photo']
 
-    # def __init__(self, *args, **kwargs):
-    #     super(CandidateForm, self).__init__(*args, **kwargs)
-    #     if self.instance.pk:
-    #         self.fields['position'].queryset = Position.objects.get(election_id=self.election_id)
-    #     else:
-    #         self.fields['position'].queryset = Position.objects.none()    
+    def __init__(self, election, *args, **kwargs):
+        super(CandidateForm, self).__init__(*args, **kwargs)
+        self.election = election
 
+        # Filter positions for the specific election
+        self.fields['position'].queryset = Position.objects.filter(election=election)
+        
 class VoteForm(FormSettings):
     class Meta:
         model = Vote

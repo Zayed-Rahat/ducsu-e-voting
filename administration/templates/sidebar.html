@@ -12,49 +12,42 @@
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="mt-4 space-y-2">
 
-      {% if request.user.voter.account_type  == 'Admin' %}
+      {% if request.user.voter.account_type == 'Admin' %}
 
-      <li><a href="{% url 'userDashboard' %}"
-                  class="py-2 px-4 text-white block hover:bg-white font-bold">
-                  <i class='bx bxs-dashboard'></i> Dashboard</a></li>
+      <li><a href="{% url 'userDashboard' %}" class="py-2 px-4 text-white block hover:bg-white font-bold">
+          <i class='bx bxs-dashboard'></i> Dashboard</a></li>
 
-      <li><a href="{% url 'viewElections' %}"
-                    class="py-2 px-4 text-white block hover:bg-white font-bold"><i
-                          class="fa fa-tasks"></i> Elections</a></li>
-    {% if request.user.voter.election  %}
-      <li><a href="{% url 'viewPositions' %}"
-                    class="py-2 px-4 text-white block hover:bg-white font-bold"><i
-                          class="fa fa-tasks"></i> Positions</a></li>
-    
-   {% endif %}                      
-      <li><a href="{% url 'viewCandidates' %}"
-                            class="py-2 px-4 text-white block hover:bg-white font-bold"><i
-                                  class="fa fa-tasks"></i> Candidates</a></li>
-                                  
-      <li><a href="{% url 'adminViewVoters' %}"
-                                    class="py-2 px-4 text-white block hover:bg-white font-bold"><i
-                                          class="fa fa-tasks"></i> Voters</a></li>
+      <li><a href="{% url 'viewElections' %}" class="py-2 px-4 text-white block hover:bg-white font-bold"><i
+            class="fa fa-tasks"></i> Elections</a></li>
+      {% if request.user.voter.election %}
+      <li><a href="{% url 'viewPositions' %}" class="py-2 px-4 text-white block hover:bg-white font-bold"><i
+            class="fa fa-tasks"></i> Positions</a></li>
 
-      
-      <li><a href="{% url 'ballot_position' %}"  class="py-2 px-4 text-white block hover:bg-white font-bold"><i class="fa fa-file-text"></i> <span>Ballot Position</span></a></li>
-      <li><a href="#config" class="py-2 px-4 text-white block hover:bg-white font-bold" data-toggle="modal"><i class="fa fa-cog"></i> <span>Election Title</span></a></li>                                    
-                                  
+      {% endif %}
+      <li><a href="{% url 'viewCandidates' %}" class="py-2 px-4 text-white block hover:bg-white font-bold"><i
+            class="fa fa-tasks"></i> Candidates</a></li>
+
+      <li><a href="{% url 'adminViewVoters' %}" class="py-2 px-4 text-white block hover:bg-white font-bold"><i
+            class="fa fa-tasks"></i> Voters</a></li>
+
+
+      <li><a href="{% url 'ballot_position' %}" class="py-2 px-4 text-white block hover:bg-white font-bold"><i
+            class="fa fa-file-text"></i> <span>Ballot Position</span></a></li>
+      <li><a href="#config" class="py-2 px-4 text-white block hover:bg-white font-bold" data-toggle="modal"><i
+            class="fa fa-cog"></i> <span>Election Title</span></a></li>
+
       {% endif %}
       <hr>
-      <li><a href="{% url 'voterDashboard' %}"
-        class="py-2 px-4 text-white block hover:bg-white font-bold"><i
-              class="fa fa-dashboard"></i>Voter Dashboard</a></li>
-      <li><a href="{% url 'show_ballot' %}"
-        class="py-2 px-4 text-white block hover:bg-white font-bold"><i
-              class="fa fa-dashboard"></i> <span>Show Ballot</span></a></li>
-              
-      <li><a href="{% url 'userDashboard' %}"
-                  class="py-2 px-4 text-white block hover:bg-white font-bold"><i
-                        class="fa fa-dashboard"></i> <span>My profile</span></a></li>
-      <li><a href="{% url 'account_logout' %}"
-                  class="py-2 px-4 text-white block hover:bg-white font-bold"><i
-                        class="fa fa-power-off"></i> <span>Logout</span></a></li>
-</ul>
+      <li><a href="{% url 'voterDashboard' %}" class="py-2 px-4 text-white block hover:bg-white font-bold"><i
+            class="fa fa-dashboard"></i>Voter Dashboard</a></li>
+      <li><a href="{% url 'show_ballot' %}" class="py-2 px-4 text-white block hover:bg-white font-bold"><i
+            class="fa fa-dashboard"></i> <span>Show Ballot</span></a></li>
+
+      <li><a href="{% url 'userDashboard' %}" class="py-2 px-4 text-white block hover:bg-white font-bold"><i
+            class="fa fa-dashboard"></i> <span>My profile</span></a></li>
+      <li><a href="{% url 'account_logout' %}" class="py-2 px-4 text-white block hover:bg-white font-bold"><i
+            class="fa fa-power-off"></i> <span>Logout</span></a></li>
+    </ul>
   </section>
   <!-- /.sidebar -->
 </aside>

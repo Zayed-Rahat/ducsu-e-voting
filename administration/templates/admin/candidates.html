@@ -64,8 +64,6 @@
       <div class="modal-body">
         <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="{% url 'viewCandidates' %}">
           {% csrf_token %}
-
-
           <div class="modal-body">
             {% for field in form1 %}
             <div class="form-group has-feedback">
@@ -74,8 +72,6 @@
               {{field}}
             </div>
             {% endfor %}
-
-
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i
@@ -87,7 +83,6 @@
     </div>
   </div>
 </div>
-
 <!-- Edit -->
 <div class="modal fade" id="edit">
   <div class="modal-dialog">
