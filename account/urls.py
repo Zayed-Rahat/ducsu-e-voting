@@ -9,9 +9,8 @@ urlpatterns = [
     path('change_pass/', views.change_pass, name="change_pass"),
     
     # team profile user
-    path('profile/',views.team_profile, name='profile'),
-    path('about/',views.about, name='about'),
-    
+    path('profile/',views.profile, name='profile'),
+    path('about/',views.aboutus, name='about'),
     
     
     # my code authentication

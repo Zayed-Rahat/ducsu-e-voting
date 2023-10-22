@@ -4,7 +4,8 @@ from rest_framework import generics
 from .models import Position
 from rest_framework import viewsets
 from . import paginations
-
+from .forms import ContactForm
+from django.shortcuts import render,redirect
 
 class ElectionViewSet(viewsets.ModelViewSet):
     queryset = Election.objects.all()
@@ -79,3 +80,4 @@ class CandidateDeleteUpdate(generics.RetrieveUpdateDestroyAPIView):
 class VoteDeleteUpdate(generics.RetrieveUpdateDestroyAPIView):
     queryset = Vote.objects.all()
     serializer_class = VoteSerializer
+    

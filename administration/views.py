@@ -2,6 +2,7 @@ from django.shortcuts import render, reverse, redirect
 from django.contrib import messages
 from django.http import JsonResponse, HttpResponse
 import requests
+from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from voting.forms import *
 from api.serializers import *
@@ -146,9 +147,57 @@ def dashboard(request):
 
 
 
+def viewElections(request):
+    user = request.user
+    if user.voter.account_type == 'Admin':
+        elections = Election.objects.filter(admin=request.user)
+        form = ElectionForm(request.POST or None) 
+        context = {
+            'elections': elections,
+            'form1': form,
+        }
+        if request.method == 'POST':
+            if form.is_valid():
+                election = form.save(commit=False)
+                election.admin = request.user
+                election.save()
+                messages.success(request, "New Election Created")    
+            else:
+                messages.error(request, "Form errors")
+        return render(request, 'admin/elections.html', context)
+    
+    return redirect('account_login')
+
+
+def updateElection(request):
+    if request.method != 'POST':
+        messages.error(request, "Access Denied")
+    try:
+        instance = Election.objects.get(id=request.POST.get('id'))
+        elec = ElectionForm(request.POST or None, instance=instance)
+        elec.save()
+        messages.success(request, "Election has been updated")
+    except:
+        messages.error(request, "Access To This Resource Denied")
+
+    return redirect(reverse('viewElections'))
+
+def deleteElection(request):
+    if request.method != 'POST':
+        messages.error(request, "Access Denied")
+    try:
+        elec = Election.objects.get(id=request.POST.get('id'))
+        elec.delete()
+        messages.success(request, "Election Has Been Deleted")
+    except:
+        messages.error(request, "Access To This Resource Denied")
+
+    return redirect(reverse('viewElections'))
+
 
 def voters(request):
-    if request.user.username == 'admin':
+    user = request.user
+    if user.voter.account_type == 'Admin':
     #   voters= requests.get('http://127.0.0.1:8000/api/voter').json()
         # voters = Voter.objects.all() 
         voters_list = Voter.objects.order_by('id')  # Order by the 'id' field, you can change it to the desired field
@@ -250,7 +299,12 @@ def deleteVoter(request):
 
 
 def viewPositions(request):
-    positions = Position.objects.order_by('-priority').all()
+    try:
+        election = Election.objects.get(admin=request.user)
+        positions = Position.objects.filter(election=election)
+    except Election.DoesNotExist:
+        return redirect('viewElections') 
+
     form = PositionForm(request.POST or None)
     context = {
         'positions': positions,
@@ -258,9 +312,11 @@ def viewPositions(request):
     }
     if request.method == 'POST':
         if form.is_valid():
-            form = form.save(commit=False)
-            form.save()
+            position = form.save(commit=False)
+            position.election = election
+            position.save()
             messages.success(request, "New Position Created")
+            return redirect('viewPositions')
         else:
             messages.error(request, "Form errors")
     return render(request, "admin/positions.html", context)
@@ -294,7 +350,12 @@ def deletePosition(request):
 
 
 def viewCandidates(request):
-    candidates = Candidate.objects.all()
+    try:
+        election = Election.objects.get(admin=request.user)
+        candidates = Candidate.objects.filter(election=election)
+    except Election.DoesNotExist:
+        return redirect('viewElections') 
+
     form = CandidateForm(request.POST or None, request.FILES or None)
     context = {
         'candidates': candidates,
@@ -302,8 +363,11 @@ def viewCandidates(request):
     }
     if request.method == 'POST':
         if form.is_valid():
-            form = form.save()
+            candidate = form.save(commit=False)
+            candidate.election = election
+            candidate.save()
             messages.success(request, "New Candidate Created")
+            return redirect('viewCandidates')
         else:
             messages.error(request, "Form errors")
     return render(request, "admin/candidates.html", context)

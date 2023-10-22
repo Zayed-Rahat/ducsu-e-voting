@@ -1,41 +1,40 @@
 {% load static %}
-<header class="main-header">
+<header class="main-header pt-4">
   <!-- Logo -->
   <a href=" {% url 'home' %}">
-    <div class="absolute h-12 w-34">
-      <img style="width:400px; height:150px; margin-top:-60px; margin-left:-85px ;"  src="{% static 'images/ducsu_logo.png' %}" alt="Logo">
-    </div>                
+    <div class="absolute">
+      <img style="width:20rem;" src="{% static 'images/logo_t.png' %}" alt="Logo">
+    </div>
   </a>
+
   <!-- Header Navbar: style can be found in header.less -->
   <nav class="navbar navbar-static-top">
-    <!-- Sidebar toggle button-->
-    <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-      <span class="sr-only">Toggle navigation</span>
-    </a>
-
-    <div class="navbar-custom-menu">
-      <ul class="nav navbar-nav">
-        <!-- User Account: style can be found in dropdown.less -->
-        <li class="dropdown user user-menu">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <span class="text-green-500 font-bold hover:text-green-700 ">Username : {{ request.user.username }}</span>
-          </a>
-          <ul class="dropdown-menu">
-            <!-- User image -->
-            <p>Member since 2023</p>
-            <li class=" flex justify-between bg-blue-800">
-              <div class="pull-left">
-                <a href="#profile" data-toggle="modal" class="btn text-white">Update</a>
-              </div>
-              <div class="pull-right">
-                <a href="{% url 'account_logout' %}" class="btn text-white">Sign out</a>
-              </div>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-  </nav>
+    
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <!-- User Account: style can be found in dropdown.less -->
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <span class="text-dark bg-white fw-bold ">Username : {{ request.user.username }}</span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <p>Member since 2023</p>
+              <li class=" flex justify-between bg-blue-800">
+                <div class="pull-left">
+                  <a href="#profile" data-toggle="modal" class="btn text-white">Update</a>
+                </div>
+                <div class="pull-right">
+                  <a href="{% url 'account_logout' %}" class="btn text-white">Sign out</a>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
 </header>
- 
+
 {% include "bio.html" %}
