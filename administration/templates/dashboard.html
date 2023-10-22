@@ -1,0 +1,87 @@
+{% extends "root.html" %}
+
+{% block head_title %} DUCSU | Admin Dashboard{% endblock %}
+{% block content %}
+<div class="akther">
+    <div class="bg-green-500 text-white p-3 text-center rounded-t-lg">
+        <h2 class="text-2xl font-bold">Admin Dashboard</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+        <div class="bg-white rounded-md border border-gray-100 p-4 shadow-md shadow-black/5">
+            <div class="flex justify-between mb-6">
+                <div>
+                    <div class="text-2xl  font-semibold mb-1">{{ positions | length }}</div>
+                    <div class="text-lg font-medium text-green-600">No. of Positions</div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white rounded-md border border-gray-100 p-4 shadow-md shadow-black/5">
+            <div class="flex justify-between mb-6">
+                <div>
+                    <div class="text-2xl  font-semibold mb-1">{{ candidates| length }}</div>
+                    <div class="text-lg font-medium text-green-600">No. of Candidates</div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white rounded-md border border-gray-100 p-4 shadow-md shadow-black/5">
+            <div class="flex justify-between mb-6">
+                <div>
+                    <div class="text-2xl font-semibold mb-1">{{ voters | length }}</div>
+                    <div class="text-lg font-medium text-green-600">Total Voter</div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white rounded-md border border-gray-100 p-4 shadow-md shadow-black/5">
+            <div class="flex justify-between mb-6">
+                <div>
+                    <div class="text-2xl  font-semibold mb-1">{{ votes | length }}</div>
+                    <div class="text-lg font-medium text-green-600">Voters Voted</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <div class="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md">
+            <div class="flex justify-between mb-4 items-start">
+                <div class="font-medium">President</div>
+            </div>
+            <div class="overflow-x-auto">
+                <div class="w-full min-w-[540px]">
+
+                </div>
+            </div>
+        </div>
+        <div class="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md">
+            <div class="flex justify-between mb-4 items-start">
+                <div class="font-medium">Chairman</div>
+
+            </div>
+            <div class="overflow-x-auto">
+                <div class="w-full min-w-[540px]">
+                    <div class="bg">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+    <div class="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md lg:col-span-2">
+        <div class="flex justify-between mb-4 items-start">
+            <div class="font-medium">Statistics</div>
+        </div>
+        <div>
+            <canvas id="order-chart"></canvas>
+        </div>
+    </div>
+    <div class="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md">
+        <div class="flex justify-between mb-4 items-start">
+            <div class="font-medium">Vice</div>
+        </div>
+        <div class="overflow-x-auto">
+            <div class="w-full min-w-[460px]"></div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
