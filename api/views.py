@@ -1,10 +1,15 @@
-from .models import Position,Voter,Candidate,Vote
-from .serializers import PositionSerializer,VoterSerializer,CandidateSerializer,VoteSerializer
+from .models import *
+from .serializers import *
 from rest_framework import generics
 from .models import Position
 from rest_framework import viewsets
 from . import paginations
 
+
+class ElectionViewSet(viewsets.ModelViewSet):
+    queryset = Election.objects.all()
+    serializer_class = ElectionSerializer
+    pagination_class = paginations.ElectionPagination
 
 class PositionViewSet(viewsets.ModelViewSet):
     queryset = Position.objects.all()
@@ -27,6 +32,16 @@ class CandidateViewSet(viewsets.ModelViewSet):
     pagination_class = paginations.CandidatePagination
 
 
+
+
+class ElectionList(generics.ListCreateAPIView):
+    queryset = Election.objects.all()
+    serializer_class = ElectionSerializer
+
+    @staticmethod
+    def get_extra_actions():
+        return []
+
 class PositionList(generics.ListCreateAPIView):
     queryset = Position.objects.all()
     serializer_class = PositionSerializer
@@ -45,6 +60,12 @@ class VoteList(generics.ListCreateAPIView):
     queryset = Vote.objects.all()
     serializer_class = VoteSerializer
 
+
+
+
+class ElectionDeleteUpdate(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Election.objects.all()
+    serializer_class = ElectionSerializer
 
 class PositionDeleteUpdate(generics.RetrieveUpdateDestroyAPIView):
     queryset = Position.objects.all()

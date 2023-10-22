@@ -9,4 +9,5 @@ urlpatterns = [
     
     # team profile user
     path('profile/',views.profile, name='profile'),
+    path('about/',views.aboutus, name='about'),
 ]

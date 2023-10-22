@@ -8,8 +8,9 @@ from django.conf import settings
 from django.http import JsonResponse
 
 
-def home(request):
-    return render(request, 'voting/home.html')
+
+def voters_home(request):
+     return render(request, 'voting/voter/voters_home.html')
 
 
 def index(request):
