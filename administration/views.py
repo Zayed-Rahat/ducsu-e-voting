@@ -9,6 +9,8 @@ from api.serializers import *
 from api.models import *
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django_renderpdf.views import PDFView
+from django.shortcuts import get_object_or_404
+from django.db import connection
 
 
 def find_n_winners(data, n):
@@ -371,6 +373,8 @@ def viewCandidates(request):
         else:
             messages.error(request, "Form errors")
     return render(request, "admin/candidates.html", context)
+
+
 
 
 def updateCandidate(request):
