@@ -90,13 +90,6 @@ class PrintView(PDFView):
         return context
 
 
-def voters_home(request):
-    voters = Voter.objects.all()  # Fetch all voters from the database
-    context = {
-        'voters': voters,  # Pass the voters queryset to the template context
-    }
-    return render(request, 'voters_home.html', context)
-
 # def dashboard(request):
 #     #   positions= requests.get('http://127.0.0.1:8000/api/position').json()
 #     #   voters= requests.get('http://127.0.0.1:8000/api/voter').json()
@@ -112,37 +105,47 @@ def voters_home(request):
 #       return render(request, 'dashboard.html', context)
 
 def dashboard(request):
-    positions = Position.objects.all().order_by('priority')
-    candidates = Candidate.objects.all()
-    voters = Voter.objects.all()
-    voted_voters = Voter.objects.filter(voted=1)
-    list_of_candidates = []
-    votes_count = []
-    chart_data = {}
-
-    for position in positions:
+    user = request.user
+    if user.voter.account_type == 'Admin':
+        positions = Position.objects.all().order_by('priority')
+        candidates = Candidate.objects.all()
+        voters = Voter.objects.all()
+        voted_voters = Voter.objects.filter(voted=1)
         list_of_candidates = []
         votes_count = []
-        for candidate in Candidate.objects.filter(position=position):
-            list_of_candidates.append(candidate.fullname)
-            votes = Vote.objects.filter(candidate=candidate).count()
-            votes_count.append(votes)
-        chart_data[position] = {
-            'candidates': list_of_candidates,
-            'votes': votes_count,
-            'pos_id': position.id
-        }
+        chart_data = {}
 
-    context = {
-        'position_count': positions.count(),
-        'candidate_count': candidates.count(),
-        'voters_count': voters.count(),
-        'voted_voters_count': voted_voters.count(),
-        'positions': positions,
-        'chart_data': chart_data,
-        'page_title': "Dashboard"
-    }
-    return render(request, "admin/home.html", context)
+        for position in positions:
+            list_of_candidates = []
+            votes_count = []
+            for candidate in Candidate.objects.filter(position=position):
+                list_of_candidates.append(candidate.fullname)
+                votes = Vote.objects.filter(candidate=candidate).count()
+                votes_count.append(votes)
+            chart_data[position] = {
+                'candidates': list_of_candidates,
+                'votes': votes_count,
+                'pos_id': position.id
+            }
+
+        context = {
+            'position_count': positions.count(),
+            'candidate_count': candidates.count(),
+            'voters_count': voters.count(),
+            'voted_voters_count': voted_voters.count(),
+            'positions': positions,
+            'chart_data': chart_data,
+            'page_title': "Dashboard"
+        }
+        return render(request, "admin/admin_home.html", context)
+    
+    elif user.voter.account_type == 'Voter':
+        return render(request, "voter/voter_home.html")
+    
+    return redirect('account_login')
+
+
+
 
 def voters(request):
     if request.user.username == 'admin':
