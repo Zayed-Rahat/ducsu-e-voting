@@ -6,6 +6,7 @@ from django.contrib import messages, auth
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, SetPasswordForm
 
 
+# new coder code for toster
 def account_login(request):
     if request.method == 'POST':
         form = AuthenticationForm(request=request, data=request.POST)        
@@ -15,12 +16,12 @@ def account_login(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('userDashboard')
+                return redirect('home')
         else:
             messages.error(request, "Invalid details")
     else:
         form = AuthenticationForm()
-    return render(request, 'voting/login.html', {'form':form})
+    return render(request, 'account/login.html')
 
 
 
@@ -32,13 +33,40 @@ def account_register(request):
             user = form.save()
             login(request, user)
             messages.success(request, "Account created. You can login now!")
-            return redirect('userDashboard')
+            return redirect('home')
         else:
             messages.error(request, "Provided data failed validation")
             # return account_login(request)
     else :
         form = RegistrationForm()        
-    return render(request, 'voting/register.html', {'form': form})
+    return render(request, 'account/register.html', {'form': form})
+
+
+
+
+# def user_registration(request):
+#     if request.method == 'POST':
+#         form = RegistrationForm(request.POST)
+#         if form.is_valid():
+#             user = form.save()
+#             login(request, user)
+#             return redirect('myprofile') 
+#     else:
+#         form = RegistrationForm()
+#     return render(request, 'account/register.html', {'form': form})
+
+
+# def user_login(request):
+#     if request.method == 'POST':
+#         username = request.POST['username']
+#         password = request.POST['password']
+#         user = authenticate(request, username=username, password=password)
+#         if user is not None:
+#             login(request, user)
+#             return redirect('myprofile')
+#         else:
+#             pass
+#     return render(request, 'account/login.html')
 
 
 
@@ -51,7 +79,7 @@ def account_logout(request):
         messages.error(
             request, "You need to be logged in to perform this action")
 
-    return redirect('account_login') 
+    return redirect('login') 
 
 
 # user register with email varification
@@ -121,19 +149,20 @@ def account_logout(request):
 
 
 # change passsword without old password
-# def change_pass(request):
-#     # if request.user.is_authenticated:
-#     if request.method == 'POST':        
-#         form = Change_pass(user=request.user, data=request.POST) # user data collect kora hocce
-#         if form.is_valid():
-#             form.save()
-#             update_session_auth_hash(request, form.user) # password update kora hocce
-#             messages.success('Your Password updated successfully')
-#             return redirect('myprofile')
-#     else:
-#         form = Change_pass(user = request.user)
-#     return render(request, 'account/pass_change.html', {'form':form})
-#     # return redirect('login')
+def change_pass(request):
+    # if request.user.is_authenticated:
+    form = Change_pass(user=request.user, data=request.POST) # user data collect kora hocce
+    if request.method == 'POST':        
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user) # password update kora hocce
+            # messages.success('Your Password updated successfully')
+            return redirect('userDashboard')
+        
+        else:
+            form = Change_pass(user = request.user)
+    return render(request, 'account/pass_change.html', {'form':form})
+    # return redirect('change_pass')
 
 
 
@@ -169,5 +198,8 @@ def account_logout(request):
 
 
 
-def profile(request):
+def team_profile(request):
     return render(request,'account/footer/team.html')
+
+def about(request):
+    return render(request, 'account/footer/about.html')

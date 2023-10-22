@@ -215,6 +215,7 @@ def voters(request):
         return redirect('account_login')
 
 
+
 # def voters(request):
 #     voters = Voter.objects.all()
 #     userForm = CustomUserForm(request.POST or None)
@@ -492,3 +493,9 @@ def resetVote(request):
     Voter.objects.all().update(voted=False)
     messages.success(request, "All votes has been reset")
     return redirect(reverse('viewVotes'))
+
+
+
+
+
+

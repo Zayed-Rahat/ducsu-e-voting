@@ -19,7 +19,7 @@
               <h3 class="">{{ position_count }}</h3>
               <p>No. of Positions</p>
             </div>
-            <div class="icon">
+            <div class="icon pt-6">
               <i class="fa fa-tasks"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
@@ -33,7 +33,7 @@
               <h3>{{ candidate_count }}</h3>          
               <p>No. of Candidates</p>
             </div>
-            <div class="icon">
+            <div class="icon pt-6">
               <i class="fa fa-black-tie"></i>
             </div>
             <a href="{% url 'viewCandidates' %}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
@@ -47,7 +47,7 @@
               <h3>{{ voters_count }}</h3>             
               <p>Total Voters</p>
             </div>
-            <div class="icon pt-4">
+            <div class="icon pt-6">
               <i class="fa fa-users"></i>
             </div>
             <a href="{% url 'adminViewVoters' %}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
@@ -61,7 +61,7 @@
               <h3>{{ voted_voters_count }}</h3>
               <p>Voters Voted</p>
             </div>
-            <div class="icon">
+            <div class="icon pt-6">
               <i class="fa fa-edit"></i>
             </div>
             <a href="{% url 'viewVotes' %}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
@@ -75,6 +75,7 @@
         <div class="col-xs-12">
           <h2>Votes Tally
             <span class="pull-right">
+              {% comment %} <a href="{% url 'printResult' %}">show</a> {% endcomment %}
               <a href="{% url 'printResult' %}" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Print</a>
             </span>
           </h2>

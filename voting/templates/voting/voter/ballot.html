@@ -14,18 +14,18 @@
       </div>
 
 
-      <form method="POST" id="ballotForm" action="{% url 'submit_ballot' %}">
-        {% csrf_token %}
-        <div class="bg-gray">
-          {{ ballot|safe }}
-        </div>
-        <div class="text-center">
-          <button type="button" class="btn btn-success btn-flat" id="preview"><i class="fa fa-file-text"></i>
-            Preview</button>
-          <button type="submit" class="btn btn-primary btn-flat" name="submit_vote"><i class="fa fa-check-square-o"></i>
-            Submit</button>
-        </div>
-      </form>
+<form method="POST" id="ballotForm" action="{% url 'submit_ballot' %}">
+  {% csrf_token %}
+  <div class="bg-gray">
+    {{ ballot|safe }}
+  </div>
+  <div class="text-center">
+    <button type="button" class="btn btn-success btn-flat bg-green-500" id="preview"><i
+            class="fa fa-file-text"></i> Preview</button>
+    <button type="submit" class="btn btn-primary bg-blue-500 btn-flat" name="submit_vote"><i
+            class="fa fa-check-square-o"></i> Submit</button>
+</div>
+</form>
     </div>
   </div>
 </section>
@@ -33,11 +33,11 @@
 
 {% block custom_js %}
 <script>
-  $(function () {
-    $('.content').iCheck({
-      checkboxClass: 'icheckbox_flat-green',
-      radioClass: 'iradio_flat-green'
-    });
+  $(function() {
+      $('.content').iCheck({
+          checkboxClass: 'icheckbox_flat-green bg-green-500',
+          radioClass: 'iradio_flat-green'
+      });
 
     $(document).on('click', '.reset', function (e) {
       e.preventDefault();
