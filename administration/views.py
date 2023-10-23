@@ -10,6 +10,7 @@ from api.models import *
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django_renderpdf.views import PDFView
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
 
 def find_n_winners(data, n):
     """Read More
@@ -161,18 +162,17 @@ def viewElections(request):
             else:
                 messages.error(request, "Form errors")
 
-        # Check if any elections should be closed
         now = timezone.now()
-        elections_to_close = elections.filter(end_date__lte=now, is_open=True)
+        for election in elections:
+            if election.end_date <= now and election.is_open:
+                election.is_open = False
+                election.save()
+                messages.info(request, f"Election '{election.title}' has been closed.")
+
         context = {
             'elections': elections,
             'form1': form,
         }
-
-        for election in elections_to_close:
-            election.is_open = False
-            election.save()
-            messages.info(request, f"Election '{election.title}' has been closed.")
 
         return render(request, 'admin/elections.html', context)
 
@@ -182,17 +182,42 @@ def viewElections(request):
 def updateElection(request):
     if request.method != 'POST':
         messages.error(request, "Access Denied")
+        return redirect(reverse('viewElections'))
+
     try:
         election_id = request.POST.get('id')
         election = Election.objects.get(id=election_id)
-        form = ElectionForm(request.POST or None, instance=election)
-        if form.is_valid:
+        
+        if election.admin != request.user:
+            messages.error(request, "Access To This Resource Denied")
+            return redirect(reverse('viewElections'))
+
+        form = ElectionForm(request.POST, instance=election)
+
+        if form.is_valid():
+            if 'end_date' in form.changed_data:
+                now = timezone.now()
+                updated_end_date = form.cleaned_data['end_date']
+                
+                if updated_end_date <= now:
+                    election.is_open = False
+                else:
+                    election.is_open = True
+
             form.save()
+            election.save()
             messages.success(request, "Election has been updated")
+        else:
+            messages.error(request, "Form errors")
+
+    except Election.DoesNotExist:
+        messages.error(request, "Election not found")
     except:
-        messages.error(request, "Access To This Resource Denied")
+        messages.error(request, "An error occurred")
 
     return redirect(reverse('viewElections'))
+
+
 
 # def deleteElection(request):
 #     election = Election.objects.get(admin=request.user)
