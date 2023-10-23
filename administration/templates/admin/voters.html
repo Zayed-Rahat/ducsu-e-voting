@@ -15,7 +15,9 @@
 <div class="box-body">
   <table id="example1" class="table table-bordered">
       <thead>
+        
           <th>Email</th>
+          <th>Election</th>
           <th>Voted</th>
           <th>Action</th>
       </thead>
@@ -24,6 +26,7 @@
       
     <tr>
       <td>{{ voter.user.email }}</td> 
+      <td>{{ voter.election }}</td>
       <td>{% if voter.voted == True %}Yes{% else %}No{% endif %}</td>      
 
       <td>
@@ -57,13 +60,9 @@
             <form class="form-horizontal" method="POST" action="{% url 'updateVoter' %}">
               {% csrf_token %}
               <input type="hidden" class="id" name="id">
-              <div class="form-group">
-                  <label for="voted" class="col-sm-3 control-label">Voted</label>
-
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" id="voted" name="voted">
-                  </div>
-              </div>
+              <p class="display_form">
+                
+              </p>
             
           </div>
           <div class="modal-footer">
@@ -90,7 +89,7 @@
               {% csrf_token %}
               <div class="text-center">
                   <p>DELETE VOTER</p>
-                  <h2 class="bold fullname"></h2>
+                  <h2 class="bold email"></h2>
               </div>
           </div>
           <div class="modal-footer">
@@ -137,9 +136,8 @@
           dataType: 'json',
           success: function(response) {
               $('.id').val(response.id);
-              $('#edit_firstname').val(response.first_name);
-              $('#edit_lastname').val(response.last_name);
-              $('.fullname').html(response.first_name + ' ' + response.last_name);
+              $('.display_form').html(response.form);
+              $('.verified').val(response.verified);
           }
       });
   }

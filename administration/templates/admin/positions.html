@@ -182,7 +182,7 @@
   function getRow(id) {
       $.ajax({
           type: 'GET',
-          url: '{% url "viewPositions" %}',
+          url: '{% url "viewPosition" %}',
           data: {
               id: id
           },
@@ -191,7 +191,7 @@
               $('.id').val(response.id);
               $('#max_vote').val(response.max_vote);
               $('#name').val(response.name);
-              $('.fullname').html(response.name);
+              $('#priority').val(response.priority);
           }
       });
   }

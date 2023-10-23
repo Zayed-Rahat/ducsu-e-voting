@@ -16,25 +16,25 @@
         <ul class="nav navbar-nav">
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <span class="text-dark bg-white fw-bold ">Username : {{ request.user.username }}</span>
-            </a>
-            <ul class="dropdown-menu">
-              <!-- User image -->
-              <p>Member since 2023</p>
-              <li class=" flex justify-between bg-blue-800">
-                <div class="pull-left">
-                  <a href="#profile" data-toggle="modal" class="btn text-white">Update</a>
-                </div>
-                <div class="pull-right">
-                  <a href="{% url 'account_logout' %}" class="btn text-white">Sign out</a>
-                </div>
-              </li>
-            </ul>
+            <span class="text-green text-2xl font-bold fw-bold animate-blink">Username : {{ request.user.username }}</span>
           </li>
         </ul>
       </div>
     </nav>
+
+    <style>
+
+@keyframes blink {
+  0% { opacity: 1; }
+  30% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Apply the "blink" animation to the element with the "animate-blink" class */
+.animate-blink {
+  animation: blink 2s infinite; /* "1s" is the duration, "infinite" makes it repeat indefinitely */
+}
+    </style>
 </header>
 
 {% include "bio.html" %}
