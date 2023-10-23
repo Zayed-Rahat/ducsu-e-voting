@@ -14,9 +14,6 @@ class Election(models.Model):
     def __str__(self):
         return self.title
     
-    def is_election_closed(self):
-        now = timezone.now()
-        return self.end_date <= now
     
 
 class Position(models.Model):
@@ -26,7 +23,7 @@ class Position(models.Model):
     election = models.ForeignKey(Election,on_delete=models.CASCADE,default=None)
 
     def __str__(self):
-        return  f'{self.name} - {self.election}'
+        return  self.name
 
 ACCOUNT_TYPE = (
     ('SuperAdmin', 'SuperAdmin'),
