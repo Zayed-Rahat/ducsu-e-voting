@@ -1,202 +1,193 @@
 {% extends 'root.html' %}
 
-{% block head_title %} DUCSU | Elections{% endblock %}
+{% block head_title %}DUCSU | Elections{% endblock %}
 {% block content %}
 <section class="content">
-
   <div class="flex justify-center mb-2">
     <h1 class="font-bold text-4xl text-blue-800">Elections List</h1>
   </div>
   <div class="row">
-<div class="col-xs-12">
-<div class="box">
-
-<div class="box-header with-border">
-  <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat">
-    <i class="fa fa-plus"></i> New</a>
-</div>
-
-<div class="box-body">
-  <table id="example1" class="table table-bordered">
-      <thead>
-          <th>Title</th>
-          <th>Start Time</th>
-          <th>End Time</th>
-          <th>Action</th>
-      </thead>
-      <tbody>
-    {% for election in elections %}
-      
-    <tr>
-      <td>{{ election.title }}</td>
-      <td>{{ election.start_date }}</td>
-      <td>{{ election.end_date }}</td>
-      
-      <td>
-        <button class='btn btn-success btn-sm edit btn-flat' data-id='{{ election.id }}'><i class='fa fa-edit'></i> Edit</button>
-        <button class='btn btn-danger btn-sm delete btn-flat' data-id='{{ election.id }}'><i class='fa fa-trash'></i> Delete</button>
-      </td>
-    </tr>
-    {% endfor %}      
-
-    </tbody>
-  </table>
-</div>
-</div>
-</div>
-</div>
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header with-border">
+          <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat">
+            <i class="fa fa-plus"></i> New
+          </a>
+        </div>
+        <div class="box-body">
+          <table id="example1" class="table table-bordered">
+            <thead>
+              <th>Title</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Action</th>
+            </thead>
+            <tbody>
+              {% for election in elections %}
+              <tr>
+                <td>{{ election.title }}</td>
+                <td>{{ election.start_date }}</td>
+                <td>{{ election.end_date }}</td>
+                <td>
+                  <button class='btn btn-success btn-sm edit btn-flat' data-id='{{ election.id }}'><i
+                      class='fa fa-edit'></i> Edit</button>
+                  <button class='btn btn-danger btn-sm delete btn-flat' data-id='{{ election.id }}'><i
+                      class='fa fa-trash'></i> Delete</button>
+                  {% if not election.is_open %}
+                  <span class="label label-warning">Closed</span>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
-
 {% endblock content %}
 
 {% block modal %}
-
-
 <div class="modal fade" id="addnew">
   <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title"><b>Add New Election</b></h4>
-          </div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title"><b>Add New Election</b></h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" method="POST" action="{% url 'viewElections' %}">
+          {% csrf_token %}
           <div class="modal-body">
-            <form class="form-horizontal" method="POST" action="{% url 'viewElections' %}">
-              {% csrf_token %}
-
-             
-              <div class="modal-body">
-                  {% for field in form1  %}
-                  <div class="form-group has-feedback">
-                      <span class="text-danger">{{field.errors}}</span>
-                      {{field.label_tag}}
-                      {{field}}
-                  </div>
-                  {% endfor %}
-
-
+            {% for field in form1 %}
+            <div class="form-group has-feedback">
+              <span class="text-danger">{{field.errors}}</span>
+              {{field.label_tag}}
+              {{field}}
+            </div>
+            {% endfor %}
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+            <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i
+                class="fa fa-close"></i> Close</button>
             <button type="submit" class="btn btn-primary btn-flat" name="add"><i class="fa fa-save"></i> Save</button>
-          </div></form></div></div></div></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Edit -->
 <div class="modal fade" id="edit">
   <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title"><b>Edit Election</b></h4>
-          </div>
-          <div class="modal-body">
-            <form class="form-horizontal" method="POST" action="{% url 'updatePosition' %}">
-              {% csrf_token %}
-              <input type="hidden" class="id" name="id">
-              <div class="form-group">
-                <label for="name" class="col-sm-3 control-label">Title</label>
-
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="title" name="title">
-                </div>
-            </div>
-
-            <div class="form-group">
-              <label for="max_vote" class="col-sm-3 control-label">Start Date</label>
-
-              <div class="col-sm-9">
-                <input type="text" class="form-control" id="start_date" name="start_date">
-              </div>
-          </div>
-
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title"><b>Edit Election</b></h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" method="POST" action="{% url 'updateElection' %}">
+          {% csrf_token %}
+          <input type="hidden" class="id" name="id">
           <div class="form-group">
-            <label for="priority" class="col-sm-3 control-label">End Date</label>
-
+            <label for="name" class="col-sm-3 control-label">Title</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="title" name="title">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="start_date" class="col-sm-3 control-label">Start Date</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="start_date" name="start_date">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="end_date" class="col-sm-3 control-label">End Date</label>
             <div class="col-sm-9">
               <input type="text" class="form-control" id="end_date" name="end_date">
             </div>
-        </div>
-
-             
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
-            <button type="submit" class="btn btn-success btn-flat" name="edit"><i class="fa fa-check-square-o"></i> Update</button>
-            </form>
-          </div>
+        </form>
       </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i
+            class="fa fa-close"></i> Close</button>
+        <button type="submit" class="btn btn-success btn-flat" name="edit"><i class="fa fa-check-square-o"></i>
+          Update</button>
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- Delete -->
 <div class="modal fade" id="delete">
   <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title"><b>Deleting...</b></h4>
-          </div>
-          <div class="modal-body">
-            <form class="form-horizontal" method="POST" action="{% url 'deleteElection' %}">
-              <input type="hidden" class="id" name="id">
-              {% csrf_token %}
-              <div class="text-center">
-                  <p>DELETE Election</p>
-                  <h2 class="bold fullname"></h2>
-              </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
-            <button type="submit" class="btn btn-danger btn-flat" name="delete"><i class="fa fa-trash"></i> Delete</button>
-            </form>
-          </div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title"><b>Deleting...</b></h4>
       </div>
+      <div class="modal-body">
+        <form class="form-horizontal" method="POST" action="{% url 'deleteElection' %}">
+          <input type="hidden" class="id" name="id">
+          {% csrf_token %}
+          <div class="text-center">
+            <p>DELETE Election</p>
+            <h2 class="bold fullname"></h2>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i
+            class="fa fa-close"></i> Close</button>
+        <button type="submit" class="btn btn-danger btn-flat" name="delete"><i class="fa fa-trash"></i> Delete</button>
+      </div>
+    </div>
   </div>
 </div>
-
 {% endblock modal %}
 
-
-
 {% block custom_js %}
-  
 <script>
-  $(function() {
-      $(document).on('click', '.edit', function(e) {
-          e.preventDefault();
-          $('#edit').modal('show');
-          var id = $(this).data('id');
-          getRow(id);
-      });
-
-      $(document).on('click', '.delete', function(e) {
-          e.preventDefault();
-          $('#delete').modal('show');
-          var id = $(this).data('id');
-          getRow(id);
-      });
-
-
-  });
-
-  function getRow(id) {
+  $(document).ready(function () {
+    // Edit election
+    $(document).on('click', '.edit', function (e) {
+      e.preventDefault();
+      var id = $(this).data('id');
+      // Implement your edit functionality here using AJAX.
+      // You can fetch the election data and populate the edit modal.
       $.ajax({
-          type: 'GET',
-          url: '{% url "viewElections" %}',
-          data: {
-              id: id
-          },
-          dataType: 'json',
-          success: function(response) {
-              $('.id').val(response.id);
-              $('#start_date').val(response.start_date);
-              $('#end_date').val(response.end_date);
-              $('.title').html(response.name);
-          }
+        type: 'GET',
+        url: '{% url "viewElections" %}',
+        data: {
+          id: id
+        },
+        dataType: 'json',
+        success: function (response) {
+          $('#edit .id').val(response.id);
+          $('#edit #title').val(response.title);
+          $('#edit #start_date').val(response.start_date);
+          $('#edit #end_date').val(response.end_date);
+        }
       });
-  }
-  </script>
+    });
+
+    // Delete election
+    $(document).on('click', '.delete', function (e) {
+      e.preventDefault();
+      var id = $(this).data('id');
+      // Implement your delete functionality here using AJAX.
+      // You can show a confirmation modal and perform the deletion.
+      $('#delete .id').val(id);
+    });
+  });
+</script>
 {% endblock custom_js %}
-  

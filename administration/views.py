@@ -153,21 +153,32 @@ def viewElections(request):
     user = request.user
     if user.voter.account_type == 'Admin':
         elections = Election.objects.filter(admin=request.user)
-        form = ElectionForm(request.POST or None) 
+        form = ElectionForm(request.POST or None)
         context = {
             'elections': elections,
             'form1': form,
         }
+
         if request.method == 'POST':
             if form.is_valid():
                 election = form.save(commit=False)
                 election.admin = request.user
                 election.save()
-                messages.success(request, "New Election Created")    
+                messages.success(request, "New Election Created")
             else:
                 messages.error(request, "Form errors")
+
+        # Check if any elections should be closed
+        now = timezone.now()
+        elections_to_close = elections.filter(end_date__lte=now, is_open=True)
+
+        for election in elections_to_close:
+            election.is_open = False
+            election.save()
+            messages.info(request, f"Election '{election.title}' has been closed.")
+
         return render(request, 'admin/elections.html', context)
-    
+
     return redirect('account_login')
 
 
