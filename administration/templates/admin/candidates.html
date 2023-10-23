@@ -168,7 +168,7 @@
           },
           dataType: 'json',
           success: function(response) {
-            $('.id').val(id),
+            $('.id').val(response.id),
               $('.display_form').html(response.form);
               $('.fullname').html(response.fullname);
           },

@@ -5,19 +5,15 @@
 <section class="content">
 
   <div class="flex justify-center mb-2">
-    <h1 class="font-bold text-4xl text-blue-800">Elections List</h1>
+    <h1 class="font-bold text-4xl text-blue-800">Elections</h1>
   </div>
   <div class="row">
 <div class="col-xs-12">
 <div class="box">
-
-<div class="box-header with-border">
-  <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat">
-    <i class="fa fa-plus"></i> New</a>
-</div>
+  {% if elections %}
 
 <div class="box-body">
-  <table id="example1" class="table table-bordered">
+  <table  class="table table-bordered">
       <thead>
           <th>Title</th>
           <th>Start Time</th>
@@ -42,6 +38,15 @@
     </tbody>
   </table>
 </div>
+
+{% else %}
+<div class="box-header with-border">
+  <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat">
+    <i class="fa fa-plus"></i> New</a>
+</div>
+<h2>No election created yet. Please Create a election!!</h2>
+
+{% endif %}
 </div>
 </div>
 </div>
@@ -91,35 +96,15 @@
             <h4 class="modal-title"><b>Edit Election</b></h4>
           </div>
           <div class="modal-body">
-            <form class="form-horizontal" method="POST" action="{% url 'updatePosition' %}">
+            <form class="form-horizontal" method="POST" action="{% url 'updateElection' %}">
               {% csrf_token %}
               <input type="hidden" class="id" name="id">
-              <div class="form-group">
-                <label for="name" class="col-sm-3 control-label">Title</label>
-
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="title" name="title">
-                </div>
-            </div>
-
-            <div class="form-group">
-              <label for="max_vote" class="col-sm-3 control-label">Start Date</label>
-
-              <div class="col-sm-9">
-                <input type="text" class="form-control" id="start_date" name="start_date">
-              </div>
+              <p class="display_form">
+                
+              </p>
           </div>
-
-          <div class="form-group">
-            <label for="priority" class="col-sm-3 control-label">End Date</label>
-
-            <div class="col-sm-9">
-              <input type="text" class="form-control" id="end_date" name="end_date">
-            </div>
-        </div>
-
              
-          </div>
+        </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
             <button type="submit" class="btn btn-success btn-flat" name="edit"><i class="fa fa-check-square-o"></i> Update</button>
@@ -144,7 +129,7 @@
               {% csrf_token %}
               <div class="text-center">
                   <p>DELETE Election</p>
-                  <h2 class="bold fullname"></h2>
+                  <h2 class="bold title"></h2>
               </div>
           </div>
           <div class="modal-footer">
@@ -184,16 +169,15 @@
   function getRow(id) {
       $.ajax({
           type: 'GET',
-          url: '{% url "viewElections" %}',
+          url: '{% url "viewElection" %}',
           data: {
               id: id
           },
           dataType: 'json',
           success: function(response) {
               $('.id').val(response.id);
-              $('#start_date').val(response.start_date);
-              $('#end_date').val(response.end_date);
-              $('.title').html(response.name);
+              $('.display_form').html(response.form);
+              $('.title').html(response.title);
           }
       });
   }

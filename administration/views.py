@@ -173,22 +173,45 @@ def updateElection(request):
     if request.method != 'POST':
         messages.error(request, "Access Denied")
     try:
-        instance = Election.objects.get(id=request.POST.get('id'))
-        elec = ElectionForm(request.POST or None, instance=instance)
-        elec.save()
-        messages.success(request, "Election has been updated")
+        election_id = request.POST.get('id')
+        election = Election.objects.get(id=election_id)
+        form = ElectionForm(request.POST or None, instance=election)
+        if form.is_valid:
+            form.save()
+            messages.success(request, "Election has been updated")
     except:
         messages.error(request, "Access To This Resource Denied")
 
     return redirect(reverse('viewElections'))
+
+# def deleteElection(request):
+#     election = Election.objects.get(admin=request.user)
+#     if request.method != 'POST':
+#         messages.error(request, "Access Denied")
+#     try:
+#         elec = Election.objects.get(id=request.POST.get('id'))
+#         elec.delete()
+#         messages.success(request, "Election Has Been Deleted")
+#         Voter.objects.filter(election=election).update(voted=False)
+#     except:
+#         messages.error(request, "Access To This Resource Denied")
+
+#     return redirect(reverse('viewElections'))
+
 
 def deleteElection(request):
     if request.method != 'POST':
         messages.error(request, "Access Denied")
     try:
         elec = Election.objects.get(id=request.POST.get('id'))
-        elec.delete()
-        messages.success(request, "Election Has Been Deleted")
+        # Get all voters associated with the election
+        voters = Voter.objects.filter(election=elec)
+        # Iterate over the voters
+        for voter in voters:
+            # If the voter is also an admin, skip the deletion of the voter
+            if voter.user.id != elec.admin.id:
+                voter.delete()
+        messages.success(request, "Voters of Election  Deleted")
     except:
         messages.error(request, "Access To This Resource Denied")
 
@@ -234,6 +257,34 @@ def view_voter_by_id(request):
         context['form'] = str(previous.as_p())
     return JsonResponse(context)
 
+def view_election_by_id(request):
+    election_id = request.GET.get('id', None)
+    election = Election.objects.filter(id=election_id)
+    context = {}
+    if not election.exists():
+        context['code'] = 404
+    else:
+        election = election[0]
+        context['code'] = 200
+        context['id'] = election.id
+        previous = ElectionForm(instance=election)
+        context['form'] = str(previous.as_p())
+    return JsonResponse(context)
+
+def view_candidate_by_id(request):
+    candidate_id = request.GET.get('id', None)
+    candidate = Candidate.objects.filter(id=candidate_id)
+    context = {}
+    if not candidate.exists():
+        context['code'] = 404
+    else:
+        candidate = candidate[0]
+        context['code'] = 200
+        context['id'] = candidate.id
+        context['fullname'] = candidate.fullname
+        previous = CandidateForm(instance=candidate)
+        context['form'] = str(previous.as_p())
+    return JsonResponse(context)
 
 def view_position_by_id(request):
     pos_id = request.GET.get('id', None)
@@ -385,20 +436,6 @@ def deleteCandidate(request):
 
     return redirect(reverse('viewCandidates'))
 
-
-def view_candidate_by_id(request):
-    candidate_id = request.GET.get('id', None)
-    candidate = Candidate.objects.filter(id=candidate_id)
-    context = {}
-    if not candidate.exists():
-        context['code'] = 404
-    else:
-        candidate = candidate[0]
-        context['code'] = 200
-        context['fullname'] = candidate.fullname
-        previous = CandidateForm(instance=candidate)
-        context['form'] = str(previous.as_p())
-    return JsonResponse(context)
 
 
 def ballot_position(request):

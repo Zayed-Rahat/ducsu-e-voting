@@ -6,8 +6,9 @@ urlpatterns = [
     path('', views.dashboard, name="userDashboard"),
     # Elections
     path('elections', views.viewElections, name="viewElections"),
-    path('elections/delete', views.deleteElection, name='deleteElection'),
+    path('election/view', views.view_election_by_id, name="viewElection"),
     path('elections/update', views.updateElection, name="updateElection"),
+    path('elections/delete', views.deleteElection, name='deleteElection'),
 
     # * Voters
     path('voters', views.voters, name="adminViewVoters"),

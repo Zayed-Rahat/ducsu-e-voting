@@ -26,7 +26,9 @@
 <!-- small box -->
 <div class="small-box bg-green">
   <div class="inner">
-    <h3>{{ candidate_count }}</h3>          
+    <h3>
+      {{ candidate_count }}
+    </h3>          
     <p>No. of Candidates</p>
   </div>
   <div class="icon">
@@ -40,7 +42,9 @@
 <!-- small box -->
 <div class="small-box bg-yellow">
   <div class="inner">
-    <h3>{{ voters_count }}</h3>             
+    <h3>
+      {{ voters_count }}
+    </h3>             
     <p>Total Voters</p>
   </div>
   <div class="icon">
@@ -58,7 +62,7 @@
     <p>Voters Voted</p>
   </div>
   <div class="icon">
-    <i class="fas fa-vote-yea fa-sm" style="color: #94a2c34c;"></i>
+    <i class="fas fa-vote-yea fa-sm"></i>
     </div>
   <a href="{% url 'viewVotes' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 </div>
