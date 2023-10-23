@@ -1,9 +1,8 @@
 {% extends 'root.html' %}
 
-{% block head_title %} DUCSU | Elections{% endblock %}
+{% block head_title %}DUCSU | Elections{% endblock %}
 {% block content %}
 <section class="content">
-
   <div class="flex justify-center mb-2">
     <h1 class="font-bold text-4xl text-blue-800">Elections</h1>
   </div>
@@ -31,6 +30,9 @@
       <td>
         <button class='btn btn-success btn-sm edit btn-flat' data-id='{{ election.id }}'><i class='fa fa-edit'></i> Edit</button>
         <button class='btn btn-danger btn-sm delete btn-flat' data-id='{{ election.id }}'><i class='fa fa-trash'></i> Delete</button>
+        {% if not election.is_open %}
+                  <span class="label label-warning">Closed</span>
+        {% endif %}
       </td>
     </tr>
     {% endfor %}      
@@ -51,40 +53,40 @@
 </div>
 </div>
 </section>
-
 {% endblock content %}
 
 {% block modal %}
-
-
 <div class="modal fade" id="addnew">
   <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title"><b>Add New Election</b></h4>
-          </div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title"><b>Add New Election</b></h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" method="POST" action="{% url 'viewElections' %}">
+          {% csrf_token %}
           <div class="modal-body">
-            <form class="form-horizontal" method="POST" action="{% url 'viewElections' %}">
-              {% csrf_token %}
-
-             
-              <div class="modal-body">
-                  {% for field in form1  %}
-                  <div class="form-group has-feedback">
-                      <span class="text-danger">{{field.errors}}</span>
-                      {{field.label_tag}}
-                      {{field}}
-                  </div>
-                  {% endfor %}
-
-
+            {% for field in form1 %}
+            <div class="form-group has-feedback">
+              <span class="text-danger">{{field.errors}}</span>
+              {{field.label_tag}}
+              {{field}}
+            </div>
+            {% endfor %}
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+            <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i
+                class="fa fa-close"></i> Close</button>
             <button type="submit" class="btn btn-primary btn-flat" name="add"><i class="fa fa-save"></i> Save</button>
-          </div></form></div></div></div></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Edit -->
 <div class="modal fade" id="edit">
@@ -183,4 +185,3 @@
   }
   </script>
 {% endblock custom_js %}
-  
