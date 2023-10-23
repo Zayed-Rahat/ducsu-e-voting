@@ -143,12 +143,11 @@ def dashboard(request):
             'page_title': "Dashboard"
         }
         return render(request, "admin/admin_home.html", context)
-    
+
     elif user.voter.account_type == 'Voter':
         return render(request, "voter/voter_home.html")
-    
-    return redirect('account_login')
 
+    return redirect('account_login')
 
 
 def viewElections(request):
@@ -351,6 +350,9 @@ def deletePosition(request):
         messages.error(request, "Access To This Resource Denied")
 
     return redirect(reverse('viewPositions'))
+
+
+
 
 
 def viewCandidates(request):

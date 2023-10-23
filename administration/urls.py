@@ -19,6 +19,7 @@ urlpatterns = [
     # path('position/view', views.view_position_by_id, name="viewPosition"),
     path('position/update', views.updatePosition, name="updatePosition"),
     path('position/delete', views.deletePosition, name='deletePosition'),
+    # path('administrator/position/delete/<int:id>/', views.deletePosition, name='deletePosition'),
     path('positions/', views.viewPositions, name='viewPositions'),
 
     # * Candidate
