@@ -30,6 +30,7 @@ class ElectionForm(FormSettings):
       
 
 
+
 class VoterForm(FormSettings):
     class Meta:
         model = Voter

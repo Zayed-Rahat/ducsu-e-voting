@@ -274,25 +274,10 @@ def view_election_by_id(request):
     if not election.exists():
         context['code'] = 404
     else:
-        election = election[0]
         context['code'] = 200
+        election = election[0]
         context['id'] = election.id
         previous = ElectionForm(instance=election)
-        context['form'] = str(previous.as_p())
-    return JsonResponse(context)
-
-def view_candidate_by_id(request):
-    candidate_id = request.GET.get('id', None)
-    candidate = Candidate.objects.filter(id=candidate_id)
-    context = {}
-    if not candidate.exists():
-        context['code'] = 404
-    else:
-        candidate = candidate[0]
-        context['code'] = 200
-        context['id'] = candidate.id
-        context['fullname'] = candidate.fullname
-        previous = CandidateForm(instance=candidate)
         context['form'] = str(previous.as_p())
     return JsonResponse(context)
 
@@ -447,6 +432,19 @@ def deleteCandidate(request):
     return redirect(reverse('viewCandidates'))
 
 
+def view_candidate_by_id(request):
+    candidate_id = request.GET.get('id', None)
+    candidate = Candidate.objects.filter(id=candidate_id)
+    context = {}
+    if not candidate.exists():
+        context['code'] = 404
+    else:
+        candidate = candidate[0]
+        context['code'] = 200
+        context['fullname'] = candidate.fullname
+        previous = CandidateForm(instance=candidate)
+        context['form'] = str(previous.as_p())
+    return JsonResponse(context)
 
 def ballot_position(request):
     context = {

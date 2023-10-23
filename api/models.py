@@ -26,7 +26,7 @@ class Position(models.Model):
     election = models.ForeignKey(Election,on_delete=models.CASCADE,default=None)
 
     def __str__(self):
-        return  self.name  
+        return  f'{self.name} - {self.election}'
 
 ACCOUNT_TYPE = (
     ('SuperAdmin', 'SuperAdmin'),
