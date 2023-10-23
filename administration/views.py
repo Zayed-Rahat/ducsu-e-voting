@@ -33,7 +33,6 @@ def find_n_winners(data, n):
     return ", &nbsp;".join(final_list)
 
 
-
 class PrintView(PDFView):
     template_name = 'admin/print.html'
     prompt_download = True
@@ -41,17 +40,19 @@ class PrintView(PDFView):
     @property
     def download_name(self):
         return "result.pdf"
+    
+    def dispatch(self, request, *args, **kwargs):
+        self.request = request
+        return super().dispatch(request, *args, **kwargs)
+    
 
     def get_context_data(self, *args, **kwargs):
-        title = "E-voting"
-        try:
-            file = open(settings.ELECTION_TITLE_PATH, 'r')
-            title = file.read()
-        except:
-            pass
+        user = self.request.user
         context = super().get_context_data(*args, **kwargs)
         position_data = {}
-        for position in Position.objects.all():
+        elections = Election.objects.get(admin=user)
+        positions = Position.objects.filter(election_id=elections.id).order_by('priority')
+        for position in positions:
             candidate_data = []
             winner = ""
             for candidate in Candidate.objects.filter(position=position):
@@ -60,9 +61,6 @@ class PrintView(PDFView):
                 this_candidate_data['name'] = candidate.fullname
                 this_candidate_data['votes'] = votes
                 candidate_data.append(this_candidate_data)
-            # print("Candidate Data For  ", str(
-            #     position.name), " = ", str(candidate_data))
-            # ! Check Winner
             if len(candidate_data) < 1:
                 winner = "Position does not have candidates"
             else:
@@ -84,14 +82,13 @@ class PrintView(PDFView):
                             winner = f"There are {count} candidates with {winner['votes']} votes"
                         else:
                             winner = "Winner : " + winner['name']
-            # print("Candidate Data For  ", str(
-            #     position.name), " = ", str(candidate_data))
             position_data[position.name] = {
                 'candidate_data': candidate_data, 'winner': winner, 'max_vote': position.max_vote}
+        
         context['positions'] = position_data
+        context['elections'] = position.election
         # print(context)
         return context
-
 
 # def dashboard(request):
 #     #   positions= requests.get('http://127.0.0.1:8000/api/position').json()
@@ -113,9 +110,10 @@ def dashboard(request):
         # positions = Position.objects.all().order_by('priority')
         elections = Election.objects.get(admin=request.user)
         positions = Position.objects.filter(election_id=elections.id).order_by('priority')
-        candidates = Candidate.objects.all()
-        voters = Voter.objects.all()
-        voted_voters = Voter.objects.filter(voted=1)
+        candidates = Candidate.objects.filter(election_id=elections.id).order_by('election')
+        voters = Voter.objects.filter(election_id=elections.id).order_by('election')
+        voted_elections = Voter.objects.filter(election_id=elections.id)
+        voted_voters = voted_elections.filter(voted=1)
         list_of_candidates = []
         votes_count = []
         chart_data = {}
@@ -132,7 +130,7 @@ def dashboard(request):
                 'votes': votes_count,
                 'pos_id': position.id
             }
-
+        # print(chart_data)
         context = {
             'position_count': positions.count(),
             'candidate_count': candidates.count(),
@@ -140,8 +138,8 @@ def dashboard(request):
             'voted_voters_count': voted_voters.count(),
             'positions': positions,
             'chart_data': chart_data,
-            'page_title': "Dashboard"
         }
+    
         return render(request, "admin/admin_home.html", context)
 
     elif user.voter.account_type == 'Voter':
@@ -200,46 +198,26 @@ def deleteElection(request):
 
 def voters(request):
     user = request.user
+    voters_list = Voter.objects.order_by('id') 
     if user.voter.account_type == 'Admin':
-    #   voters= requests.get('http://127.0.0.1:8000/api/voter').json()
-        # voters = Voter.objects.all() 
-        voters_list = Voter.objects.order_by('id')  # Order by the 'id' field, you can change it to the desired field
-        # paginator = Paginator(voters_list, 3)  # Show 5 voters per page
-        # page_number = request.GET.get('page')
-        # try:
-        #     voters = paginator.page(page_number)
-        # except PageNotAnInteger:
-        #     voters = paginator.page(1)
-        # except EmptyPage:
-        #     voters = paginator.page(paginator.num_pages)
-
         return render(request, 'admin/voters.html', {'voters': voters_list})
     else:
         return redirect('account_login')
 
 
+def updateVoter(request):
+    if request.method != 'POST':
+        messages.error(request, "Access Denied")
+    try:
+        instance = Voter.objects.get(id=request.POST.get('id'))
+        voter = VoterForm(request.POST or None, instance=instance)
+        voter.save()
+        messages.success(request, "Voter's bio updated")
+    except:
+        messages.error(request, "Access To This Resource Denied")
 
-# def voters(request):
-#     voters = Voter.objects.all()
-#     userForm = CustomUserForm(request.POST or None)
-#     voterForm = VoterForm(request.POST or None)
-#     context = {
-#         'form1': userForm,
-#         'form2': voterForm,
-#         'voters': voters,
-#         'page_title': 'Voters List'
-#     }
-#     if request.method == 'POST':
-#         if userForm.is_valid() and voterForm.is_valid():
-#             user = userForm.save(commit=False)
-#             voter = voterForm.save(commit=False)
-#             voter.admin = user
-#             user.save()
-#             voter.save()
-#             messages.success(request, "New voter created")
-#         else:
-#             messages.error(request, "Form validation failed")
-#     return render(request, "admin/voters.html", context)
+    return redirect(reverse('adminViewVoters'))
+
 
 
 def view_voter_by_id(request):
@@ -251,10 +229,10 @@ def view_voter_by_id(request):
     else:
         context['code'] = 200
         voter = voter[0]
-        context['first_name'] = voter.user.first_name
-        context['last_name'] = voter.user.last_name
+        context['verified'] = voter.verified
         context['id'] = voter.id
-        context['email'] = voter.user.email
+        previous = VoterForm(instance=voter)
+        context['form'] = str(previous.as_p())
     return JsonResponse(context)
 
 
@@ -267,9 +245,10 @@ def view_position_by_id(request):
     else:
         context['code'] = 200
         pos = pos[0]
+        context['id'] = pos.id
         context['name'] = pos.name
         context['max_vote'] = pos.max_vote
-        context['id'] = pos.id
+        context['priority'] = pos.priority
     return JsonResponse(context)
 
 

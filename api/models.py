@@ -5,7 +5,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 class Election(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=20)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
     admin = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -21,7 +21,7 @@ class Position(models.Model):
     election = models.ForeignKey(Election,on_delete=models.CASCADE,default=None)
 
     def __str__(self):
-        return  f'{self.name} - {self.election}'   
+        return  self.name  
 
 ACCOUNT_TYPE = (
     ('SuperAdmin', 'SuperAdmin'),
@@ -34,9 +34,9 @@ class Voter(models.Model):
     account_type = models.CharField(max_length=10, choices=ACCOUNT_TYPE, default='Voter')
     verified = models.BooleanField(default=True)
     voted = models.BooleanField(default=False)
-    election = models.ManyToManyField(Election, default=None)
+    election = models.ForeignKey(Election, on_delete=models.CASCADE, null=True, blank=True)
     def __str__(self):
-      return f'{self.user.username} - {self.election}'
+      return self.user.username
 
 
 @receiver(post_save, sender=User)

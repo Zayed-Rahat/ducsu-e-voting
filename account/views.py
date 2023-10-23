@@ -16,7 +16,7 @@ def account_login(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('home')
+                return redirect('userDashboard')
         else:
             messages.error(request, "Invalid details")
     else:
@@ -33,7 +33,7 @@ def account_register(request):
             user = form.save()
             login(request, user)
             messages.success(request, "Account created. You can login now!")
-            return redirect('home')
+            return redirect('userDashboard')
         else:
             messages.error(request, "Provided data failed validation")
             # return account_login(request)

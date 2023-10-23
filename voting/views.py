@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, reverse
 from account.views import account_login
-from api.models import Position, Candidate, Vote
+from api.models import *
 from django.http import JsonResponse
 from django.utils.text import slugify
 from django.contrib import messages
@@ -20,8 +20,9 @@ def index(request):
     return render(request, "account/login.html", context)
 
 
-def generate_ballot(display_controls=False):
-    positions = Position.objects.order_by('priority').all()
+def generate_ballot(election, display_controls=False):
+    # voters = Voter.objects.get(user=user)
+    positions = Position.objects.filter(election=election).order_by('priority')
     output = ""
     candidates_data = ""
     num = 1
@@ -87,15 +88,14 @@ def generate_ballot(display_controls=False):
 
 
 def fetch_ballot(request):
-    output = generate_ballot(display_controls=True)
+    election= request.user.voter.election
+    output = generate_ballot(election,display_controls=True)
     return JsonResponse(output, safe=False)
 
 
 
 def dashboard(request):
-    user = request.user
-    # * Check if this voter has been verified
-   
+    user = request.user   
     if user.voter.voted:  # * User has voted
             # To display election result or candidates I voted for ?
             context = {
@@ -107,17 +107,22 @@ def dashboard(request):
 
 
 def show_ballot(request):
+    user = request.user
     if request.user.voter.voted:
         messages.error(request, "You have voted already")
         return redirect(reverse('voterDashboard'))
-    ballot = generate_ballot(display_controls=False)
+    election = request.user.voter.election
+    ballot = generate_ballot(election, display_controls=False)
     context = {
-        'ballot': ballot
-    }
+            'ballot': ballot
+        }
     return render(request, "voting/voter/ballot.html", context)
+    
+
 
 
 def preview_vote(request):
+    election= request.user.voter.election
     if request.method != 'POST':
         error = True
         response = "Please browse the system properly"
@@ -128,7 +133,7 @@ def preview_vote(request):
         form.pop('csrfmiddlewaretoken', None)
         error = False
         data = []
-        positions = Position.objects.all()
+        positions = Position.objects.filter(election=election).order_by('priority')
         for position in positions:
             max_vote = position.max_vote
             pos = slugify(position.name)
@@ -159,7 +164,7 @@ def preview_vote(request):
                             candidate = Candidate.objects.get(
                                 id=form_candidate_id, position=position)
                             data += f"""
-		                      	<li><i class="fa fa-check-square-o"></i> {candidate.fullname}</li>
+		                      	<span class='col-sm-8'><li><i class="fa fa-check-square-o"></i> {candidate.fullname}  </li></span>
                             """
                         except:
                             error = True
@@ -178,7 +183,7 @@ def preview_vote(request):
                     output += f"""
                             <div class='row votelist' style='padding-bottom: 2px'>
 		                      	<span class='col-sm-4'><span class='pull-right'><b>{position.name} :</b></span></span>
-		                      	<span class='col-sm-8'><i class="fa fa-check-circle-o"></i> {candidate.fullname}</span>
+		                      	<span class='col-sm-4'><i class="fa fa-check-circle-o"></i> {candidate.fullname}</span>
 		                    </div>
                       <hr/>
                     """
@@ -211,7 +216,8 @@ def submit_ballot(request):
     if len(form.keys()) < 1:
         messages.error(request, "Please select at least one candidate")
         return redirect(reverse('show_ballot'))
-    positions = Position.objects.all()
+    election= request.user.voter.election
+    positions = Position.objects.filter(election=election).order_by('priority')
     form_count = 0
     for position in positions:
         max_vote = position.max_vote
@@ -236,6 +242,7 @@ def submit_ballot(request):
                         vote.candidate = candidate
                         vote.voter = voter
                         vote.position = position
+                        vote.election = election
                         vote.save()
                     except Exception as e:
                         messages.error(
@@ -256,6 +263,7 @@ def submit_ballot(request):
                 vote.candidate = candidate
                 vote.voter = voter
                 vote.position = position
+                vote.election = election
                 vote.save()
             except Exception as e:
                 messages.error(

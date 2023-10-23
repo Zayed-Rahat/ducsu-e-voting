@@ -6,25 +6,27 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block head_title %}DUCSU{% endblock %}</title>
+    <!-- Tailwind CSS -->
 
   <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" type="text/css">
   <script src="https://cdn.tailwindcss.com"></script>
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/v4-shims.min.js"
     integrity="sha512-6n3X18GAJomziz6HVPbmyBOEZeoB8+unwEBTRXFs3IZTRYYCkbXNAWNV68uHujamEvDBqaGe2FTW19o81h1/RA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/v4-shims.min.js" integrity="sha512-6n3X18GAJomziz6HVPbmyBOEZeoB8+unwEBTRXFs3IZTRYYCkbXNAWNV68uHujamEvDBqaGe2FTW19o81h1/RA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.7 -->
-  {% comment %} <link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}"> {% endcomment %}
   <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="{% static 'plugins/iCheck/all.css' %}">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="{% static 'bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
+ 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="{% static 'bower_components/font-awesome/css/font-awesome.min.css' %}">
+  <!-- One file includes all the Font Awesome Free icons and utilities -->
+  <link href="{% static 'fontawesome_free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+      
   <!-- Theme style -->
   <link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
