@@ -10,8 +10,13 @@ from api.models import *
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django_renderpdf.views import PDFView
 from django.shortcuts import get_object_or_404
+<<<<<<< HEAD
 from django.db import connection
 
+=======
+from django.utils import timezone
+from datetime import timedelta
+>>>>>>> 549740ae477044d52876745fa2f3dbb7e5cdae35
 
 def find_n_winners(data, n):
     """Read More
@@ -152,44 +157,102 @@ def viewElections(request):
     user = request.user
     if user.voter.account_type == 'Admin':
         elections = Election.objects.filter(admin=request.user)
-        form = ElectionForm(request.POST or None) 
-        context = {
-            'elections': elections,
-            'form1': form,
-        }
+        form = ElectionForm(request.POST or None)
         if request.method == 'POST':
             if form.is_valid():
                 election = form.save(commit=False)
                 election.admin = request.user
                 election.save()
-                messages.success(request, "New Election Created")    
+                messages.success(request, "New Election Created")
             else:
                 messages.error(request, "Form errors")
+
+        now = timezone.now() + timedelta(hours=6)
+        for election in elections:
+            if election.end_date <= now and election.is_open:
+                election.is_open = False
+                election.save()
+                messages.info(request, f"Election '{election.title}' has been closed.")
+
+        context = {
+            'elections': elections,
+            'form1': form,
+        }
+
         return render(request, 'admin/elections.html', context)
-    
+
     return redirect('account_login')
 
 
 def updateElection(request):
     if request.method != 'POST':
         messages.error(request, "Access Denied")
+        return redirect(reverse('viewElections'))
+
     try:
-        instance = Election.objects.get(id=request.POST.get('id'))
-        elec = ElectionForm(request.POST or None, instance=instance)
-        elec.save()
-        messages.success(request, "Election has been updated")
+        election_id = request.POST.get('id')
+        election = Election.objects.get(id=election_id)
+        if election.admin != request.user:
+            messages.error(request, "Access To This Resource Denied")
+            return redirect(reverse('viewElections'))
+
+        form = ElectionForm(request.POST, instance=election)
+        if form.is_valid():
+            if 'end_date' in form.changed_data:
+                now = timezone.now() + timedelta(hours=6)
+                updated_end_date = form.cleaned_data['end_date']
+                # updated_end_date = timezone.make_aware(updated_end_date)
+                print(now)
+                print(updated_end_date)
+                print(updated_end_date<=now)
+                if updated_end_date <= now:
+                    election.is_open = False
+                else:
+                    election.is_open = True
+
+            form.save()
+            election.save(update_fields=['is_open'])
+            messages.success(request, "Election has been updated")
+        else:
+            messages.error(request, "Form errors")
+
+    except Election.DoesNotExist:
+        messages.error(request, "Election not found")
     except:
-        messages.error(request, "Access To This Resource Denied")
+        messages.error(request, "An error occurred")
 
     return redirect(reverse('viewElections'))
+
+
+
+# def deleteElection(request):
+#     election = Election.objects.get(admin=request.user)
+#     if request.method != 'POST':
+#         messages.error(request, "Access Denied")
+#     try:
+#         elec = Election.objects.get(id=request.POST.get('id'))
+#         elec.delete()
+#         messages.success(request, "Election Has Been Deleted")
+#         Voter.objects.filter(election=election).update(voted=False)
+#     except:
+#         messages.error(request, "Access To This Resource Denied")
+
+#     return redirect(reverse('viewElections'))
+
 
 def deleteElection(request):
     if request.method != 'POST':
         messages.error(request, "Access Denied")
     try:
         elec = Election.objects.get(id=request.POST.get('id'))
-        elec.delete()
-        messages.success(request, "Election Has Been Deleted")
+        # Get all voters associated with the election
+        voters = Voter.objects.filter(election=elec)
+        # Iterate over the voters
+        for voter in voters:
+            # If the voter is also an admin, skip the deletion of the voter
+            if voter.user.id != elec.admin.id:
+                voter.delete()
+        messages.success(request, "Voters of Election  Deleted")
     except:
         messages.error(request, "Access To This Resource Denied")
 
@@ -235,6 +298,19 @@ def view_voter_by_id(request):
         context['form'] = str(previous.as_p())
     return JsonResponse(context)
 
+def view_election_by_id(request):
+    election_id = request.GET.get('id', None)
+    election = Election.objects.filter(id=election_id)
+    context = {}
+    if not election.exists():
+        context['code'] = 404
+    else:
+        context['code'] = 200
+        election = election[0]
+        context['id'] = election.id
+        previous = ElectionForm(instance=election)
+        context['form'] = str(previous.as_p())
+    return JsonResponse(context)
 
 def view_position_by_id(request):
     pos_id = request.GET.get('id', None)
@@ -405,7 +481,6 @@ def view_candidate_by_id(request):
         previous = CandidateForm(instance=candidate)
         context['form'] = str(previous.as_p())
     return JsonResponse(context)
-
 
 def ballot_position(request):
     context = {

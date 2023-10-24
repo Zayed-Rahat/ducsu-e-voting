@@ -3,15 +3,21 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
 
 class Election(models.Model):
+<<<<<<< HEAD
     title = models.CharField(max_length=100)
+=======
+    title = models.CharField(max_length=50)
+>>>>>>> 549740ae477044d52876745fa2f3dbb7e5cdae35
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
     admin = models.ForeignKey(User, on_delete=models.CASCADE)
-
+    is_open = models.BooleanField(default=True)
     def __str__(self):
         return self.title
+    
     
 
 class Position(models.Model):
@@ -21,7 +27,7 @@ class Position(models.Model):
     election = models.ForeignKey(Election,on_delete=models.CASCADE,default=None)
 
     def __str__(self):
-        return  self.name  
+        return  self.name
 
 ACCOUNT_TYPE = (
     ('SuperAdmin', 'SuperAdmin'),

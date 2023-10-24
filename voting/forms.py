@@ -21,12 +21,14 @@ class ElectionForm(FormSettings):
     class Meta:
         model = Election
         fields = ['title', 'start_date', 'end_date']
+        
         widgets = {            
             'start_date': DateTimeInput(format=["%Y-%m-%dT%H:%M", "%Y-%m-%d %H:%M"],),
             'end_date': DateTimeInput(format=["%Y-%m-%dT%H:%M", "%Y-%m-%d %H:%M"],),   
 
         }
       
+
 
 
 class VoterForm(FormSettings):
