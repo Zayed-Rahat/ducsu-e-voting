@@ -5,7 +5,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 class Election(models.Model):
-    title = models.CharField(max_length=20)
+    title = models.CharField(max_length=100)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
     admin = models.ForeignKey(User, on_delete=models.CASCADE)

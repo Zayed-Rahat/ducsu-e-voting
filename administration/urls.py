@@ -20,11 +20,6 @@ urlpatterns = [
     path('position/view', views.view_position_by_id, name="viewPosition"),
     path('position/update', views.updatePosition, name="updatePosition"),
     path('position/delete', views.deletePosition, name='deletePosition'),
-<<<<<<< HEAD
-    # path('administrator/position/delete/<int:id>/', views.deletePosition, name='deletePosition'),
-    path('positions/', views.viewPositions, name='viewPositions'),
-=======
->>>>>>> aaae5fd9f6f36bdec629b44c8f55b05cab7b8896
 
     # * Candidate
     path('candidates/', views.viewCandidates, name='viewCandidates'),
