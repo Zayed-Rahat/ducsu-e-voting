@@ -3,6 +3,7 @@ import os
 import sys
 
 sys.modules['fontawesome_free'] = __import__('fontawesome-free')
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -33,7 +34,7 @@ INSTALLED_APPS = [
     'administration',
     'api',
     'rest_framework',
-    'voting',
+    'voting',   
 ]
 
 MIDDLEWARE = [

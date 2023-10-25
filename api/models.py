@@ -32,8 +32,10 @@ ACCOUNT_TYPE = (
     ('Voter', 'Voter'),
 )
 
+
+
 class Voter(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='voter')
     account_type = models.CharField(max_length=10, choices=ACCOUNT_TYPE, default='Voter')
     verified = models.BooleanField(default=True)
     voted = models.BooleanField(default=False)
@@ -69,6 +71,7 @@ class Vote(models.Model):
 
     def __str__(self):
         return self.voter.user.username
+
 
 class ContactMessage(models.Model):
     name = models.CharField(max_length=100)

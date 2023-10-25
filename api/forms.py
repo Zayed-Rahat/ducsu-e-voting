@@ -6,10 +6,10 @@ class ContactForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ContactForm, self).__init__(*args, **kwargs)
 
-        self.fields['name'].widget.attrs.update({'class': 'border w-full px-2 py-2 focus:outline-none focus:ring-0 text-base focus:border-gray-600'})
-        self.fields['email'].widget.attrs.update({'class': 'border w-full px-2 py-2 focus:outline-none focus:ring-0 text-base focus:border-gray-600'})
-        self.fields['phone'].widget.attrs.update({'class': 'border w-full px-2 py-2 focus:outline-none focus:ring-0 text-base focus:border-gray-600'})
-        self.fields['message'].widget.attrs.update({'class': 'border w-full px-2 py-2 focus:outline-none focus:ring-0 text-base focus:border-gray-600'})
+        self.fields['name'].widget.attrs.update({'class': 'border w-full px-2 py-2 focus:outline-none focus:ring-0 text-base focus:border-gray-600', 'placeholder':'Enter Your Full Name'})
+        self.fields['email'].widget.attrs.update({'class': 'border w-full px-2 py-2 focus:outline-none focus:ring-0 text-base focus:border-gray-600', 'placeholder':'Enter Your Active Email'})
+        self.fields['phone'].widget.attrs.update({'class': 'border w-full px-2 py-2 focus:outline-none focus:ring-0 text-base focus:border-gray-600', 'placeholder':'Enter Your Phone Number'})
+        self.fields['message'].widget.attrs.update({'class': 'border w-full px-2 py-2 focus:outline-none focus:ring-0 text-base focus:border-gray-600', 'placeholder':'Write Your Message'})
 
     class Meta:
         model = ContactMessage

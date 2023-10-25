@@ -8,11 +8,11 @@
     <div class="bg-[#032245] h-screen">
         <div class="flex mx-auto pt-6 justify-around px-24">
             <div class=" w-1/2 pt-14">
-                <img src="{% static 'images/regi.png'%}" alt="pic">
+                <img src="{% static 'images/regi1.png'%}" alt="pic">
 
             </div>
-                <div class="login-box-body w-2/5 shadow-xl rounded-md">
-                    <h1 class="text-5xl block text-center font-semibold">Register</h1>
+                <div class="login-box-body w-2/5 shadow-xl rounded-md" id="register">
+                    <h1 class="text-4xl block text-center font-semibold">Register</h1>
                     <form action="{% url 'register' %}" method="POST">
                         {% csrf_token %}
                      
@@ -71,8 +71,13 @@
         </div>
     </div>
 
+    {% endblock content %}
+
+
+
+    {% block model %}
     <!-- Modal -->
-    {% comment %} <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="register" aria-hidden="true">
+    <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="register" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <form action="{% url 'register' %}" method="POST">
@@ -116,5 +121,6 @@
             </div>
             </form>
         </div>
-    </div> {% endcomment %}
-{% endblock content %} 
+    </div> 
+ 
+{% endblock model %}

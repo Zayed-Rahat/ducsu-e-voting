@@ -30,7 +30,7 @@ urlpatterns = [
 
     # # * Settings (Ballot Position and Election Title)
     path("settings/ballot/position", views.ballot_position, name='ballot_position'),
-    path("settings/ballot/title/", views.ballot_title, name='ballot_title'),
+    # path("settings/ballot/title/", views.ballot_title, name='ballot_title'),
     path("settings/ballot/position/update/<int:position_id>/<str:up_or_down>/",
          views.update_ballot_position, name='update_ballot_position'),
 
@@ -38,4 +38,8 @@ urlpatterns = [
     path('votes/view', views.viewVotes, name='viewVotes'),
     path('votes/reset/', views.resetVote, name='resetVote'),
     path('votes/print/', views.PrintView.as_view(), name='printResult'),
+    
+    # Messages
+    path('messages/', views.all_messages, name='messages'),
+    path('delete_message/<int:message_id>/', views.delete_message, name='delete_message'),
 ]
