@@ -17,6 +17,10 @@ class DateTimeInput(forms.DateTimeInput):
         kwargs["format"] = "%Y-%m-%dT%H:%M"
         super().__init__(**kwargs)
 
+
+
+
+
 class ElectionForm(FormSettings):
     class Meta:
         model = Election

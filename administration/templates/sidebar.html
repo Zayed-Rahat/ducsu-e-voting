@@ -13,7 +13,8 @@
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="mt-4 space-y-2">
 
-      {% if request.user.voter.account_type  == 'Admin' %}
+      <!-- {% if request.user.voter.account_type  == 'Admin' %} -->
+      {% if request.user.voter.election  %}
 
       <li><a href="{% url 'userDashboard' %}"
                   class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold">
@@ -22,7 +23,6 @@
       <li><a href="{% url 'viewElections' %}"
                     class="py-2 px-4 text-2xl  text-white block hover:bg-white font-bold"><i
                           class="fas fa-archive"></i> Elections</a></li>
-    {% if request.user.voter.election  %}
       <li><a href="{% url 'viewPositions' %}"
                     class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-list-ul fa-lg"></i></i> Positions</a></li>
 
@@ -35,7 +35,7 @@
 
       <li><a href="{% url 'ballot_position' %}"  class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-file-alt fa-lg"></i> <span>Ballot Position</span></a></li>
                                   
-      {% endif %}
+      <!-- {% endif %} -->
       <hr>
       {% if request.user.is_superuser %}
       <li><a href="{% url 'messages' %}"
