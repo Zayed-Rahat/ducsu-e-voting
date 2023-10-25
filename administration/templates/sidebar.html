@@ -37,6 +37,11 @@
                                   
       {% endif %}
       <hr>
+      {% if request.user.is_superuser %}
+      <li><a href="{% url 'messages' %}"
+            class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-comments fa-lg"></i>Messages</a></li>
+      {% endif %}      
+
       <li><a href="{% url 'voterDashboard' %}"
         class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-vote-yea fa-lg"></i></i>Voter Dashboard</a></li>
 
@@ -45,13 +50,13 @@
               
       <li><a href="{% url 'userDashboard' %}"
                   class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-user fa-lg"></i></i> <span>My profile</span></a></li>
+      
+      <li><a href="{% url 'change_pass' %}" class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-unlock fa-lg"></i><span>Change Password</span></a></li>            
 
       <li><a href="{% url 'account_logout' %}"
                   class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-sign-out-alt fa-lg"></i></i> <span>Logout</span></a></li>
 
-      <li><a href="{% url 'change_pass' %}"
-        class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold">
-        <i class="fas fa-unlock fa-lg"></i><span>Change Password</span></a></li>
+     
 </ul>
   </section>
   <!-- /.sidebar -->

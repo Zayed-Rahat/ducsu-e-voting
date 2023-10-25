@@ -12,6 +12,7 @@ from django_renderpdf.views import PDFView
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from datetime import timedelta
+from api.models import ContactMessage
 
 def find_n_winners(data, n):
     """Read More
@@ -524,6 +525,13 @@ def resetVote(request):
 
 
 
+def all_messages(request):
+    messages = ContactMessage.objects.all()
+    return render(request, 'admin/messages.html',{'messages':messages})
 
+def delete_message(request,message_id):
+    blog = get_object_or_404(ContactMessage, id=message_id)
+    blog.delete()
+    return redirect('messages')
 
 
