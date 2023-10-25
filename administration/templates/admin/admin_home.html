@@ -73,7 +73,7 @@
 
 <div class="row">
 <div class="col-xs-12">
-<h3>Votes Tally
+<h3>Election Name: <b> {{election_title}} </b> . Positions with candidates vote count in tally
   <span class="pull-right">
     <a href="{% url 'printResult' %}" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Print</a>
   </span>
@@ -92,7 +92,7 @@
 </div>
 <div class='box-body'>
 <div class='chart'>
-  <canvas id='{{ position.name|slugify }}' style='height:200px'></canvas>
+  <canvas id='{{ position.name|slugify }}' style='height:100px'></canvas>
 </div>
 </div>
 </div>

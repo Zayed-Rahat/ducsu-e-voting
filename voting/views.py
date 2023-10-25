@@ -94,25 +94,44 @@ def fetch_ballot(request):
 
 
 
-def dashboard(request):
+def userProfile(request):
     user = request.user
+    elections = Election.objects.filter(is_open = 1)
     election = request.user.voter.election
-    if user.voter.voted:  # * User has voted
-            # To display election result or candidates I voted for ?
-            context = {
-                'my_votes': Vote.objects.filter(voter=user.voter),
-                'election' : election
-            }
-            return render(request, "voting/voter/result.html", context)
+    if election:
+        if user.voter.voted:  # * User has voted
+                context = {
+                    'my_votes': Vote.objects.filter(voter=user.voter),
+                    'election' : election
+                }
+                return render(request, "voting/voter/result.html", context)
+        else:
+                return redirect(reverse('show_ballot'))
     else:
+        if request.method == 'POST':
+            selected_election_id = request.POST.get('selectedElection')
+            election = Election.objects.get(id=selected_election_id)
+            voter = request.user.voter
+
+            # Update the voter's election field
+            voter.election = election
+            voter.save()
+            messages.success(request, "Election selection successful")
             return redirect(reverse('show_ballot'))
+    context2 = {
+            'elections' : elections
+        }
+    
+    return render(request, "voting/voter/ballot.html", context2)
+
+
 
 
 def show_ballot(request):
     user = request.user
     if request.user.voter.voted:
         messages.error(request, "You have voted already")
-        return redirect(reverse('voterDashboard'))
+        return redirect(reverse('userProfile'))
     election = request.user.voter.election
     ballot = generate_ballot(election, display_controls=False)
     context = {
@@ -285,4 +304,4 @@ def submit_ballot(request):
         voter.voted = True
         voter.save()
         messages.success(request, "Thanks for voting")
-        return redirect(reverse('voterDashboard'))
+        return redirect(reverse('userDashboard'))
