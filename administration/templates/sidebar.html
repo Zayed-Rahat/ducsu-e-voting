@@ -26,15 +26,14 @@
       <li><a href="{% url 'viewPositions' %}"
                     class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-list-ul fa-lg"></i></i> Positions</a></li>
 
-   {% endif %}                      
       <li><a href="{% url 'viewCandidates' %}"
                             class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-users fa-lg"></i></i> Candidates</a></li>
                                   
       <li><a href="{% url 'adminViewVoters' %}"
                                     class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-id-card fa-lg"></i></i> Voters</a></li>
+   {% endif %}                      
 
       <li><a href="{% url 'ballot_position' %}"  class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-file-alt fa-lg"></i> <span>Ballot Position</span></a></li>
-      <li><a href="#config" class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold" data-toggle="modal"><i class="fas fa-cog fa-lg"></i> <span>Election Title</span></a></li>                                    
                                   
       {% endif %}
       <hr>

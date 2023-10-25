@@ -44,7 +44,7 @@ def generate_ballot(election, display_controls=False):
                 input_box = '<input value="'+str(candidate.id)+'" type="radio" class="flat-red ' + \
                     position_name+'" name="'+position_name+'">'
             image = "/media/" + str(candidate.photo)
-            candidates_data = candidates_data + '<li>' + input_box + '<button type="button" class="btn btn-primary btn-sm btn-flat clist platform" data-fullname="'+candidate.fullname+'" data-bio="'+candidate.bio+'"><i class="fa fa-search"></i> Platform</button><img src="' + \
+            candidates_data = candidates_data + '<li>' + input_box + '<button type="button" class="btn btn-primary btn-sm btn-flat clist platform" data-fullname="'+candidate.fullname+'" data-bio="'+candidate.bio+'"><i class="fas fa-receipt fa-lg"></i> Details</button><img src="' + \
                 image+'" height="100px" width="100px" class="clist"><span class="cname clist">' + \
                 candidate.fullname+'</span></li>'
         up = ''
@@ -67,7 +67,7 @@ def generate_ballot(election, display_controls=False):
         <div class="box-body">
         <p>{instruction}
         <span class="pull-right">
-        <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="{position_name}"><i class="fa fa-refresh"></i> Reset</button>
+        <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="{position_name}"><i class="fas fa-redo"></i> Reset</button>
         </span>
         </p>
         <div id="candidate_list">
@@ -95,11 +95,13 @@ def fetch_ballot(request):
 
 
 def dashboard(request):
-    user = request.user   
+    user = request.user
+    election = request.user.voter.election
     if user.voter.voted:  # * User has voted
             # To display election result or candidates I voted for ?
             context = {
                 'my_votes': Vote.objects.filter(voter=user.voter),
+                'election' : election
             }
             return render(request, "voting/voter/result.html", context)
     else:
@@ -114,7 +116,8 @@ def show_ballot(request):
     election = request.user.voter.election
     ballot = generate_ballot(election, display_controls=False)
     context = {
-            'ballot': ballot
+            'ballot': ballot,
+            'election' : election
         }
     return render(request, "voting/voter/ballot.html", context)
     

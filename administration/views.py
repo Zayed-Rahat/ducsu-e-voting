@@ -219,23 +219,6 @@ def updateElection(request):
 
     return redirect(reverse('viewElections'))
 
-
-
-# def deleteElection(request):
-#     election = Election.objects.get(admin=request.user)
-#     if request.method != 'POST':
-#         messages.error(request, "Access Denied")
-#     try:
-#         elec = Election.objects.get(id=request.POST.get('id'))
-#         elec.delete()
-#         messages.success(request, "Election Has Been Deleted")
-#         Voter.objects.filter(election=election).update(voted=False)
-#     except:
-#         messages.error(request, "Access To This Resource Denied")
-
-#     return redirect(reverse('viewElections'))
-
-
 def deleteElection(request):
     if request.method != 'POST':
         messages.error(request, "Access Denied")
@@ -257,9 +240,11 @@ def deleteElection(request):
 
 def voters(request):
     user = request.user
-    voters_list = Voter.objects.order_by('id') 
-    if user.voter.account_type == 'Admin':
-        return render(request, 'admin/voters.html', {'voters': voters_list})
+    # voters_list = Voter.objects.order_by('id') 
+    if user.is_authenticated and user.voter.account_type == 'Admin':
+        elections = Election.objects.get(admin=user)
+        voters = Voter.objects.filter(election_id=elections.id).order_by('id')    
+        return render(request, 'admin/voters.html', {'voters': voters})
     else:
         return redirect('account_login')
 
@@ -515,26 +500,13 @@ def update_ballot_position(request, position_id, up_or_down):
     return JsonResponse(context)
 
 
-def ballot_title(request):
-    from urllib.parse import urlparse
-    url = urlparse(request.META['HTTP_REFERER']).path
-    from django.urls import resolve
-    try:
-        redirect_url = resolve(url)
-        title = request.POST.get('title', 'No Name')
-        file = open(settings.ELECTION_TITLE_PATH, 'w')
-        file.write(title)
-        file.close()
-        messages.success(
-            request, "Election title has been changed to " + str(title))
-        return redirect(url)
-    except Exception as e:
-        messages.error(request, e)
-        return redirect("/")
-
-
 def viewVotes(request):
-    votes = Vote.objects.all()
+    user = request.user
+    
+
+    election = Election.objects.get(admin=request.user)
+
+    votes = Vote.objects.filter(election=election)
     context = {
         'votes': votes,
     }
@@ -542,8 +514,11 @@ def viewVotes(request):
 
 
 def resetVote(request):
-    Vote.objects.all().delete()
-    Voter.objects.all().update(voted=False)
+    user = request.user
+    election = Election.objects.get(admin=request.user)
+    Vote.objects.filter(election=election).delete()
+    # Vote.objects.all().delete()
+    Voter.objects.filter(election=election).update(voted=False)
     messages.success(request, "All votes has been reset")
     return redirect(reverse('viewVotes'))
 
