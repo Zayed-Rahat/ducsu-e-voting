@@ -32,7 +32,9 @@ class CandidateViewSet(viewsets.ModelViewSet):
     serializer_class = CandidateSerializer
     pagination_class = paginations.CandidatePagination
 
-
+class ContactMessageViewSet(viewsets.ModelViewSet):
+    queryset = ContactMessage.objects.all()
+    serializer_class = ContactMessageSerializer
 
 
 class ElectionList(generics.ListCreateAPIView):
@@ -61,7 +63,9 @@ class VoteList(generics.ListCreateAPIView):
     queryset = Vote.objects.all()
     serializer_class = VoteSerializer
 
-
+class ContactMessageList(generics.ListCreateAPIView):
+    queryset = ContactMessage.objects.all()
+    serializer_class = ContactMessageSerializer
 
 
 class ElectionDeleteUpdate(generics.RetrieveUpdateDestroyAPIView):
@@ -80,4 +84,7 @@ class CandidateDeleteUpdate(generics.RetrieveUpdateDestroyAPIView):
 class VoteDeleteUpdate(generics.RetrieveUpdateDestroyAPIView):
     queryset = Vote.objects.all()
     serializer_class = VoteSerializer
-    
+
+class ContactMessageDeleteUpdate(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ContactMessage.objects.all()
+    serializer_class = ContactMessageSerializer

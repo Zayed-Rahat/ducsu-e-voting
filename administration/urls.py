@@ -38,4 +38,8 @@ urlpatterns = [
     path('votes/view', views.viewVotes, name='viewVotes'),
     path('votes/reset/', views.resetVote, name='resetVote'),
     path('votes/print/', views.PrintView.as_view(), name='printResult'),
+    
+    # Messages
+    path('messages/', views.all_messages, name='messages'),
+    path('delete_message/<int:message_id>/', views.delete_message, name='delete_message'),
 ]
