@@ -5,35 +5,6 @@
 {% block content %}
 <div class="h-screen bg-[#032245]">
     <div class="container px-24 mx-auto ">
-       
-
-        {% comment %} <div class="flex justify-between pt-8">
-            <div>
-                <img class="absolute h-10 w-30" src="static/images/logo_t.png" alt="Logo">
-            </div>
-            <div class="text-white">
-                <div class="flex gap-[20px] pt-4 text-white font-bold">
-
-                    {% if request.user.is_authenticated %}
-                    <a class="hover:bg-pink-500 hover:rounded-xl hover:px-2 px-2" href="{% url 'home' %}">Home</a>
-                    <a class="hover:bg-pink-500 hover:rounded-xl hover:px-2 px-2" href="{% url 'about' %}">About</a>
-                    <a class="hover:bg-pink-500 hover:rounded-xl hover:px-2 px-2"
-                        href="{% url 'userDashboard' %}">Welcome, {{ request.user.username }}</a>
-                    {% else %}
-
-                    <a class="hover:bg-pink-500 hover:rounded-xl hover:px-2 px-2" href="{% url 'home' %}">Home</a>
-                    <a class="hover:bg-pink-500 hover:rounded-xl hover:px-2 px-2" href="{% url 'about' %}">About</a>
-                    <a class="hover:bg-pink-500 hover:rounded-xl hover:px-2 px-2"
-                        href="{% url 'account_login' %}">Login</a>
-                    <a class="hover:bg-pink-500 hover:rounded-xl hover:px-2 px-2"
-                        href="{% url 'account_register' %}">Register</a>
-
-                    {% endif %}
-                </div>
-            </div>
-        </div> {% endcomment %}
-        
-
         <!--home page section-->
         <div class="flex gap-[100px]">
             <div class="text-sky-200 w-1/3 flex flex-col gap-10 pt-[100px]">
@@ -69,7 +40,7 @@
 <div class="bg-blue-900 ">
     <div class="px-24 mx-auto pb-20 text-center">
         <div>
-            <h1 class="text-white text-3xl font-bold pt-10 pb-4">Our Voting Services</h1>
+            <h1 class="text-white text-3xl font-bold pt-10 pb-4">Our Voting <span class="text-pink-500">Services</span></h1>
             <hr class="w-[400px] mx-auto">
         </div>
         <div class="flex justify-between  text-white gap-6">

@@ -3,18 +3,21 @@ from . import views
 
 
 urlpatterns = [
-    # path('login/', views.account_login, name="account_login"),
-    # path('register/', views.account_register, name="account_register"),
-    path('logout/', views.account_logout, name="account_logout"),
-    path('change_pass/', views.change_pass, name="change_pass"),
-    
     # team profile user
     path('profile/',views.profile, name='profile'),
     path('about/',views.aboutus, name='about'),
     
     
     # my code authentication
+    path('logout/', views.account_logout, name="account_logout"),
+    path('change_pass/', views.change_pass, name="change_pass"),
     path('login/',views.account_login, name='login'),
     path('register/',views.account_register, name='register'),
-    # path('logout/',views.user_logout, name='logout'),
+    
+    
+    #email varification and forgot pass
+    path('activate/<uidb64>/<token>/', views.activate, name='activate'),
+    path('forgotPassword/', views.forgotPassword, name='forgotPassword'),
+    path('resetpassword_validate/<uidb64>/<token>/', views.resetpassword_validate, name='resetpassword_validate'),
+    path('resetPassword/', views.resetPassword, name='resetPassword'),
 ]
