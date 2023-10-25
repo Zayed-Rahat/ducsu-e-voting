@@ -6,15 +6,12 @@ from django.dispatch import receiver
 from django.utils import timezone
 
 class Election(models.Model):
-<<<<<<< HEAD
-    title = models.CharField(max_length=100)
-=======
     title = models.CharField(max_length=50)
->>>>>>> 549740ae477044d52876745fa2f3dbb7e5cdae35
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
     admin = models.ForeignKey(User, on_delete=models.CASCADE)
     is_open = models.BooleanField(default=True)
+    
     def __str__(self):
         return self.title
     
