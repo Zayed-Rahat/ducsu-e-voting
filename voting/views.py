@@ -87,10 +87,24 @@ def generate_ballot(election, display_controls=False):
     return output
 
 
+# def fetch_ballot(request):
+#     election= request.user.voter.election
+#     output = generate_ballot(election,display_controls=True)
+#     return JsonResponse(output, safe=False)
+
 def fetch_ballot(request):
-    election= request.user.voter.election
-    output = generate_ballot(election,display_controls=True)
-    return JsonResponse(output, safe=False)
+    user = request.user
+    if user.is_authenticated and user.voter.account_type == 'Voter':
+        election = user.voter.election
+
+        if election.is_open:
+            output = generate_ballot(election, display_controls=True)
+            return JsonResponse(output, safe=False)
+        else:
+            return JsonResponse({"message": "There is no election currently ongoing."}, safe=False)
+
+    return redirect('login')
+
 
 
 
@@ -127,19 +141,46 @@ def userProfile(request):
 
 
 
+# def show_ballot(request):
+#     user = request.user
+#     if request.user.voter.voted:
+#         messages.error(request, "You have voted already")
+#         return redirect(reverse('userProfile'))
+#     election = request.user.voter.election
+#     ballot = generate_ballot(election, display_controls=False)
+#     context = {
+#             'ballot': ballot,
+#             'election' : election
+#         }
+#     return render(request, "voting/voter/ballot.html", context)
 def show_ballot(request):
     user = request.user
     if request.user.voter.voted:
         messages.error(request, "You have voted already")
         return redirect(reverse('userProfile'))
+
     election = request.user.voter.election
-    ballot = generate_ballot(election, display_controls=False)
-    context = {
+
+    # Check if the election is open
+    if election.is_open:
+        ballot = generate_ballot(election, display_controls=False)
+
+        context = {
             'ballot': ballot,
-            'election' : election
+            'election': election
         }
-    return render(request, "voting/voter/ballot.html", context)
+
+        return render(request, "voting/voter/ballot.html", context)
     
+    else:
+        # The election is closed, so display a message in the template
+        messages.error(request, "The election is closed.")
+        
+        context = {
+            'election': election  # Pass the election object for reference
+        }
+        
+        return render(request, "voting/voter/election_closed.html", context)
 
 
 

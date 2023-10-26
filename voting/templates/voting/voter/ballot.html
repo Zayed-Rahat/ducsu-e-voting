@@ -12,28 +12,29 @@
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         <span class="message"></span>
       </div>
-{% if election %}
-<form method="POST" id="ballotForm" action="{% url 'submit_ballot' %}">
-  {% csrf_token %}
-  <div class="bg-gray">
-    {{ ballot|safe }}
-  </div>
-  <div class="text-center">
-    <button type="button" class="btn btn-success btn-flat bg-green-500" id="preview"><i class="fas fa-file-pdf fa-sm"></i></i> Preview</button>
-    <button type="submit" class="btn btn-primary bg-blue-500 btn-flat" name="submit_vote"><i class="fas fa-vote-yea fa-sm"></i></i> Submit</button>
-</div>
-</form>
 
-{%else %}
-
-<h1 class=" text-2xl text-blue-800">Hi {{ request.user.username }}, you can vote in an election at once. After the finished of one election in a period of time , you can vote another election.</h1>
-  <b> For voting, Choose an Election that you wanna vote</b>
-<div class="box-header with-border">
-  <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat">
-    <i class="far fa-plus-square"></i> Election</a>
-</div>
-
-{% endif %}
+      {% if election %}
+      <form method="POST" id="ballotForm" action="{% url 'submit_ballot' %}">
+        {% csrf_token %}
+        <div class="bg-gray">
+          {{ ballot|safe }}
+        </div>
+        <div class="text-center">
+          <button type="button" class="btn btn-success btn-flat bg-green-500" id="preview"><i
+              class="fas fa-file-pdf fa-sm"></i></i> Preview</button>
+          <button type="submit" class="btn btn-primary bg-blue-500 btn-flat" name="submit_vote"><i
+              class="fas fa-vote-yea fa-sm"></i></i> Submit</button>
+        </div>
+      </form>
+      {% else %}
+      <h1 class=" text-2xl text-blue-800">Hi {{ request.user.username }}, you can vote in an election at once. After the
+        finished of one election in a period of time, you can vote another election.</h1>
+      <b>For voting, Choose an Election that you wanna vote</b>
+      <div class="box-header with-border">
+        <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat">
+          <i class="far fa-plus-square"></i> Election</a>
+      </div>
+      {% endif %}
     </div>
   </div>
 </section>
@@ -41,11 +42,11 @@
 
 {% block custom_js %}
 <script>
-  $(function() {
-      $('.content').iCheck({
-          checkboxClass: 'icheckbox_flat-green bg-green-500',
-          radioClass: 'iradio_flat-green'
-      });
+  $(function () {
+    $('.content').iCheck({
+      checkboxClass: 'icheckbox_flat-green bg-green-500',
+      radioClass: 'iradio_flat-green'
+    });
 
     $(document).on('click', '.reset', function (e) {
       e.preventDefault();
@@ -102,32 +103,36 @@
 {% block modal %}
 <div class="modal fade" id="addnew">
   <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title"><b>Select Election</b></h4>
-          </div>
-          <div class="modal-body">
-            <form class="form-horizontal" method="POST" action="{% url 'userProfile' %}">
-              {% csrf_token %}
-             
-              <select name="selectedElection" id="selected-election">
-                {% for election in elections %}
-                    <option value="{{ election.id }}">{{ election.title }}</option>
-                {% endfor %}
-            </select>
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"><b>Select Election</b></h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" method="POST" action="{% url 'userProfile' %}">
+          {% csrf_token %}
+
+          <select name="selectedElection" id="selected-election">
+            {% for election in elections %}
+            <option value="{{ election.id }}">{{ election.title }}</option>
+            {% endfor %}
+          </select>
 
           <div class="modal-footer">
-            <button type="button" class="btn btn-warning btn-flat pull-left" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
+            <button type="button" class="btn btn-warning btn-flat pull-left" data-dismiss="modal"><i
+                class="fas fa-times-circle"></i> Close</button>
             <button type="submit" class="btn btn-success btn-flat" name="add"><i class="fas fa-save"></i> Save</button>
           </div>
-        
-      </form>
-        
-        
-        
-        </div></div></div></div>
+
+        </form>
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <!-- Details -->
@@ -144,7 +149,8 @@
         <p id="plat_view"></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-warning btn-flat pull-left" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
+        <button type="button" class="btn btn-warning btn-flat pull-left" data-dismiss="modal"><i
+            class="fas fa-times-circle"></i> Close</button>
       </div>
     </div>
   </div>
@@ -163,7 +169,8 @@
         <div id="preview_body"></div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-warning btn-flat pull-left" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
+        <button type="button" class="btn btn-warning btn-flat pull-left" data-dismiss="modal"><i
+            class="fas fa-times-circle"></i> Close</button>
       </div>
     </div>
   </div>
