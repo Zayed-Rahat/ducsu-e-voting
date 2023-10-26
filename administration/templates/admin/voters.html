@@ -33,8 +33,8 @@
       <td>{% if voter.voted == True %}Yes{% else %}No{% endif %}</td>      
 
       <td>
-        <button class='btn btn-success btn-sm edit btn-flat' data-id='{{ election.id }}'><i class="fas fa-edit fa-sm"></i> Edit</button>
-        <button class='btn btn-danger btn-sm delete btn-flat' data-id='{{ election.id }}'><i class="fas fa-trash-alt fa-sm"></i>Delete</button>
+        <button class='btn btn-success btn-sm edit btn-flat' data-id='{{ voter.id }}'><i class="fas fa-edit fa-sm"></i> Edit</button>
+        <button class='btn btn-danger btn-sm delete btn-flat' data-id='{{ voter.id }}'><i class="fas fa-trash-alt fa-sm"></i>Delete</button>
       </td>
     </tr>
     {% endfor %}      

@@ -407,7 +407,7 @@ def viewCandidates(request):
     except Election.DoesNotExist:
         return redirect('viewElections') 
 
-    form = CandidateForm(request.POST or None, request.FILES or None)
+    form = CandidateForm(election, request.POST or None, request.FILES or None)
     context = {
         'candidates': candidates,
         'form1': form,
@@ -425,12 +425,14 @@ def viewCandidates(request):
 
 
 def updateCandidate(request):
+    election = Election.objects.get(admin=request.user)
+
     if request.method != 'POST':
         messages.error(request, "Access Denied")
     try:
         candidate_id = request.POST.get('id')
         candidate = Candidate.objects.get(id=candidate_id)
-        form = CandidateForm(request.POST or None,
+        form = CandidateForm(election,request.POST or None,
                              request.FILES or None, instance=candidate)
         if form.is_valid():
             form.save()
@@ -459,6 +461,8 @@ def deleteCandidate(request):
 def view_candidate_by_id(request):
     candidate_id = request.GET.get('id', None)
     candidate = Candidate.objects.filter(id=candidate_id)
+    election = Election.objects.get(admin=request.user)
+
     context = {}
     if not candidate.exists():
         context['code'] = 404
@@ -466,7 +470,7 @@ def view_candidate_by_id(request):
         candidate = candidate[0]
         context['code'] = 200
         context['fullname'] = candidate.fullname
-        previous = CandidateForm(instance=candidate)
+        previous = CandidateForm(election,instance=candidate)
         context['form'] = str(previous.as_p())
     return JsonResponse(context)
 
