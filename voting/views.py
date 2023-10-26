@@ -6,7 +6,7 @@ from django.utils.text import slugify
 from django.contrib import messages
 from django.conf import settings
 from django.http import JsonResponse
-
+from datetime import datetime
 
 
 def voters_home(request):
@@ -160,14 +160,21 @@ def show_ballot(request):
         return redirect(reverse('userProfile'))
 
     election = request.user.voter.election
-
+    # handling reamining time and pass it to the coxtext
+    current_time = timezone.now()
+    election_end_time = election.end_date
+    current_time = current_time.astimezone(election_end_time.tzinfo)
+    time_remaining = (election_end_time - current_time).total_seconds()
+    
+    
     # Check if the election is open
     if election.is_open:
         ballot = generate_ballot(election, display_controls=False)
 
         context = {
             'ballot': ballot,
-            'election': election
+            'election': election,
+            'time_remaining': time_remaining,
         }
 
         return render(request, "voting/voter/ballot.html", context)
