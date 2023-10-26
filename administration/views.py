@@ -156,7 +156,7 @@ def dashboard(request):
     
         return redirect('viewElections')
     
-    return redirect('account_login')
+    return redirect('login')
 
 
 
