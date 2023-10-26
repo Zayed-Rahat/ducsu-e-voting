@@ -6,18 +6,15 @@ from django.utils.text import slugify
 from django.contrib import messages
 from django.conf import settings
 from django.http import JsonResponse
+from datetime import timedelta
 
 
 
-def voters_home(request):
-     return render(request, 'voting/voter/voters_home.html')
-
-
-def index(request):
-    if not request.user.is_authenticated:
-        return account_login(request)
-    context = {}
-    return render(request, "account/login.html", context)
+# def index(request):
+#     if not request.user.is_authenticated:
+#         return account_login(request)
+#     context = {}
+#     return render(request, "account/login.html", context)
 
 
 def generate_ballot(election, display_controls=False):
@@ -87,40 +84,82 @@ def generate_ballot(election, display_controls=False):
     return output
 
 
+# def fetch_ballot(request):
+#     election= request.user.voter.election
+#     output = generate_ballot(election,display_controls=True)
+#     return JsonResponse(output, safe=False)
+
 def fetch_ballot(request):
-    election= request.user.voter.election
-    output = generate_ballot(election,display_controls=True)
-    return JsonResponse(output, safe=False)
-
-
-
-def dashboard(request):
     user = request.user
-    election = request.user.voter.election
-    if user.voter.voted:  # * User has voted
-            # To display election result or candidates I voted for ?
-            context = {
-                'my_votes': Vote.objects.filter(voter=user.voter),
-                'election' : election
-            }
-            return render(request, "voting/voter/result.html", context)
+    if user.is_authenticated:
+        election = user.voter.election
+        output = generate_ballot(election, display_controls=True)
+        return JsonResponse(output, safe=False)
     else:
+        return JsonResponse({"message": "There is no election currently ongoing."}, safe=False)
+
+
+
+def userProfile(request):
+    user = request.user
+    elections = Election.objects.filter(is_open = 1)
+    election = request.user.voter.election
+    if election:
+        if user.voter.voted:  # * User has voted
+                context = {
+                    'my_votes': Vote.objects.filter(voter=user.voter),
+                    'election' : election
+                }
+                return render(request, "voting/result.html", context)
+        else:
+                return redirect(reverse('show_ballot'))
+    else:
+        if request.method == 'POST':
+            selected_election_id = request.POST.get('selectedElection')
+            election = Election.objects.get(id=selected_election_id)
+            voter = request.user.voter
+
+            # Update the voter's election field
+            voter.election = election
+            voter.save()
+            messages.success(request, "Election selection successful")
             return redirect(reverse('show_ballot'))
+    context2 = {
+            'elections' : elections
+        }
+    
+    return render(request, "voting/voters_election.html", context2)
 
 
 def show_ballot(request):
     user = request.user
-    if request.user.voter.voted:
+    if user.voter.voted:
         messages.error(request, "You have voted already")
-        return redirect(reverse('voterDashboard'))
-    election = request.user.voter.election
-    ballot = generate_ballot(election, display_controls=False)
-    context = {
+        return redirect(reverse('userProfile'))
+
+    election = user.voter.election
+    # handling reamining time and pass it to the coxtext
+    current_time = timezone.now() + timedelta(hours=6)
+    election_end_time = election.end_date
+    current_time = current_time.astimezone(election_end_time.tzinfo)
+    time_remaining = (election_end_time - current_time).total_seconds()
+    # Check if the election is open
+    if election:
+        ballot = generate_ballot(election, display_controls=False)
+
+        context = {
             'ballot': ballot,
-            'election' : election
+            'election': election,
+            'time_remaining': time_remaining,
         }
-    return render(request, "voting/voter/ballot.html", context)
-    
+
+        return render(request, "voting/ballot.html", context)
+    else:       
+        context = {
+            'election': election  # Pass the election object for reference
+        }
+        
+        return render(request, "voting/voters_election.html", context)
 
 
 
@@ -285,4 +324,4 @@ def submit_ballot(request):
         voter.voted = True
         voter.save()
         messages.success(request, "Thanks for voting")
-        return redirect(reverse('voterDashboard'))
+        return redirect(reverse('userDashboard'))

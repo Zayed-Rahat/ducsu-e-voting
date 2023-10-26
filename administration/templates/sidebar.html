@@ -13,16 +13,15 @@
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="mt-4 space-y-2">
 
-      <!-- {% if request.user.voter.account_type  == 'Admin' %} -->
-      {% if request.user.voter.election  %}
+      {% if request.user.voter.account_type  == 'Admin' %}
+      <li><a href="{% url 'viewElections' %}"
+        class="py-2 px-4 text-2xl  text-white block hover:bg-white font-bold"><i
+              class="fas fa-archive"></i> Elections</a></li>
 
       <li><a href="{% url 'userDashboard' %}"
                   class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold">
                   <i class="fas fa-chalkboard-teacher fa-lg"></i> Dashboard</a></li>
 
-      <li><a href="{% url 'viewElections' %}"
-                    class="py-2 px-4 text-2xl  text-white block hover:bg-white font-bold"><i
-                          class="fas fa-archive"></i> Elections</a></li>
       <li><a href="{% url 'viewPositions' %}"
                     class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-list-ul fa-lg"></i></i> Positions</a></li>
 
@@ -31,24 +30,26 @@
                                   
       <li><a href="{% url 'adminViewVoters' %}"
                                     class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-id-card fa-lg"></i></i> Voters</a></li>
-   {% endif %}                      
 
-      <li><a href="{% url 'ballot_position' %}"  class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-file-alt fa-lg"></i> <span>Ballot Position</span></a></li>
+      <li><a href="{% url 'ballot_position' %}"  class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-file-alt fa-lg"></i> <span>Ballot Position</span></a></li>                  
                                   
-      <!-- {% endif %} -->
+     {% endif %} 
       <hr>
       {% if request.user.is_superuser %}
       <li><a href="{% url 'messages' %}"
             class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-comments fa-lg"></i>Messages</a></li>
       {% endif %}      
 
-      <li><a href="{% url 'voterDashboard' %}"
+      <li><a href="{% url 'userDashboard' %}"
         class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-vote-yea fa-lg"></i></i>Voter Dashboard</a></li>
 
+
+    {% if request.user.voter.election %}
       <li><a href="{% url 'show_ballot' %}"
         class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-file-alt fa-lg"></i> <span>Show Ballot</span></a></li>
-              
-      <li><a href="{% url 'userDashboard' %}"
+    {% endif %}
+           
+      <li><a href="{% url 'userProfile' %}"
                   class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-user fa-lg"></i></i> <span>My profile</span></a></li>
       
       <li><a href="{% url 'change_pass' %}" class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-unlock fa-lg"></i><span>Change Password</span></a></li>            

@@ -109,9 +109,19 @@ class PrintView(PDFView):
 
 def dashboard(request):
     user = request.user
-    if user.voter.account_type == 'Admin':
-        # positions = Position.objects.all().order_by('priority')
-        elections = Election.objects.get(admin=request.user)
+    if  user.is_authenticated :
+        if user.voter.account_type == 'Admin':
+            if  user.voter.election:
+              elections = Election.objects.get(admin=user)
+            else:
+                return redirect('viewElections')   
+            
+        elif user.voter.account_type == 'Voter' :
+            if  user.voter.election:
+                elections = Election.objects.get(title = user.voter.election)
+            else:
+                return redirect('userProfile')
+    
         positions = Position.objects.filter(election_id=elections.id).order_by('priority')
         candidates = Candidate.objects.filter(election_id=elections.id).order_by('election')
         voters = Voter.objects.filter(election_id=elections.id).order_by('election')
@@ -120,35 +130,42 @@ def dashboard(request):
         list_of_candidates = []
         votes_count = []
         chart_data = {}
-
         for position in positions:
-            list_of_candidates = []
-            votes_count = []
-            for candidate in Candidate.objects.filter(position=position):
-                list_of_candidates.append(candidate.fullname)
-                votes = Vote.objects.filter(candidate=candidate).count()
-                votes_count.append(votes)
-            chart_data[position] = {
-                'candidates': list_of_candidates,
-                'votes': votes_count,
-                'pos_id': position.id
-            }
-        # print(chart_data)
+                    list_of_candidates = []
+                    votes_count = []
+                    for candidate in Candidate.objects.filter(position=position):
+                        list_of_candidates.append(candidate.fullname)
+                        votes = Vote.objects.filter(candidate=candidate).count()
+                        votes_count.append(votes)
+                    chart_data[position] = {
+                        'candidates': list_of_candidates,
+                        'votes': votes_count,
+                        'pos_id': position.id
+                    }
         context = {
-            'position_count': positions.count(),
-            'candidate_count': candidates.count(),
-            'voters_count': voters.count(),
-            'voted_voters_count': voted_voters.count(),
-            'positions': positions,
-            'chart_data': chart_data,
-        }
+                    'position_count': positions.count(),
+                    'candidate_count': candidates.count(),
+                    'voters_count': voters.count(),
+                    'voted_voters_count': voted_voters.count(),
+                    'positions': positions,
+                    'chart_data': chart_data,
+                    'election_title' : elections.title,
+                }
+        if user.voter.account_type == 'Admin':
+            return render(request, "admin/admin_home.html", context)
+        elif user.voter.account_type == 'Voter' :
+            return render(request, "voter/voter_home.html", context)
     
-        return render(request, "admin/admin_home.html", context)
+        return redirect('viewElections')
     
+<<<<<<< HEAD
     elif user.voter.account_type == 'Voter':
         return render(request, "voter/voter_home.html")
 
     return redirect('account_login')
+=======
+    return redirect('login')
+>>>>>>> 1beeaf460289807874f10e8eb0663a3edbfed47b
 
 # def dashboard(request):
 #     user = request.user
@@ -226,13 +243,13 @@ def dashboard(request):
 
 def viewElections(request):
     user = request.user
-    if user.voter.account_type == 'Admin':
-        elections = Election.objects.filter(admin=request.user)
+    if user.is_authenticated and user.voter.account_type == 'Admin':
+        elections = Election.objects.filter(admin=user)
         form = ElectionForm(request.POST or None)
         if request.method == 'POST':
             if form.is_valid():
                 election = form.save(commit=False)
-                election.admin = request.user
+                election.admin = user
                 election.save()
                 messages.success(request, "New Election Created")
             else:
@@ -252,7 +269,7 @@ def viewElections(request):
 
         return render(request, 'admin/elections.html', context)
 
-    return redirect('account_login')
+    return redirect('login')
 
 
 def updateElection(request):
@@ -305,7 +322,8 @@ def deleteElection(request):
         for voter in voters:
             # If the voter is also an admin, skip the deletion of the voter
             if voter.user.id != elec.admin.id:
-                voter.delete()
+                voter.election = None
+                voter.save()
         messages.success(request, "Voters of Election  Deleted")
     except:
         messages.error(request, "Access To This Resource Denied")
@@ -473,7 +491,7 @@ def viewCandidates(request):
     except Election.DoesNotExist:
         return redirect('viewElections') 
 
-    form = CandidateForm(request.POST or None, request.FILES or None)
+    form = CandidateForm(election, request.POST or None, request.FILES or None)
     context = {
         'candidates': candidates,
         'form1': form,
@@ -493,12 +511,14 @@ def viewCandidates(request):
 
 
 def updateCandidate(request):
+    election = Election.objects.get(admin=request.user)
+
     if request.method != 'POST':
         messages.error(request, "Access Denied")
     try:
         candidate_id = request.POST.get('id')
         candidate = Candidate.objects.get(id=candidate_id)
-        form = CandidateForm(request.POST or None,
+        form = CandidateForm(election,request.POST or None,
                              request.FILES or None, instance=candidate)
         if form.is_valid():
             form.save()
@@ -527,6 +547,8 @@ def deleteCandidate(request):
 def view_candidate_by_id(request):
     candidate_id = request.GET.get('id', None)
     candidate = Candidate.objects.filter(id=candidate_id)
+    election = Election.objects.get(admin=request.user)
+
     context = {}
     if not candidate.exists():
         context['code'] = 404
@@ -534,7 +556,7 @@ def view_candidate_by_id(request):
         candidate = candidate[0]
         context['code'] = 200
         context['fullname'] = candidate.fullname
-        previous = CandidateForm(instance=candidate)
+        previous = CandidateForm(election,instance=candidate)
         context['form'] = str(previous.as_p())
     return JsonResponse(context)
 
