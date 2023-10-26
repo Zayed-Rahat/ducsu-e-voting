@@ -110,7 +110,7 @@ def userProfile(request):
                     'my_votes': Vote.objects.filter(voter=user.voter),
                     'election' : election
                 }
-                return render(request, "voting/voter/result.html", context)
+                return render(request, "voting/result.html", context)
         else:
                 return redirect(reverse('show_ballot'))
     else:
@@ -128,7 +128,7 @@ def userProfile(request):
             'elections' : elections
         }
     
-    return render(request, "voting/voter/ballot.html", context2)
+    return render(request, "voting/ballot.html", context2)
 
 
 
@@ -163,7 +163,7 @@ def show_ballot(request):
             'election': election
         }
 
-        return render(request, "voting/voter/ballot.html", context)
+        return render(request, "voting/ballot.html", context)
     
     else:
         # The election is closed, so display a message in the template
@@ -173,7 +173,7 @@ def show_ballot(request):
             'election': election  # Pass the election object for reference
         }
         
-        return render(request, "voting/voter/election_closed.html", context)
+        return render(request, "voting/election_closed.html", context)
 
 
 
