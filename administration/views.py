@@ -188,7 +188,7 @@ def viewElections(request):
 
         return render(request, 'admin/elections.html', context)
 
-    return redirect('account_login')
+    return redirect('login')
 
 
 def updateElection(request):

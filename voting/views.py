@@ -6,7 +6,7 @@ from django.utils.text import slugify
 from django.contrib import messages
 from django.conf import settings
 from django.http import JsonResponse
-
+from datetime import timedelta
 
 
 
@@ -128,52 +128,38 @@ def userProfile(request):
             'elections' : elections
         }
     
-    return render(request, "voting/ballot.html", context2)
+    return render(request, "voting/voters_election.html", context2)
 
-
-
-
-# def show_ballot(request):
-#     user = request.user
-#     if request.user.voter.voted:
-#         messages.error(request, "You have voted already")
-#         return redirect(reverse('userProfile'))
-#     election = request.user.voter.election
-#     ballot = generate_ballot(election, display_controls=False)
-#     context = {
-#             'ballot': ballot,
-#             'election' : election
-#         }
-#     return render(request, "voting/voter/ballot.html", context)
 
 def show_ballot(request):
     user = request.user
-    if request.user.voter.voted:
+    if user.voter.voted:
         messages.error(request, "You have voted already")
         return redirect(reverse('userProfile'))
 
-    election = request.user.voter.election
-
+    election = user.voter.election
+    # handling reamining time and pass it to the coxtext
+    current_time = timezone.now() + timedelta(hours=6)
+    election_end_time = election.end_date
+    current_time = current_time.astimezone(election_end_time.tzinfo)
+    time_remaining = (election_end_time - current_time).total_seconds()
     # Check if the election is open
-    if election.is_open:
+    if election:
         ballot = generate_ballot(election, display_controls=False)
 
         context = {
             'ballot': ballot,
-            'election': election
+            'election': election,
+            'time_remaining': time_remaining,
         }
 
         return render(request, "voting/ballot.html", context)
-    
-    else:
-        # The election is closed, so display a message in the template
-        messages.error(request, "The election is closed.")
-        
+    else:       
         context = {
             'election': election  # Pass the election object for reference
         }
         
-        return render(request, "voting/election_closed.html", context)
+        return render(request, "voting/voters_election.html", context)
 
 
 
