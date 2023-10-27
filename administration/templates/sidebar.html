@@ -43,9 +43,12 @@
       <li><a href="{% url 'userDashboard' %}"
         class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-vote-yea fa-lg"></i></i>Voter Dashboard</a></li>
 
+
+    {% if request.user.voter.election %}
       <li><a href="{% url 'show_ballot' %}"
         class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-file-alt fa-lg"></i> <span>Show Ballot</span></a></li>
-              
+    {% endif %}
+           
       <li><a href="{% url 'userProfile' %}"
                   class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-user fa-lg"></i></i> <span>My profile</span></a></li>
       

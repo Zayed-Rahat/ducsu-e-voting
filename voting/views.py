@@ -6,18 +6,15 @@ from django.utils.text import slugify
 from django.contrib import messages
 from django.conf import settings
 from django.http import JsonResponse
-from datetime import datetime
+from datetime import timedelta
 
 
-def voters_home(request):
-     return render(request, 'voting/voter/voters_home.html')
 
-
-def index(request):
-    if not request.user.is_authenticated:
-        return account_login(request)
-    context = {}
-    return render(request, "account/login.html", context)
+# def index(request):
+#     if not request.user.is_authenticated:
+#         return account_login(request)
+#     context = {}
+#     return render(request, "account/login.html", context)
 
 
 def generate_ballot(election, display_controls=False):
@@ -94,17 +91,12 @@ def generate_ballot(election, display_controls=False):
 
 def fetch_ballot(request):
     user = request.user
-    if user.is_authenticated and user.voter.account_type == 'Voter':
+    if user.is_authenticated:
         election = user.voter.election
-
-        if election.is_open:
-            output = generate_ballot(election, display_controls=True)
-            return JsonResponse(output, safe=False)
-        else:
-            return JsonResponse({"message": "There is no election currently ongoing."}, safe=False)
-
-    return redirect('login')
-
+        output = generate_ballot(election, display_controls=True)
+        return JsonResponse(output, safe=False)
+    else:
+        return JsonResponse({"message": "There is no election currently ongoing."}, safe=False)
 
 
 
@@ -118,7 +110,7 @@ def userProfile(request):
                     'my_votes': Vote.objects.filter(voter=user.voter),
                     'election' : election
                 }
-                return render(request, "voting/voter/result.html", context)
+                return render(request, "voting/result.html", context)
         else:
                 return redirect(reverse('show_ballot'))
     else:
@@ -136,39 +128,23 @@ def userProfile(request):
             'elections' : elections
         }
     
-    return render(request, "voting/voter/ballot.html", context2)
+    return render(request, "voting/voters_election.html", context2)
 
 
-
-
-# def show_ballot(request):
-#     user = request.user
-#     if request.user.voter.voted:
-#         messages.error(request, "You have voted already")
-#         return redirect(reverse('userProfile'))
-#     election = request.user.voter.election
-#     ballot = generate_ballot(election, display_controls=False)
-#     context = {
-#             'ballot': ballot,
-#             'election' : election
-#         }
-#     return render(request, "voting/voter/ballot.html", context)
 def show_ballot(request):
     user = request.user
-    if request.user.voter.voted:
+    if user.voter.voted:
         messages.error(request, "You have voted already")
         return redirect(reverse('userProfile'))
 
-    election = request.user.voter.election
-    # handling reamining time and pass it to the coxtext
-    current_time = timezone.now()
+    election = user.voter.election
+    current_time = timezone.now() + timedelta(hours=6)
     election_end_time = election.end_date
     current_time = current_time.astimezone(election_end_time.tzinfo)
     time_remaining = (election_end_time - current_time).total_seconds()
-    
-    
+
     # Check if the election is open
-    if election.is_open:
+    if election and current_time <= election_end_time:
         ballot = generate_ballot(election, display_controls=False)
 
         context = {
@@ -177,17 +153,12 @@ def show_ballot(request):
             'time_remaining': time_remaining,
         }
 
-        return render(request, "voting/voter/ballot.html", context)
-    
+        return render(request, "voting/ballot.html", context)
     else:
-        # The election is closed, so display a message in the template
-        messages.error(request, "The election is closed.")
-        
         context = {
-            'election': election  # Pass the election object for reference
+            'election_ended': True 
         }
-        
-        return render(request, "voting/voter/election_closed.html", context)
+        return render(request, "voting/ballot.html", context)
 
 
 
