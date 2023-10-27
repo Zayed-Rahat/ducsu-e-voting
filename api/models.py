@@ -26,7 +26,6 @@ class Position(models.Model):
         return  self.name
 
 ACCOUNT_TYPE = (
-    ('SuperAdmin', 'SuperAdmin'),
     ('Admin', 'Admin'),
     ('Voter', 'Voter'),
 )

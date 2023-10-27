@@ -1,6 +1,7 @@
 from pathlib import Path
 import os
 import sys
+# import fontawesome_free
 
 sys.modules['fontawesome_free'] = __import__('fontawesome-free')
 
@@ -34,7 +35,7 @@ INSTALLED_APPS = [
     'administration',
     'api',
     'rest_framework',
-    'voting',   
+    'voting',  
 ]
 
 MIDDLEWARE = [

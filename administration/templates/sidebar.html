@@ -35,9 +35,11 @@
 
       <li><a href="{% url 'viewCandidates' %}"
                             class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-users fa-lg"></i></i> Candidates</a></li>
-                                  
+      {% if request.user.voter.election %}                         
       <li><a href="{% url 'adminViewVoters' %}"
                                     class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-id-card fa-lg"></i></i> Voters</a></li>
+
+      {% endif %}                               
 
       <li><a href="{% url 'ballot_position' %}"  class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-file-alt fa-lg"></i> <span>Ballot Position</span></a></li>
                                   

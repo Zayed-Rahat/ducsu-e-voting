@@ -15,9 +15,6 @@ from datetime import timedelta
 from api.models import ContactMessage
 
 def find_n_winners(data, n):
-    """Read More
-    https://www.geeksforgeeks.org/python-program-to-find-n-largest-elements-from-a-list/
-    """
     final_list = []
     candidate_data = data[:]
     # print("Candidate = ", str(candidate_data))

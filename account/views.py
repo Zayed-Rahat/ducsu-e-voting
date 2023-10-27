@@ -5,6 +5,7 @@ from api.models import *
 from .forms import RegistrationForm, Changepass, Change_pass
 from django.contrib import messages, auth
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, SetPasswordForm
+
 # Verification email
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -118,7 +119,7 @@ def change_pass(request):
         if form.is_valid():
             form.save()
             update_session_auth_hash(request, form.user) # password update kora hocce
-            messages.success('Your Password updated successfully')
+            # messages.success('Your Password updated successfully')
             return redirect('userDashboard')
         
         else:
