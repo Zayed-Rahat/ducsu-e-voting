@@ -9,3 +9,21 @@
         </div>
     {% endfor %}
 {% endif %}
+
+<script>
+    var messageElements = document.querySelectorAll('.alert');
+    messageElements.forEach(function (messageElement) {
+        setTimeout(function () {
+            messageElement.style.display = 'none';
+        }, 3000);
+    });
+    var closeButtonElements = document.querySelectorAll('.close');
+    closeButtonElements.forEach(function (closeButtonElement) {
+        closeButtonElement.addEventListener('click', function () {
+            var messageElement = this.closest('.alert');
+            if (messageElement) {
+                messageElement.style.display = 'none';
+            }
+        });
+    });
+</script>

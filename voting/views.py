@@ -9,14 +9,6 @@ from django.http import JsonResponse
 from datetime import timedelta
 
 
-
-# def index(request):
-#     if not request.user.is_authenticated:
-#         return account_login(request)
-#     context = {}
-#     return render(request, "account/login.html", context)
-
-
 def generate_ballot(election, display_controls=False):
     # voters = Voter.objects.get(user=user)
     positions = Position.objects.filter(election=election).order_by('priority')
