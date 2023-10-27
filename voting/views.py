@@ -130,13 +130,13 @@ def show_ballot(request):
         return redirect(reverse('userProfile'))
 
     election = user.voter.election
-    # handling reamining time and pass it to the coxtext
     current_time = timezone.now() + timedelta(hours=6)
     election_end_time = election.end_date
     current_time = current_time.astimezone(election_end_time.tzinfo)
     time_remaining = (election_end_time - current_time).total_seconds()
+
     # Check if the election is open
-    if election:
+    if election and current_time <= election_end_time:
         ballot = generate_ballot(election, display_controls=False)
 
         context = {
@@ -146,12 +146,11 @@ def show_ballot(request):
         }
 
         return render(request, "voting/ballot.html", context)
-    else:       
+    else:
         context = {
-            'election': election  # Pass the election object for reference
+            'election_ended': True 
         }
-        
-        return render(request, "voting/voters_election.html", context)
+        return render(request, "voting/ballot.html", context)
 
 
 

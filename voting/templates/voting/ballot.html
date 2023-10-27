@@ -6,8 +6,8 @@
 <section class="content" style="max-height: 80vh; overflow-y: auto;">
   <h1 class="page-header text-center title"><b>{{ election.title }}</b></h1>
 
-  {% if election.is_open  %}
-       
+  {% if election.is_open %}
+
   <div id="countdown" class="countdown-box flex justify-center text-3xl"
     data-time-remaining="{{ time_remaining|default:0 }}">
     <div class="countdown-text mb-5"> Election Ends In : </div>
@@ -37,12 +37,16 @@
     {% else %}
 
     <div class="col-sm-10 col-sm-offset-1">
-      <div class="alert alert-danger">
-          <p>Opps!! The election is currently closed. You can't vote now.</p>
+      <div class="alert text-danger text-3xl">
+        <div class="text-center title">
+          {% if election_ended %}
+          <h2 class="mt-5"> Opps!! The election you were trying to access has ended.</h2>
+          <marquee width="50%" direction="left" height="100px">Thank you for your participation.</marquee>
+          {% endif %}
+        </div>
       </div>
-  </div>
-
-  {% endif %}
+    </div>
+    {% endif %}
   </div>
 </section>
 {% endblock content %}
