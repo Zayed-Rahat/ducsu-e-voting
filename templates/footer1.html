@@ -13,29 +13,33 @@
 
             <a href="{% url 'about' %}" class="hover:text-red-700">About</a>
             <a href="{% url 'profile' %}" class="hover:text-red-700">Team</a>
-            <a href="https://calendar.google.com/calendar/" class="hover:text-red-700" target="_blank">Event Calendar</a>
+            {% comment %} <a href="https://calendar.google.com/calendar/" class="hover:text-red-700" target="_blank">Event Calendar</a> {% endcomment %}
             
            
           </div>              
         </div>
       </div>
 
-      {% comment %} <div>
+      <div>
         <div class="flex flex-col ">
           <h1 class="text-xl font-bold">QUICK LINKS</h1>
         </div>
        <hr class="border mt-3 text-red-500 border-red-700">
         <div class="flex flex-col gap-4 pt-4">
-          <a href="" class="hover:text-red-700">services</a>
+          {% comment %} <a href="" class="hover:text-red-700">services</a>
           <a href="" class="hover:text-red-700">Blog</a>
           <a href="" class="hover:text-red-700">Campaign</a>
-          <a href="" class="hover:text-red-700">Support</a>                
+          <a href="" class="hover:text-red-700">Support</a> {% endcomment %}
+          <a href="https://calendar.google.com/calendar/" class="hover:text-red-700" target="_blank">Event Calendar</a>
+          <a href="https://meet.google.com/" class="hover:text-red-700" target="_blank">Meeting</a>
+                          
         </div>
-      </div> {% endcomment %}
+      </div>
 
       <div>
         <div class="flex flex-col  ">
-          <h1 class="text-xl font-bold">FOLLOW US</h1>
+          {% comment %} <h1 class="text-xl font-bold">FOLLOW US</h1> {% endcomment %}
+          <h1 class="text-xl font-bold">GET IN TUCH</h1>
           <hr class="text-xl mt-4 border border-red-700">
 
         </div>
@@ -49,10 +53,10 @@
             <i class="fa-solid fa-phone"></i>
             <span>Contact </span>
           </a>
-          <a href="https://www.facebook.com" class="hover:text-red-700" target="_blank">
+          {% comment %} <a href="https://www.facebook.com" class="hover:text-red-700" target="_blank">
             <i class="fa-brands fa-facebook-f" ></i>
             <span>Facebook</span>
-          </a>
+          </a> {% endcomment %}
           
         </div>
       </div>           
