@@ -4,13 +4,10 @@ import sys
 import dj_database_url
 from decouple import config
 from dotenv import load_dotenv
-<<<<<<< HEAD
-=======
 
 load_dotenv()
 
 # import fontawesome_free
->>>>>>> 00b3fba6f9a86518bbef6cd5a772f8c9d99c2d92
 
 load_dotenv()
 sys.modules['fontawesome_free'] = __import__('fontawesome-free')
@@ -26,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-t2(kww3_47!isa@stn$b6k4d3z@kxn$!#ve#_#inro-bszl+sa'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -91,18 +88,12 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-<<<<<<< HEAD
-DATABASES = {
-    'default': dj_database_url.config(default=config('DATABASE_URL'))
-}
-=======
 
 DATABASES = {
     'default': dj_database_url.config(default=config('DATABASE_URL'))
 }
 
 
->>>>>>> 00b3fba6f9a86518bbef6cd5a772f8c9d99c2d92
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -137,15 +128,23 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-# STATIC_ROOT = BASE_DIR / 'static'
-MEDIA_URL = 'media/'
+# STATIC_URL = 'static/'
+# # STATIC_ROOT = BASE_DIR / 'static'
+# MEDIA_URL = 'media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# STATICFILES_DIRS = [
+#     BASE_DIR/'static',
+# ]
+STATIC_URL = '/static/'
+
+MEDIA_URL = '/media/'
+
+if DEBUG:
+  STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-STATICFILES_DIRS = [
-    BASE_DIR/'static',
-]
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

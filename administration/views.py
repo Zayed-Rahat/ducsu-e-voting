@@ -88,25 +88,6 @@ class PrintView(PDFView):
         # print(context)
         return context
 
-<<<<<<< HEAD
-# def dashboard(request):
-#     #   positions= requests.get('http://127.0.0.1:8000/api/position').json()
-#     #   voters= requests.get('http://127.0.0.1:8000/api/voter').json()
-#     #   candidates= requests.get('http://127.0.0.1:8000/api/candidate').json()
-#     #   votes= requests.get('http://127.0.0.1:8000/api/vote').json()
-#       positions = Position.objects.all()
-#       voters = Voter.objects.all()
-#       candidates = Candidate.objects.all()
-#       votes = Vote.objects.all()
-
-
-#       context = {'positions':positions, 'voters' : voters, 'votes' : votes, 'candidates': candidates}
-#       return render(request, 'dashboard.html', context)
-
-
-
-=======
->>>>>>> 00b3fba6f9a86518bbef6cd5a772f8c9d99c2d92
 def dashboard(request):
     user = request.user
     if  user.is_authenticated :
