@@ -31,7 +31,7 @@ class ElectionForm(FormSettings):
 class VoterForm(FormSettings):
     class Meta:
         model = Voter
-        fields = ['verified', 'election']
+        fields = ['verified', 'account_type', 'election']
 
 
 class CandidateForm(FormSettings):    

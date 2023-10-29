@@ -1,10 +1,16 @@
 from django.urls import path
 from . import views
+from voting.views import userProfile
 
 
 urlpatterns = [
-    path('', views.dashboard, name="userDashboard"),
+
+    path('', userProfile, name='userProfile'),
+
+    path('dashboard', views.dashboard, name="userDashboard"),
     # Elections
+    path('electionList', views.superAdminViewElections, name="superAdminViewElections"),
+
     path('elections', views.viewElections, name="viewElections"),
     path('election/view', views.view_election_by_id, name="viewElection"),
     path('elections/update', views.updateElection, name="updateElection"),
