@@ -236,18 +236,16 @@ def deleteElection(request):
     try:
         elec = Election.objects.get(id=request.POST.get('id'))
         # Get all voters associated with the election
-        if request.user.is_superuser:
-            elec.delete()
-            messages.success(request, "Election Deleted!!")
-        else: 
-            voters = Voter.objects.filter(election=elec)
-        # Iterate over the voters
-            for voter in voters:
-                # If the voter is also an admin, skip the deletion of the voter
-                if voter.user.id != elec.admin.id:
-                    voter.election = None
-                    voter.save()
-            messages.success(request, "Voters of Election  Deleted")
+        # if request.user.is_superuser:
+        elec.delete()
+        messages.success(request, "Election Deleted!!")
+        # else: 
+        #     voters = Voter.objects.filter(election=elec)
+        #     # Iterate over the voters
+        #     for voter in voters:    
+        #         voter.election = None
+        #         voter.save()
+        #     messages.success(request, "Voters of Election  Deleted")
     except:
         messages.error(request, "Access To This Resource Denied")
 
@@ -260,13 +258,13 @@ def deleteElection(request):
 
 def voters(request):
     user = request.user
-    if user.is_authenticated and user.voter.account_type == 'Admin':
+    if  user.is_superuser:
+        users = Voter.objects.all()
+        return render(request, 'superAdmin/userList.html', {'voters': users})    
+    elif user.is_authenticated and user.voter.account_type == 'Admin':
         elections = Election.objects.get(admin=user)
         voters = Voter.objects.filter(election_id=elections.id).order_by('id')    
-        return render(request, 'admin/voters.html', {'voters': voters})    
-    elif user.is_superuser:
-        users = Voter.objects.all()
-        return render(request, 'superAdmin/userList.html', {'voters': users})
+        return render(request, 'admin/voters.html', {'voters': voters})
     else:
         return redirect('login')
 

@@ -1,6 +1,12 @@
 from pathlib import Path
 import os
 import sys
+import dj_database_url
+from decouple import config
+from dotenv import load_dotenv
+
+load_dotenv()
+
 # import fontawesome_free
 
 sys.modules['fontawesome_free'] = __import__('fontawesome-free')
@@ -74,16 +80,6 @@ ASGI_APPLICATION = 'ducsu_online_voting.asgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'evoting',
-#         'USER': 'admin',
-#         'PASSWORD': '123',
-#         'HOST': 'localhost',  # Replace with your PostgreSQL server's address if necessary
-#         'PORT': '5432',          # Leave empty to use the default PostgreSQL port (usually 5432)
-#     }
-# }
 
 DATABASES = {
     'default': {
@@ -91,6 +87,11 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+DATABASES = {
+    'default': dj_database_url.config(default=config('DATABASE_URL'))
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -152,12 +153,3 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'ariful10462@gmail.com' # hosting mail
 EMAIL_HOST_PASSWORD = 'cvsk bimg hmsp tlpb' # google theke create kore dite hobe
 EMAIL_USE_TLS = True
-
-# CHANNEL_LAYERS = {
-#     'default': {
-#         'BACKEND' : 'channels_redis.core.RedisChannelLayer',
-#         'CONFIG':{
-#             "hosts": [('127.0.0.1',6379)],
-#         }
-#     }
-# }

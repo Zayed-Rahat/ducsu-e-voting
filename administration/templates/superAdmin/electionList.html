@@ -19,6 +19,7 @@
           <th>Election Admin</th>
           <th>Start Time(BST)</th>
           <th>End Time(BST)</th>
+          <th>Action</th>
           <th>Status</th>
 
       </thead>
@@ -30,6 +31,10 @@
       <td>{{ election.admin.email }}</td>
       <td>{{ election.start_date }}</td>
       <td>{{ election.end_date }}</td>
+
+      <td>
+        <button class='btn btn-danger btn-sm delete btn-flat' data-id='{{ election.id }}'><i class="fas fa-trash-alt fa-sm"></i>Delete</button>
+      </td>
     
       <td> {% if not election.is_open %}
         <button class="btn btn-warning btn-sm  btn-flat disabled"><i class="far fa-clock fa-lg"></i>Closed</button>
