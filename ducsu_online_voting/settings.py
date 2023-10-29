@@ -1,7 +1,11 @@
 from pathlib import Path
 import os
 import sys
+import dj_database_url
+from decouple import config
+from dotenv import load_dotenv
 
+load_dotenv()
 sys.modules['fontawesome_free'] = __import__('fontawesome-free')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -90,7 +94,9 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
+DATABASES = {
+    'default': dj_database_url.config(default=config('DATABASE_URL'))
+}
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 

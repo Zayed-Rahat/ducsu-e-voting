@@ -158,14 +158,7 @@ def dashboard(request):
     
         return redirect('viewElections')
     
-<<<<<<< HEAD
-    elif user.voter.account_type == 'Voter':
-        return render(request, "voter/voter_home.html")
-
-    return redirect('account_login')
-=======
     return redirect('login')
->>>>>>> 1beeaf460289807874f10e8eb0663a3edbfed47b
 
 # def dashboard(request):
 #     user = request.user
