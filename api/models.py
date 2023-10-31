@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
+from datetime import timedelta
+from django.db import models
 
 class Election(models.Model):
     title = models.CharField(max_length=50)
@@ -11,10 +13,18 @@ class Election(models.Model):
     end_date = models.DateTimeField()
     admin = models.ForeignKey(User, on_delete=models.CASCADE)
     is_open = models.BooleanField(default=True)
+
     def __str__(self):
         return self.title
-    
-    
+
+    def save(self, *args, **kwargs):
+        now = timezone.now() + timedelta(hours=6)
+        if self.start_date <= now <= self.end_date:
+            self.is_open = True
+        else:
+            self.is_open = False
+        super().save(*args, **kwargs)
+
 
 class Position(models.Model):
     name = models.CharField(max_length=20)
@@ -26,7 +36,6 @@ class Position(models.Model):
         return  self.name
 
 ACCOUNT_TYPE = (
-    ('SuperAdmin', 'SuperAdmin'),
     ('Admin', 'Admin'),
     ('Voter', 'Voter'),
 )
@@ -38,7 +47,8 @@ class Voter(models.Model):
     account_type = models.CharField(max_length=10, choices=ACCOUNT_TYPE, default='Voter')
     verified = models.BooleanField(default=True)
     voted = models.BooleanField(default=False)
-    election = models.ForeignKey(Election, on_delete=models.CASCADE, null=True, blank=True)
+    election = models.ForeignKey(Election, on_delete=models.SET_NULL, null=True, blank=True)
+
     def __str__(self):
       return self.user.username
 

@@ -1,10 +1,16 @@
 from django.urls import path
 from . import views
+from voting.views import userProfile
 
 
 urlpatterns = [
-    path('', views.dashboard, name="userDashboard"),
+
+    path('', userProfile, name='userProfile'),
+
+    path('dashboard', views.dashboard, name="userDashboard"),
     # Elections
+    path('electionList', views.superAdminViewElections, name="superAdminViewElections"),
+
     path('elections', views.viewElections, name="viewElections"),
     path('election/view', views.view_election_by_id, name="viewElection"),
     path('elections/update', views.updateElection, name="updateElection"),
@@ -28,9 +34,8 @@ urlpatterns = [
     path('candidate/delete', views.deleteCandidate, name='deleteCandidate'),
     path('candidate/view', views.view_candidate_by_id, name='viewCandidate'),
 
-    # # * Settings (Ballot Position and Election Title)
+    # # * Settings (Ballot Position)
     path("settings/ballot/position", views.ballot_position, name='ballot_position'),
-    # path("settings/ballot/title/", views.ballot_title, name='ballot_title'),
     path("settings/ballot/position/update/<int:position_id>/<str:up_or_down>/",
          views.update_ballot_position, name='update_ballot_position'),
 

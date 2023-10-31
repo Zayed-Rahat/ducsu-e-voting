@@ -1,7 +1,6 @@
 from django import forms
 from api.models import *
 from account.forms import FormSettings
-from django.contrib.admin.widgets import AdminSplitDateTime
 
 
 class PositionForm(FormSettings):
@@ -18,9 +17,6 @@ class DateTimeInput(forms.DateTimeInput):
         super().__init__(**kwargs)
 
 
-
-
-
 class ElectionForm(FormSettings):
     class Meta:
         model = Election
@@ -32,32 +28,20 @@ class ElectionForm(FormSettings):
 
         }
       
-
-
-
 class VoterForm(FormSettings):
     class Meta:
         model = Voter
-        fields = ['verified', 'election']
+        fields = ['verified', 'account_type', 'election']
 
-    # def __init__(self, *args, **kwargs):
-    #     super(VoterForm, self).__init__(*args, **kwargs)
-    #     if self.instance.pk:
-    #         user = self.instance.user
-    #         self.fields['election'].queryset = Election.objects.filter(admin=user)
 
 class CandidateForm(FormSettings):    
     class Meta:
         model = Candidate
         fields = ['position', 'fullname', 'bio', 'photo']
 
-    # def __init__(self, *args, **kwargs):
-    #     # user = kwargs.pop('user', None)
-    #     super(CandidateForm, self).__init__(*args, **kwargs)
-    #     if self.instance.pk:
-    #         election = Election.objects.get(admin=self.instance.admin)
-    #             # election = Election.objects.get(admin=user)
-    #         self.fields['position'].queryset = Position.objects.filter(election_id=election.id) 
+    def __init__(self, election, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['position'].queryset = Position.objects.filter(election=election)
 
 class VoteForm(FormSettings):
     class Meta:

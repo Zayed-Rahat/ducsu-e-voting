@@ -15,12 +15,12 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
 
 
-from django.core.exceptions import ObjectDoesNotExist
-
-
 # new coder code for toster
 def account_login(request):
-    if request.method == 'POST':
+    user = request.user
+    if user.is_authenticated:
+       return redirect('userProfile')
+    elif request.method == 'POST':
         form = AuthenticationForm(request=request, data=request.POST)        
         if form.is_valid():
             username = request.POST['username']
@@ -34,33 +34,6 @@ def account_login(request):
     else:
         form = AuthenticationForm()
     return render(request, 'account/login.html')
-
-
-
-# def user_registration(request):
-#     if request.method == 'POST':
-#         form = RegistrationForm(request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             login(request, user)
-#             return redirect('myprofile') 
-#     else:
-#         form = RegistrationForm()
-#     return render(request, 'account/register.html', {'form': form})
-
-
-# def user_login(request):
-#     if request.method == 'POST':
-#         username = request.POST['username']
-#         password = request.POST['password']
-#         user = authenticate(request, username=username, password=password)
-#         if user is not None:
-#             login(request, user)
-#             return redirect('myprofile')
-#         else:
-#             pass
-#     return render(request, 'account/login.html')
-
 
 
 def account_logout(request):
@@ -77,7 +50,11 @@ def account_logout(request):
 
 # user register with email varification
 def account_register(request):
-    if request.method == 'POST':
+    user = request.user
+    if user.is_authenticated:
+       return redirect('userProfile')
+    
+    elif request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
@@ -123,24 +100,6 @@ def activate(request, uidb64, token):
 
 
 
-# change password with old password
-# def pass_change(request):
-#     if request.user.is_authenticated:
-#         if request.method == 'POST':        
-#             form = Changepass(user=request.user, data=request.POST) # user data collect kora hocce
-#             if form.is_valid():
-#                 form.save()
-#                 update_session_auth_hash(request, form.user) # password update kora hocce
-#                 messages.success('Your password updated successfully')
-#                 return redirect('myprofile')
-#         else:
-#             form = Changepass(user = request.user)
-#         return render(request, 'account/pass_change.html', {'form':form})
-#     return redirect('login')
-
-
-
-
 # change passsword without old password
 def change_pass(request):
     # if request.user.is_authenticated:
@@ -156,9 +115,6 @@ def change_pass(request):
             form = Change_pass(user = request.user)
     return render(request, 'account/pass_change.html', {'form':form})
     # return redirect('change_pass')
-
-
-
 
 
 
