@@ -9,14 +9,6 @@ from django.http import JsonResponse
 from datetime import timedelta
 
 
-
-# def index(request):
-#     if not request.user.is_authenticated:
-#         return account_login(request)
-#     context = {}
-#     return render(request, "account/login.html", context)
-
-
 def generate_ballot(election, display_controls=False):
     # voters = Voter.objects.get(user=user)
     positions = Position.objects.filter(election=election).order_by('priority')
@@ -102,33 +94,38 @@ def fetch_ballot(request):
 
 def userProfile(request):
     user = request.user
-    elections = Election.objects.filter(is_open = 1)
-    election = request.user.voter.election
-    if election:
-        if user.voter.voted:  # * User has voted
-                context = {
-                    'my_votes': Vote.objects.filter(voter=user.voter),
-                    'election' : election
-                }
-                return render(request, "voting/result.html", context)
-        else:
-                return redirect(reverse('show_ballot'))
-    else:
-        if request.method == 'POST':
-            selected_election_id = request.POST.get('selectedElection')
-            election = Election.objects.get(id=selected_election_id)
-            voter = request.user.voter
 
-            # Update the voter's election field
-            voter.election = election
-            voter.save()
-            messages.success(request, "Election selection successful")
-            return redirect(reverse('show_ballot'))
-    context2 = {
-            'elections' : elections
-        }
+    if user.is_authenticated:
+        elections = Election.objects.filter(is_open = 1)
+        election = request.user.voter.election
+        if election:
+            if user.voter.voted:  # * User has voted
+                    context = {
+                        'my_votes': Vote.objects.filter(voter=user.voter),
+                        'election' : election
+                    }
+                    return render(request, "voting/result.html", context)
+            else:
+                    return redirect(reverse('show_ballot'))
+        else:
+            if request.method == 'POST':
+                selected_election_id = request.POST.get('selectedElection')
+                election = Election.objects.get(id=selected_election_id)
+                voter = request.user.voter
+
+                # Update the voter's election field
+                voter.election = election
+                voter.save()
+                messages.success(request, "Election selection successful")
+                return redirect(reverse('show_ballot'))
+        context2 = {
+                'elections' : elections
+            }
+        
+        return render(request, "voting/voters_election.html", context2)
     
-    return render(request, "voting/voters_election.html", context2)
+    return redirect('login')
+    
 
 
 def show_ballot(request):

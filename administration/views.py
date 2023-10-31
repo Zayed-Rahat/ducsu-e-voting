@@ -15,9 +15,6 @@ from datetime import timedelta
 from api.models import ContactMessage
 
 def find_n_winners(data, n):
-    """Read More
-    https://www.geeksforgeeks.org/python-program-to-find-n-largest-elements-from-a-list/
-    """
     final_list = []
     candidate_data = data[:]
     # print("Candidate = ", str(candidate_data))
@@ -91,20 +88,6 @@ class PrintView(PDFView):
         # print(context)
         return context
 
-# def dashboard(request):
-#     #   positions= requests.get('http://127.0.0.1:8000/api/position').json()
-#     #   voters= requests.get('http://127.0.0.1:8000/api/voter').json()
-#     #   candidates= requests.get('http://127.0.0.1:8000/api/candidate').json()
-#     #   votes= requests.get('http://127.0.0.1:8000/api/vote').json()
-#       positions = Position.objects.all()
-#       voters = Voter.objects.all()
-#       candidates = Candidate.objects.all()
-#       votes = Vote.objects.all()
-
-
-#       context = {'positions':positions, 'voters' : voters, 'votes' : votes, 'candidates': candidates}
-#       return render(request, 'dashboard.html', context)
-
 def dashboard(request):
     user = request.user
     if  user.is_authenticated :
@@ -114,12 +97,12 @@ def dashboard(request):
             else:
                 return redirect('viewElections')   
             
-        elif user.voter.account_type == 'Voter' :
+        else:
             if  user.voter.election:
                 elections = Election.objects.get(title = user.voter.election)
             else:
                 return redirect('userProfile')
-    
+
         positions = Position.objects.filter(election_id=elections.id).order_by('priority')
         candidates = Candidate.objects.filter(election_id=elections.id).order_by('election')
         voters = Voter.objects.filter(election_id=elections.id).order_by('election')
@@ -155,8 +138,8 @@ def dashboard(request):
             return render(request, "voter/voter_home.html", context)
     
         return redirect('viewElections')
-    
-    return redirect('login')
+    else:
+        return redirect('login')
 
 
 
@@ -191,27 +174,39 @@ def viewElections(request):
     return redirect('login')
 
 
+def superAdminViewElections(request):
+    user = request.user
+    if user.is_superuser:
+        elections = Election.objects.all()
+        context = {
+            'elections': elections
+        }
+        return render(request, 'superAdmin/electionList.html', context)
+
+
 def updateElection(request):
     if request.method != 'POST':
         messages.error(request, "Access Denied")
-        return redirect(reverse('viewElections'))
+        if request.user.is_superuser:
+            return redirect(reverse('superAdminViewElections'))
+        else:
+            return redirect(reverse('viewElections'))   
 
     try:
         election_id = request.POST.get('id')
         election = Election.objects.get(id=election_id)
-        if election.admin != request.user:
+        if  election.admin != request.user or request.user.is_superuser:
             messages.error(request, "Access To This Resource Denied")
-            return redirect(reverse('viewElections'))
+            if request.user.is_superuser:
+                return redirect(reverse('superAdminViewElections'))
+            else:
+                return redirect(reverse('viewElections'))
 
         form = ElectionForm(request.POST, instance=election)
         if form.is_valid():
             if 'end_date' in form.changed_data:
                 now = timezone.now() + timedelta(hours=6)
-                updated_end_date = form.cleaned_data['end_date']
-                # updated_end_date = timezone.make_aware(updated_end_date)
-                print(now)
-                print(updated_end_date)
-                print(updated_end_date<=now)
+                updated_end_date = form.cleaned_data['end_date']               
                 if updated_end_date <= now:
                     election.is_open = False
                 else:
@@ -228,7 +223,12 @@ def updateElection(request):
     except:
         messages.error(request, "An error occurred")
 
-    return redirect(reverse('viewElections'))
+    if request.user.is_superuser:
+            return redirect(reverse('superAdminViewElections'))
+    else:
+            return redirect(reverse('viewElections'))    
+    
+
 
 def deleteElection(request):
     if request.method != 'POST':
@@ -236,29 +236,37 @@ def deleteElection(request):
     try:
         elec = Election.objects.get(id=request.POST.get('id'))
         # Get all voters associated with the election
-        voters = Voter.objects.filter(election=elec)
-        # Iterate over the voters
-        for voter in voters:
-            # If the voter is also an admin, skip the deletion of the voter
-            if voter.user.id != elec.admin.id:
-                voter.election = None
-                voter.save()
-        messages.success(request, "Voters of Election  Deleted")
+        # if request.user.is_superuser:
+        elec.delete()
+        messages.success(request, "Election Deleted!!")
+        # else: 
+        #     voters = Voter.objects.filter(election=elec)
+        #     # Iterate over the voters
+        #     for voter in voters:    
+        #         voter.election = None
+        #         voter.save()
+        #     messages.success(request, "Voters of Election  Deleted")
     except:
         messages.error(request, "Access To This Resource Denied")
 
-    return redirect(reverse('viewElections'))
+    if request.user.is_superuser:
+            return redirect(reverse('superAdminViewElections'))
+    else:
+            return redirect(reverse('viewElections'))    
+    
 
 
 def voters(request):
     user = request.user
-    # voters_list = Voter.objects.order_by('id') 
-    if user.is_authenticated and user.voter.account_type == 'Admin':
+    if  user.is_superuser:
+        users = Voter.objects.all()
+        return render(request, 'superAdmin/userList.html', {'voters': users})    
+    elif user.is_authenticated and user.voter.account_type == 'Admin':
         elections = Election.objects.get(admin=user)
         voters = Voter.objects.filter(election_id=elections.id).order_by('id')    
         return render(request, 'admin/voters.html', {'voters': voters})
     else:
-        return redirect('account_login')
+        return redirect('login')
 
 
 def updateVoter(request):
@@ -542,7 +550,7 @@ def resetVote(request):
 
 def all_messages(request):
     messages = ContactMessage.objects.all()
-    return render(request, 'admin/messages.html',{'messages':messages})
+    return render(request, 'superAdmin/messages.html',{'messages':messages})
 
 def delete_message(request,message_id):
     blog = get_object_or_404(ContactMessage, id=message_id)

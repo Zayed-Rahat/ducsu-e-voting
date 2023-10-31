@@ -18,6 +18,8 @@
           <th>Start Time(BST)</th>
           <th>End Time(BST)</th>
           <th>Action</th>
+          <th>Status</th>
+
       </thead>
       <tbody>
     {% for election in elections %}
@@ -30,10 +32,13 @@
       <td>
         <button class='btn btn-success btn-sm edit btn-flat' data-id='{{ election.id }}'><i class="fas fa-edit fa-sm"></i> Edit</button>
         <button class='btn btn-danger btn-sm delete btn-flat' data-id='{{ election.id }}'><i class="fas fa-trash-alt fa-sm"></i>Delete</button>
-        {% if not election.is_open %}
-        <button class="btn btn-warning btn-sm  btn-flat disabled"><i class="far fa-clock fa-lg"></i>Closed</button>
-        {% endif %}
       </td>
+
+      <td> {% if not election.is_open %}
+        <button class="btn btn-warning btn-sm  btn-flat disabled"><i class="far fa-clock fa-lg"></i>Closed</button>
+           {% else %}
+           <button class="btn btn-success btn-sm edit btn-flat disabled"><i class="far fa-clock fa-lg"></i>Running</button>
+        {% endif %}</td>
     </tr>
     {% endfor %}      
 
