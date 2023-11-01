@@ -17,6 +17,9 @@
                         href="{% url 'userProfile' %}">Welcome, {{ request.user.username }}</a>
                     <a class="hover:bg-pink-500 hover:rounded-md hover:text-white px-2"
                         href="{% url 'logout' %}">Logout</a>
+                    <a class="hover:bg-pink-400 hover:rounded-md hover:text-white px-2"
+                        href="{% url 'how_to_use' %}">How
+                        to use?</a>
                     {% else %}
 
                     <a class="hover:bg-pink-500 hover:rounded-md hover:text-white px-2" href="{% url 'home' %}">Home</a>
