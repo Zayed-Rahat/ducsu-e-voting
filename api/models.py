@@ -6,6 +6,7 @@ from django.dispatch import receiver
 from django.utils import timezone
 from datetime import timedelta
 from django.db import models
+from cloudinary.models import CloudinaryField
 
 class Election(models.Model):
     title = models.CharField(max_length=50)
@@ -64,7 +65,8 @@ def save_user_voter(sender, instance, **kwargs):
 class Candidate(models.Model):
     position = models.ForeignKey(Position, on_delete=models.CASCADE)
     fullname = models.CharField(max_length=20)
-    photo = models.ImageField(upload_to="candidates", blank=True)
+    # photo = models.ImageField(upload_to="candidates", blank=True)
+    photo = CloudinaryField('image')
     bio = models.CharField(max_length=50)
     election = models.ForeignKey(Election, on_delete=models.CASCADE)
     def __str__(self):
