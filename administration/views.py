@@ -141,6 +141,78 @@ def dashboard(request):
     else:
         return redirect('login')
 
+# def dashboard(request):
+#     user = request.user
+
+#     if user.voter.account_type == 'Admin':
+#         # positions = Position.objects.all().order_by('priority')
+#         elections = Election.objects.get(admin=request.user)
+#         positions = Position.objects.filter(election_id=elections.id).order_by('priority')
+#         candidates = Candidate.objects.filter(election_id=elections.id).order_by('election')
+#         voters = Voter.objects.filter(election_id=elections.id).order_by('election')
+#         voted_elections = Voter.objects.filter(election_id=elections.id)
+#         voted_voters = voted_elections.filter(voted=1)
+#         list_of_candidates = []
+#         votes_count = []
+#         chart_data = {}
+
+#         for position in positions:
+#             list_of_candidates = []
+#             votes_count = []
+#             for candidate in Candidate.objects.filter(position=position):
+#                 list_of_candidates.append(candidate.fullname)
+#                 votes = Vote.objects.filter(candidate=candidate).count()
+#                 votes_count.append(votes)
+#             chart_data[position] = {
+#                 'candidates': list_of_candidates,
+#                 'votes': votes_count,
+#                 'pos_id': position.id
+#             }
+#         context = {
+#             'position_count': positions.count(),
+#             'candidate_count': candidates.count(),
+#             'voters_count': voters.count(),
+#             'voted_voters_count': voted_voters.count(),
+#             'positions': positions,
+#             'chart_data': chart_data,
+#         }
+#         return render(request, "admin/admin_home.html", context)
+
+#     elif user.voter.account_type == 'Voter':
+#         elections = Election.objects.get(admin=request.user)
+#         positions = Position.objects.filter(election_id=elections.id).order_by('priority')
+#         candidates = Candidate.objects.filter(election_id=elections.id).order_by('election')
+#         voters = Voter.objects.filter(election_id=elections.id).order_by('election')
+#         voted_elections = Voter.objects.filter(election_id=elections.id)
+#         voted_voters = voted_elections.filter(voted=1)
+#         list_of_candidates = []
+#         votes_count = []
+#         chart_data = {}
+
+#         for position in positions:
+#             list_of_candidates = []
+#             votes_count = []
+#             for candidate in Candidate.objects.filter(position=position):
+#                 list_of_candidates.append(candidate.fullname)
+#                 votes = Vote.objects.filter(candidate=candidate).count()
+#                 votes_count.append(votes)
+#             chart_data[position] = {
+#                 'candidates': list_of_candidates,
+#                 'votes': votes_count,
+#                 'pos_id': position.id
+#             }
+#         context = {
+#             'position_count': positions.count(),
+#             'candidate_count': candidates.count(),
+#             'voters_count': voters.count(),
+#             'voted_voters_count': voted_voters.count(),
+#             'positions': positions,
+#             'chart_data': chart_data,
+#         }
+#         return render(request, "voter/voter_home.html", context)
+
+#     return redirect('account_login')
+
 
 
 def viewElections(request):
@@ -408,6 +480,9 @@ def deletePosition(request):
     return redirect(reverse('viewPositions'))
 
 
+
+
+
 def viewCandidates(request):
     try:
         election = Election.objects.get(admin=request.user)
@@ -430,6 +505,8 @@ def viewCandidates(request):
         else:
             messages.error(request, "Form errors")
     return render(request, "admin/candidates.html", context)
+
+
 
 
 def updateCandidate(request):

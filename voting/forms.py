@@ -43,6 +43,23 @@ class CandidateForm(FormSettings):
         super().__init__(*args, **kwargs)
         self.fields['position'].queryset = Position.objects.filter(election=election)
 
+#         # Set the election as an instance variable
+#         self.election = election
+
+#     class Meta:
+#         model = Candidate
+#         fields = ['position', 'fullname', 'bio', 'photo']  # Add the fields you want to include in the form
+
+#     def clean(self):
+#         cleaned_data = super().clean()
+#         # Perform your custom validation here
+#         # Access the election instance using self.election
+
+#         # Example validation logic:
+#         # if some_condition:
+#         #     raise forms.ValidationError("Validation error message")
+
+#         return cleaned_data
 class VoteForm(FormSettings):
     class Meta:
         model = Vote

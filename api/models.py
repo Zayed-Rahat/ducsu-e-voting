@@ -13,7 +13,6 @@ class Election(models.Model):
     end_date = models.DateTimeField()
     admin = models.ForeignKey(User, on_delete=models.CASCADE)
     is_open = models.BooleanField(default=True)
-
     def __str__(self):
         return self.title
 
