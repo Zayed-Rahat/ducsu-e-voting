@@ -15,8 +15,8 @@ class ContactForm(forms.ModelForm):
         model = ContactMessage
         fields = ['name', 'email','phone', 'message']
         widgets = {
-            'name': forms.TextInput(attrs={'class':' border w-50 px-2 py-2 focus:outline-none focus:ring-0 text-base focus:border-gray-600',}),
+            'name': forms.TextInput(attrs={'class': 'border w-50 px-2 py-2 focus:outline-none focus:ring-0 text-base focus:border-gray-600'}),
             'email': forms.TextInput(attrs={'class': 'border w-50 px-2 py-2 focus:outline-none focus:ring-0 text-base focus:border-gray-600'}),
             'phone': forms.TextInput(attrs={'class': 'border w-50 px-2 py-2 focus:outline-none focus:ring-0 text-base focus:border-gray-600'}),
             'message': Textarea(attrs={'rows': 4, 'class': 'form-control'}),
-        }
+        } 
