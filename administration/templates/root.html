@@ -22,47 +22,45 @@
   
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="{% static 'dist/css/skins/_all-skins.min.css' %}">
-    <link rel="stylesheet" href="{% static 'toastr/toastr.min.css' %} ">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- Tailwind CSS -->
-    <link
-        href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
-        rel="stylesheet"
-      />
-  
-    <!-- Google Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  
-    <style>
-      .bold{
-        font-weight:bold;
-      }
-      
-      #candidate_list{
-        margin-top:20px;
-      }
-  
-      #candidate_list ul{
-        list-style-type:none;
-      }
-  
-      #candidate_list ul li{ 
-        margin:0 30px 30px 0; 
-        vertical-align:top
-      }
-  
-      .clist{
-        margin-left: 20px;
-      }
-  
-      .cname{
-        font-size: 25px;
-      }
-    </style>		
-  </head>
+  <link rel="stylesheet" href="{% static 'dist/css/skins/_all-skins.min.css' %}">
+  <link rel="stylesheet" href="{% static 'toastr/toastr.min.css' %} ">
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- Tailwind CSS -->
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet" />
 
-<body class="hold-transition bg-blue-900 sidebar-mini px-10">
+  <!-- Google Font -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  <style>
+    .bold {
+      font-weight: bold;
+    }
+
+    #candidate_list {
+      margin-top: 20px;
+    }
+
+    #candidate_list ul {
+      list-style-type: none;
+    }
+
+    #candidate_list ul li {
+      margin: 0 30px 30px 0;
+      vertical-align: top
+    }
+
+    .clist {
+      margin-left: 20px;
+    }
+
+    .cname {
+      font-size: 25px;
+    }
+  </style>
+</head>
+
+<body class="hold-transition bg-blue-900  sidebar-mini px-10">
   <div class="wrapper">
 
     {% include "navbar.html" %}
@@ -70,7 +68,7 @@
     {% include "sidebar.html" %}
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper bg-white bg-slate-800">
 
       {% block content %}
 

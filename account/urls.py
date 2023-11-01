@@ -6,7 +6,7 @@ urlpatterns = [
     # team profile user
     path('profile/',views.profile, name='profile'),
     path('about/',views.aboutus, name='about'),
-    
+    path('how_to_use/',views.how_to_use, name="how_to_use"),
     
     # my code authentication
     path('logout/', views.account_logout, name="logout"),

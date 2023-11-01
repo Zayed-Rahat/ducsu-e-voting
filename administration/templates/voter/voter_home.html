@@ -4,115 +4,6 @@
 {% block head_title %} DUCSU | Voter Dashboard{% endblock %}
 
 {% block content %}
-<<<<<<< HEAD
-<section class="content">
-    <!-- Small boxes (Stat box) -->
-  <div class="row">
-  <div class="col-lg-3 col-xs-8">
-  <!-- small box -->
-  <div class="small-box bg-primary" style="height: 160px;">
-    <div class="inner">
-      <h3>{{ position_count }}</h3>
-      <p>No. of Positions</p>
-    </div>
-    <div class="icon">
-      
-      <i class="fas fa-tasks fa-sm"></i>
-    </div>
-    
-    <i class="fas fa-circle-right"></i>
-  </div>
-  </div>
-  <!-- ./col -->
-  <div class="col-lg-3 col-xs-6">
-  <!-- small box -->
-  <div class="small-box bg-green" style="height: 160px;">
-    <div class="inner">
-      <h3>
-        {{ candidate_count }}
-      </h3>          
-      <p>No. of Candidates</p>
-    </div>
-    <div class="icon">
-      <i class="fas fa-users fa-sm"></i></i>
-    </div>
-    <i class="fas fa-circle-right"></i>
-  </div>
-  </div>
-  <!-- ./col -->
-  <div class="col-lg-3 col-xs-6">
-  <!-- small box -->
-  <div class="small-box bg-yellow"style="height: 160px;">
-    <div class="inner">
-      <h3>
-        {{ voters_count }}
-      </h3>             
-      <p>Total Voters</p>
-    </div>
-    <div class="icon">
-      <i class="fas fa-id-card fa-sm"></i>
-    </div>
-    <i class="fas fa-circle-right"></i>
-  </div>
-  </div>
-  <!-- ./col -->
-  <div class="col-lg-3 col-xs-6">
-  <!-- small box -->
-  <div class="small-box bg-red" style="height: 160px;">
-    <div class="inner">
-      <h3>{{ voted_voters_count }}</h3>
-      <p>Voters Voted</p>
-    </div>
-    <div class="icon">
-      <i class="fas fa-vote-yea fa-sm"></i>
-      </div>
-    <i class="fas fa-circle-right"></i>
-  </div>
-  </div>
-  <!-- ./col -->
-  </div>
-  
-  
-  <div class="row">
-  <div class="col-xs-12">
-  <h3>Votes Tally
-    <span class="pull-right">
-      <a href="{% url 'printResult' %}" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Print</a>
-    </span>
-  </h3>
-  </div>
-  </div>
-  
-  {% for position in positions %}
-  {% if not forloop.counter|divisibleby:2 %}
-  <div class='row'>
-  {% endif %}
-  <div class='col-sm-6'>
-  <div class='box box-solid'>
-  <div class='box-header with-border'>
-  <h4 class='box-title'><b>{{ position.name }}</b></h4>
-  </div>
-  <div class='box-body'>
-  <div class='chart'>
-    <canvas id='{{ position.name|slugify }}' style='height:200px'></canvas>
-  </div>
-  </div>
-  </div>
-  </div>
-  {% if forloop.counter|divisibleby:2 %}
-  </div>
-  {% endif %}
-  
-  {% endfor %}
-  {% if not forloop.counter|divisibleby:2 %}
-  </div>
-  {% endif %}
-  </section>
-  
-    
-
-{% endblock content %}
-=======
 <!-- Main content -->
 <section class="content">
   <!-- Small boxes (Stat box) -->
@@ -211,7 +102,6 @@
 
 {% endblock content %}
 
->>>>>>> 1beeaf460289807874f10e8eb0663a3edbfed47b
 <!-- New Block -->
 {% block custom_js %}
 <script src="{% static 'bower_components/chart.js/Chart.js' %}"></script>

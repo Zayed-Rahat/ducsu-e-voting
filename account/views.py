@@ -185,3 +185,5 @@ def profile(request):
 
 def aboutus(request):
     return render(request,'account/footer/about.html')
+def how_to_use(request):
+    return render(request, 'account/footer/how_to_use.html')

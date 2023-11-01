@@ -8,11 +8,22 @@
 
   {% if election.is_open %}
 
-  <div id="countdown" class="countdown-box flex justify-center text-3xl"
+  <!-- <div id="countdown" class="countdown-box flex justify-center text-3xl"
     data-time-remaining="{{ time_remaining|default:0 }}">
     <div class="countdown-text mb-5"> Election Ends In : </div>
     <span id="countdown-timer" class="mb-5 text-red-500"> 00d 00h 00m 00s</span>
+  </div> -->
+  <div id="countdown" class="countdown-box flex justify-center font-bold text-3xl"
+    data-time-remaining="{{ time_remaining | default:0 }}">
+    <div class="countdown-text mb-5">Election Ends In : </div>
+    <span id="countdown-timer" class="mb-5">
+      <span class="rounded p-2 shadow-md bg-red-500 text-white">00d</span>
+      <span class="rounded p-2 shadow-md ml-2 bg-blue-500 text-white">00h</span>
+      <span class="rounded p-2 shadow-md ml-2 bg-yellow-500 text-black">00m</span>
+      <span class="rounded p-2 shadow-md ml-2 bg-green-500 text-white">00s</span>
+    </span>
   </div>
+
 
   <div class="row">
     <div class="col-sm-10 col-sm-offset-1">
