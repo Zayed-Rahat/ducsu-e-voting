@@ -180,10 +180,13 @@ def resetPassword(request):
 
 
 
+
+
 def profile(request):
     return render(request,'account/footer/team.html')
 
 def aboutus(request):
     return render(request,'account/footer/about.html')
+
 def how_to_use(request):
     return render(request, 'account/footer/how_to_use.html')

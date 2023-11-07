@@ -10,7 +10,7 @@ import cloudinary.api
 
 load_dotenv()
 
-
+# For static file online hostion
 cloudinary.config( 
   cloud_name = config('CLOUDINARY_CLOUD_NAME'), 
   api_key = config('CLOUDINARY_API_KEY'), 
@@ -138,6 +138,20 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATICFILES_DIRS = [
     BASE_DIR/'static',
 ]
+
+# For render this code needed..........
+
+# STATIC_URL = '/static/'
+
+# MEDIA_URL = '/media/'
+
+# if DEBUG:
+#   STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# else:
+#     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
