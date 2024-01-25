@@ -42,7 +42,6 @@ ACCOUNT_TYPE = (
 )
 
 
-
 class Voter(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='voter')
     account_type = models.CharField(max_length=10, choices=ACCOUNT_TYPE, default='Voter')
