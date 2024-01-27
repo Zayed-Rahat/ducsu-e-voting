@@ -30,7 +30,7 @@ About the site : https://onlineevoting-ou3s.onrender.com/account/about
 ![7](https://github.com/Zayed-Rahat/ducsu-e-voting/blob/main/DUCSU_UI/Show_Ballot.png)
 
 `Super Admin Elections List`
-![8](https://github.com/Zayed-Rahat/ducsu-e-voting/blob/main/DUCSU_UI/super_AdminElections_list.png)
+![8](https://github.com/Zayed-Rahat/ducsu-e-voting/blob/main/DUCSU_UI/super_AdminElections_List.png)
 
 `Voter Voted`
 ![9](https://github.com/Zayed-Rahat/ducsu-e-voting/blob/main/DUCSU_UI/Voted.png)
