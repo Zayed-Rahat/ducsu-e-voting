@@ -39,5 +39,5 @@ About the site : https://onlineevoting-ou3s.onrender.com/account/about
 ![10](https://github.com/Zayed-Rahat/ducsu-e-voting/blob/main/DUCSU_UI/Voter_DashBoard.png)
 
 `Voters List`
-![11](https://github.com/Zayed-Rahat/ducsu-e-voting/blob/main/DUCSU_UI/Voters_List.png)
+![11](https://github.com/Zayed-Rahat/ducsu-e-voting/blob/main/DUCSU_UI/Voters_list.png)
 
